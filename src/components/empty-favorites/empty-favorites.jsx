@@ -1,7 +1,7 @@
 import React from "react";
 import {Header} from "../header/header";
 
-const FavoritesEmpty = () => (
+const EmptyFavorites = () => (
   <div className="page page--favorites-empty">
     <Header/>
 
@@ -25,4 +25,4 @@ const FavoritesEmpty = () => (
   </div>
 );
 
-export {FavoritesEmpty};
+export {EmptyFavorites};

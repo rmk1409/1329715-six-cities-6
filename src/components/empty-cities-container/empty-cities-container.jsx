@@ -1,6 +1,6 @@
 import React from "react";
 
-const CitiesEmptyContainer = () => (
+const EmptyCitiesContainer = () => (
   <main className="page__main page__main--index page__main--index-empty">
     <h1 className="visually-hidden">Cities</h1>
     <div className="tabs">
@@ -54,4 +54,4 @@ const CitiesEmptyContainer = () => (
   </main>
 );
 
-export {CitiesEmptyContainer};
+export {EmptyCitiesContainer};

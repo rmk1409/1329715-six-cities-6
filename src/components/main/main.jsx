@@ -1,8 +1,13 @@
 import React from 'react';
 import {OfferCard} from "../offer-card/offer-card";
 import PropTypes from "prop-types";
+import {EmptyMain} from "../empty-main/empty-main";
 
 const Main = ({offers}) => {
+  if (!offers.length) {
+    return <EmptyMain/>;
+  }
+
   return <div className="page page--gray page--main">
     <header className="header">
       <div className="container">
