@@ -7,11 +7,11 @@ import {Favorites} from "../favorites/favorites";
 import {Offer} from "../offer/offer";
 import {NotFound} from "../404/404";
 
-const App = ({offerQuantity}) => (
+const App = ({offers}) => (
   <BrowserRouter>
     <Switch>
       <Route path="/" exact>
-        <Main offerQuantity={offerQuantity}/>
+        <Main offers={offers}/>
       </Route>
       <Route path="/login" exact>
         <Login/>
@@ -20,7 +20,7 @@ const App = ({offerQuantity}) => (
         <Favorites/>
       </Route>
       <Route path="/offer/:id" exact>
-        <Offer/>
+        <Offer offers={offers}/>
       </Route>
       <Route>
         <NotFound/>
@@ -30,7 +30,7 @@ const App = ({offerQuantity}) => (
 );
 
 App.propTypes = {
-  offerQuantity: PropTypes.number.isRequired
+  offers: PropTypes.array.isRequired
 };
 
 export {App};

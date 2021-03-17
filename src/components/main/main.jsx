@@ -2,9 +2,7 @@ import React from 'react';
 import {OfferCard} from "../offer-card/offer-card";
 import PropTypes from "prop-types";
 
-const Main = ({offerQuantity}) => {
-  const offers = new Array(offerQuantity).fill(null);
-
+const Main = ({offers}) => {
   return <div className="page page--gray page--main">
     <header className="header">
       <div className="container">
@@ -77,7 +75,7 @@ const Main = ({offerQuantity}) => {
               <span className="places__sorting-type" tabIndex="0">
                   Popular
                 <svg className="places__sorting-arrow" width="7" height="4">
-                  <use xlinkHref="#icon-arrow-select"></use>
+                  <use xlinkHref="#icon-arrow-select"/>
                 </svg>
               </span>
               <ul className="places__options places__options--custom places__options--opened">
@@ -88,11 +86,11 @@ const Main = ({offerQuantity}) => {
               </ul>
             </form>
             <div className="cities__places-list places__list tabs__content">
-              {offers.map((value, index) => <OfferCard key = {index}/>)}
+              {offers.map((value) => <OfferCard key={value.id} offer={value}/>)}
             </div>
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <section className="cities__map map"/>
           </div>
         </div>
       </div>
@@ -101,7 +99,7 @@ const Main = ({offerQuantity}) => {
 };
 
 Main.propTypes = {
-  offerQuantity: PropTypes.number.isRequired
+  offers: PropTypes.array.isRequired
 };
 
 export {Main};

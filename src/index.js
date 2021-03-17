@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from "./components/app/app";
-
-const OFFER_QUANTITY = 5;
+import {offers as offersMock} from "./mocks/offers";
 
 ReactDOM.render(
-    <App offerQuantity = {OFFER_QUANTITY}/>,
+    <App offers={offersMock}/>,
     document.querySelector(`#root`)
 );

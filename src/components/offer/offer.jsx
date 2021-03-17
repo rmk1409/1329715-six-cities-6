@@ -1,45 +1,48 @@
 import React from "react";
 import {Header} from "../header/header";
 import {OfferCard} from "../offer-card/offer-card";
+import {useParams} from "react-router-dom";
+import PropTypes from "prop-types";
+import {NotFound} from "../404/404";
+import {DECIMAL_RADIX} from "../../const";
+import {addActiveClass, getRatingWidth} from "../../util";
 
-const Offer = () => (
-  <div className="page">
+const Offer = ({offers}) => {
+  const {id} = useParams();
+  const currentOffer = offers.find((current) => {
+    return current.id === parseInt(id, DECIMAL_RADIX);
+  });
+  if (!currentOffer) {
+    return <NotFound/>;
+  }
+  const bookmarkClass = `property__bookmark-button button ${addActiveClass(currentOffer[`is_favorite`], `property__bookmark-button--active`)}`;
+  const ratingWidth = getRatingWidth(currentOffer.rating);
+
+  return <div className="page">
     <Header/>
 
     <main className="page__main page__main--property">
       <section className="property">
         <div className="property__gallery-container container">
           <div className="property__gallery">
-            <div className="property__image-wrapper">
-              <img className="property__image" src="img/room.jpg" alt="Photo studio"/>
-            </div>
-            <div className="property__image-wrapper">
-              <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio"/>
-            </div>
-            <div className="property__image-wrapper">
-              <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio"/>
-            </div>
-            <div className="property__image-wrapper">
-              <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio"/>
-            </div>
-            <div className="property__image-wrapper">
-              <img className="property__image" src="img/studio-01.jpg" alt="Photo studio"/>
-            </div>
-            <div className="property__image-wrapper">
-              <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio"/>
-            </div>
+            {currentOffer.images.map((value, index) =>
+              <div key={`${value}-${index}`} className="property__image-wrapper">
+                <img className="property__image" src={value} alt={`${currentOffer.type} photo`}/>
+              </div>)}
           </div>
         </div>
         <div className="property__container container">
           <div className="property__wrapper">
-            <div className="property__mark">
-              <span>Premium</span>
-            </div>
+            {currentOffer[`is_premium`] ?
+              <div className="property__mark">
+                <span>Premium</span>
+              </div> :
+              ``}
             <div className="property__name-wrapper">
               <h1 className="property__name">
-                Beautiful &amp; luxurious studio at great location
+                {currentOffer.title}
               </h1>
-              <button className="property__bookmark-button button" type="button">
+              <button className={bookmarkClass} type="button">
                 <svg className="property__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"/>
                 </svg>
@@ -48,59 +51,33 @@ const Offer = () => (
             </div>
             <div className="property__rating rating">
               <div className="property__stars rating__stars">
-                <span style={{width: `80%`}}/>
+                <span style={{width: `${ratingWidth}%`}}/>
                 <span className="visually-hidden">Rating</span>
               </div>
-              <span className="property__rating-value rating__value">4.8</span>
+              <span className="property__rating-value rating__value">{currentOffer.rating}</span>
             </div>
             <ul className="property__features">
               <li className="property__feature property__feature--entire">
-                Apartment
+                {currentOffer.type}
               </li>
               <li className="property__feature property__feature--bedrooms">
-                3 Bedrooms
+                {currentOffer.bedrooms} Bedrooms
               </li>
               <li className="property__feature property__feature--adults">
-                Max 4 adults
+                Max {currentOffer[`max_adults`]} adults
               </li>
             </ul>
             <div className="property__price">
-              <b className="property__price-value">&euro;120</b>
+              <b className="property__price-value">&euro;{currentOffer.price}</b>
               <span className="property__price-text">&nbsp;night</span>
             </div>
             <div className="property__inside">
               <h2 className="property__inside-title">What&apos;s inside</h2>
               <ul className="property__inside-list">
-                <li className="property__inside-item">
-                  Wi-Fi
-                </li>
-                <li className="property__inside-item">
-                  Washing machine
-                </li>
-                <li className="property__inside-item">
-                  Towels
-                </li>
-                <li className="property__inside-item">
-                  Heating
-                </li>
-                <li className="property__inside-item">
-                  Coffee machine
-                </li>
-                <li className="property__inside-item">
-                  Baby seat
-                </li>
-                <li className="property__inside-item">
-                  Kitchen
-                </li>
-                <li className="property__inside-item">
-                  Dishwasher
-                </li>
-                <li className="property__inside-item">
-                  Cabel TV
-                </li>
-                <li className="property__inside-item">
-                  Fridge
-                </li>
+                {currentOffer.goods.map((value) =>
+                  <li key={value} className="property__inside-item">
+                    {value}
+                  </li>)}
               </ul>
             </div>
             <div className="property__host">
@@ -108,21 +85,16 @@ const Offer = () => (
               <div className="property__host-user user">
                 <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
                   <img
-                    className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74"
-                    alt="Host avatar"/>
+                    className="property__avatar user__avatar" src={currentOffer.host[`avatar_url`]} width="74"
+                    height="74" alt="Host avatar"/>
                 </div>
                 <span className="property__user-name">
-                    Angelina
+                  {currentOffer.host.name}
                 </span>
               </div>
               <div className="property__description">
                 <p className="property__text">
-                  A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The
-                  building is green and from 18th century.
-                </p>
-                <p className="property__text">
-                  An independent House, strategically located between Rembrand Square and National Opera, but where the
-                  bustle of the city comes to rest in this alley flowery and colorful.
+                  {currentOffer.description}
                 </p>
               </div>
             </div>
@@ -219,14 +191,18 @@ const Offer = () => (
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
           <div className="near-places__list places__list">
-            <OfferCard/>
-            <OfferCard/>
-            <OfferCard/>
+            <OfferCard offer={offers[0]}/>
+            <OfferCard offer={offers[1]}/>
+            <OfferCard offer={offers[2]}/>
           </div>
         </section>
       </div>
     </main>
-  </div>
-);
+  </div>;
+};
+
+Offer.propTypes = {
+  offers: PropTypes.array.isRequired,
+};
 
 export {Offer};
