@@ -17,7 +17,7 @@ const App = ({offers, reviews}) => (
         <Login/>
       </Route>
       <Route path="/favorites" exact>
-        <Favorites/>
+        <Favorites offers={offers}/>
       </Route>
       <Route path="/offer/:id" exact>
         <Offer offers={offers} reviews={reviews}/>
