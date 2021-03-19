@@ -145,15 +145,15 @@ const offers = [
   },
   {
     "id": 5,
-    "preview_image": `img/room.jpg`,
+    "preview_image": `img/apartment-small-04.jpg`,
     "is_premium": false,
-    "price": 80,
+    "price": 180,
     "is_favorite": true,
-    "title": `Wood and stone place`,
-    "type": `Private room`,
-    "rating": 4.2,
+    "title": `White castle`,
+    "type": `Apartment`,
+    "rating": 5,
 
-    "images": [`img/apartment-01.jpg`],
+    "images": [`img/apartment-small-04.jpg`],
     "bedrooms": 7,
     "max_adults": 7,
     "goods": [`Dishwasher`],
@@ -163,7 +163,7 @@ const offers = [
       "is_pro": true,
       "name": `Angelina`
     },
-    "description": `Wood A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
+    "description": `White A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.`,
 
     "city": {
       "location": {
@@ -171,7 +171,7 @@ const offers = [
         "longitude": 4.895168,
         "zoom": 10
       },
-      "name": `Amsterdam`
+      "name": `Cologne`
     },
     "location": {
       "latitude": 52.35514938496378,

@@ -1,10 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {addActiveClass, getRatingWidth} from "../../util";
+import {Link} from "react-router-dom";
 
 const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
   const bookmarkClass = `place-card__bookmark-button button ${addActiveClass(offer[`is_favorite`], `place-card__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(offer.rating);
+
+  const linkToCard = `/offer/${offer.id}`;
 
   return <article
     className="cities__place-card place-card" onMouseEnter={onMouseEnter} data-id={offer.id}
@@ -15,7 +18,7 @@ const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
       </div>
       : ``}
     <div className="cities__image-wrapper place-card__image-wrapper">
-      <a href="#">
+      <a>
         <img
           className="place-card__image" src={offer[`preview_image`]} width="260" height="200"
           alt="Place image"/>
@@ -41,7 +44,7 @@ const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
         </div>
       </div>
       <h2 className="place-card__name">
-        <a href="#">{offer.title}</a>
+        <Link to={linkToCard} href="#">{offer.title}</Link>
       </h2>
       <p className="place-card__type">{offer.type}</p>
     </div>
