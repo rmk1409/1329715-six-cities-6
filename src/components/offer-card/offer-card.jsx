@@ -1,13 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {addActiveClass, getRatingWidth} from "../../util";
-import {Link} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
   const bookmarkClass = `place-card__bookmark-button button ${addActiveClass(offer[`is_favorite`], `place-card__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(offer.rating);
-
+  const history = useHistory();
   const linkToCard = `/offer/${offer.id}`;
+
+  const handleClickTitle = (evt) => {
+    evt.preventDefault();
+    history.push(linkToCard);
+    window.scrollTo(0, 0);
+  };
 
   return <article
     className="cities__place-card place-card" onMouseEnter={onMouseEnter} data-id={offer.id}
@@ -44,7 +50,7 @@ const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
         </div>
       </div>
       <h2 className="place-card__name">
-        <Link to={linkToCard} href="#">{offer.title}</Link>
+        <a onClick={handleClickTitle} href={linkToCard}>{offer.title}</a>
       </h2>
       <p className="place-card__type">{offer.type}</p>
     </div>
