@@ -2,11 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import {addActiveClass, getRatingWidth} from "../../util";
 
-const OfferCard = ({offer}) => {
+const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
   const bookmarkClass = `place-card__bookmark-button button ${addActiveClass(offer[`is_favorite`], `place-card__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(offer.rating);
 
-  return <article className="cities__place-card place-card">
+  return <article
+    className="cities__place-card place-card" onMouseEnter={onMouseEnter} data-id={offer.id}
+    onMouseLeave={onMouseLeave}>
     {offer[`is_premium`] ?
       <div className="place-card__mark">
         <span>Premium</span>
@@ -48,6 +50,8 @@ const OfferCard = ({offer}) => {
 
 OfferCard.propTypes = {
   offer: PropTypes.object.isRequired,
+  onMouseEnter: PropTypes.func.isRequired,
+  onMouseLeave: PropTypes.func.isRequired,
 };
 
 export {OfferCard};
