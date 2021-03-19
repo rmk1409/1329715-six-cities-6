@@ -6,17 +6,18 @@ import PropTypes from "prop-types";
 import {NotFound} from "../404/404";
 import {DECIMAL_RADIX} from "../../const";
 import {addActiveClass, getRatingWidth} from "../../util";
+import {Review} from "../review/review";
 
-const Offer = ({offers}) => {
+const Offer = ({offers, reviews}) => {
   const {id} = useParams();
-  const currentOffer = offers.find((current) => {
-    return current.id === parseInt(id, DECIMAL_RADIX);
-  });
+  const currentOffer = offers.find((current) => current.id === parseInt(id, DECIMAL_RADIX));
   if (!currentOffer) {
     return <NotFound/>;
   }
   const bookmarkClass = `property__bookmark-button button ${addActiveClass(currentOffer[`is_favorite`], `property__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(currentOffer.rating);
+
+  const reviewsForOffer = reviews.filter((review) => review[`offer_id`] === currentOffer.id);
 
   return <div className="page">
     <Header/>
@@ -99,33 +100,9 @@ const Offer = ({offers}) => {
               </div>
             </div>
             <section className="property__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">1</span></h2>
+              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsForOffer.length}</span></h2>
               <ul className="reviews__list">
-                <li className="reviews__item">
-                  <div className="reviews__user user">
-                    <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                      <img
-                        className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54"
-                        alt="Reviews avatar"/>
-                    </div>
-                    <span className="reviews__user-name">
-                        Max
-                    </span>
-                  </div>
-                  <div className="reviews__info">
-                    <div className="reviews__rating rating">
-                      <div className="reviews__stars rating__stars">
-                        <span style={{width: `80%`}}/>
-                        <span className="visually-hidden">Rating</span>
-                      </div>
-                    </div>
-                    <p className="reviews__text">
-                      A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The
-                      building is green and from 18th century.
-                    </p>
-                    <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
-                  </div>
-                </li>
+                {reviewsForOffer.map((review) => <Review key={review.id} review={review}/>)}
               </ul>
               <form className="reviews__form form" action="#" method="post">
                 <label className="reviews__label form__label" htmlFor="review">Your review</label>
@@ -203,6 +180,7 @@ const Offer = ({offers}) => {
 
 Offer.propTypes = {
   offers: PropTypes.array.isRequired,
+  reviews: PropTypes.array.isRequired,
 };
 
 export {Offer};

@@ -7,7 +7,7 @@ import {Favorites} from "../favorites/favorites";
 import {Offer} from "../offer/offer";
 import {NotFound} from "../404/404";
 
-const App = ({offers}) => (
+const App = ({offers, reviews}) => (
   <BrowserRouter>
     <Switch>
       <Route path="/" exact>
@@ -20,7 +20,7 @@ const App = ({offers}) => (
         <Favorites/>
       </Route>
       <Route path="/offer/:id" exact>
-        <Offer offers={offers}/>
+        <Offer offers={offers} reviews={reviews}/>
       </Route>
       <Route>
         <NotFound/>
@@ -30,7 +30,8 @@ const App = ({offers}) => (
 );
 
 App.propTypes = {
-  offers: PropTypes.array.isRequired
+  offers: PropTypes.array.isRequired,
+  reviews: PropTypes.array.isRequired,
 };
 
 export {App};
