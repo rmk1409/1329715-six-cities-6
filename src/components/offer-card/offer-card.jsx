@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {addActiveClass, getRatingWidth} from "../../util";
 import {useHistory} from "react-router-dom";
 
-const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
+const OfferCard = ({offer, handleEvent}) => {
   const bookmarkClass = `place-card__bookmark-button button ${addActiveClass(offer[`is_favorite`], `place-card__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(offer.rating);
   const history = useHistory();
@@ -16,8 +16,8 @@ const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
   };
 
   return <article
-    className="cities__place-card place-card" onMouseEnter={onMouseEnter} data-id={offer.id}
-    onMouseLeave={onMouseLeave}>
+    className="cities__place-card place-card" onMouseEnter={handleEvent} data-id={offer.id}
+    onMouseLeave={handleEvent}>
     {offer[`is_premium`] ?
       <div className="place-card__mark">
         <span>Premium</span>
@@ -59,8 +59,7 @@ const OfferCard = ({offer, onMouseEnter, onMouseLeave}) => {
 
 OfferCard.propTypes = {
   offer: PropTypes.object.isRequired,
-  onMouseEnter: PropTypes.func.isRequired,
-  onMouseLeave: PropTypes.func.isRequired,
+  handleEvent: PropTypes.func.isRequired
 };
 
 export {OfferCard};
