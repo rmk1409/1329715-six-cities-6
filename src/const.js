@@ -1,4 +1,10 @@
 const DECIMAL_RADIX = 10;
 const ONE_STAR_WIDTH = 20;
 
-export {DECIMAL_RADIX, ONE_STAR_WIDTH};
+const OfferType = {
+  MAIN: `MAIN`,
+  NEAR: `NEAR`,
+  FAVORITE: `FAVORITE`
+};
+
+export {DECIMAL_RADIX, ONE_STAR_WIDTH, OfferType};

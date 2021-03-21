@@ -2,12 +2,40 @@ import React from "react";
 import PropTypes from "prop-types";
 import {addActiveClass, getRatingWidth} from "../../util";
 import {useHistory} from "react-router-dom";
+import {OfferType} from "../../const";
 
-const OfferCard = ({offer, handleEvent}) => {
+const getOfferClassByType = (type) => {
+  let offerClass = {
+    article: ``,
+    wrapper: ``,
+    info: ``
+  };
+
+  switch (type) {
+    case OfferType.MAIN:
+      offerClass.article = `cities__place-card`;
+      offerClass.wrapper = `cities__image-wrapper`;
+      break;
+    case OfferType.NEAR:
+      offerClass.article = `near-places__card`;
+      offerClass.wrapper = `near-places__image-wrapper`;
+      break;
+    case OfferType.FAVORITE:
+      offerClass.article = `favorites__card`;
+      offerClass.wrapper = `favorites__image-wrapper`;
+      offerClass.info = `favorites__card-info`;
+      break;
+  }
+
+  return offerClass;
+};
+
+const OfferCard = ({offer, handleEvent, type}) => {
   const bookmarkClass = `place-card__bookmark-button button ${addActiveClass(offer[`is_favorite`], `place-card__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(offer.rating);
   const history = useHistory();
   const linkToCard = `/offer/${offer.id}`;
+  const offerClass = getOfferClassByType(type);
 
   const handleClickTitle = (evt) => {
     evt.preventDefault();
@@ -16,21 +44,22 @@ const OfferCard = ({offer, handleEvent}) => {
   };
 
   return <article
-    className="cities__place-card place-card" onMouseEnter={handleEvent} data-id={offer.id}
+    className={`${offerClass.article} place-card`} onMouseEnter={handleEvent} data-id={offer.id}
     onMouseLeave={handleEvent}>
-    {offer[`is_premium`] ?
+    {type === OfferType.MAIN && offer[`is_premium`] ?
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
       : ``}
-    <div className="cities__image-wrapper place-card__image-wrapper">
+    <div className={`${offerClass.wrapper} place-card__image-wrapper`}>
       <a>
         <img
-          className="place-card__image" src={offer[`preview_image`]} width="260" height="200"
-          alt="Place image"/>
+          className="place-card__image" src={offer[`preview_image`]}
+          width={`${type === OfferType.FAVORITE ? `150` : `260`}`}
+          height={`${type === OfferType.FAVORITE ? `110` : `200`}`} alt="Place image"/>
       </a>
     </div>
-    <div className="place-card__info">
+    <div className={`${offerClass.info} place-card__info`}>
       <div className="place-card__price-wrapper">
         <div className="place-card__price">
           <b className="place-card__price-value">&euro;{offer.price}</b>
@@ -59,7 +88,8 @@ const OfferCard = ({offer, handleEvent}) => {
 
 OfferCard.propTypes = {
   offer: PropTypes.object.isRequired,
-  handleEvent: PropTypes.func.isRequired
+  handleEvent: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 export {OfferCard};

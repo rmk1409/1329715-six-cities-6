@@ -3,7 +3,7 @@ import {Header} from "../header/header";
 import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import {NotFound} from "../404/404";
-import {DECIMAL_RADIX} from "../../const";
+import {DECIMAL_RADIX, OfferType} from "../../const";
 import {addActiveClass, getRatingWidth} from "../../util";
 import {Review} from "../review/review";
 import {FormSendReview} from "../form-send-review/form-send-review";
@@ -101,7 +101,8 @@ const Offer = ({offers, reviews}) => {
               </div>
             </div>
             <section className="property__reviews reviews">
-              <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsForOffer.length}</span></h2>
+              <h2 className="reviews__title">Reviews &middot; <span
+                className="reviews__amount">{reviewsForOffer.length}</span></h2>
               <ul className="reviews__list">
                 {reviewsForOffer.map((review) => <Review key={review.id} review={review}/>)}
               </ul>
@@ -114,9 +115,7 @@ const Offer = ({offers, reviews}) => {
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <div className="near-places__list places__list">
-            <OfferList offers={offers.slice(0, 3)}/>
-          </div>
+          <OfferList offers={offers.slice(0, 3)} type={OfferType.NEAR}/>
         </section>
       </div>
     </main>

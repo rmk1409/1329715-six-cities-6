@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import {EmptyMain} from "../empty-main/empty-main";
 import {OfferList} from "../offer-list/offer-list";
+import {OfferType} from "../../const";
 
 const Main = ({offers}) => {
   if (!offers.length) {
@@ -90,9 +91,7 @@ const Main = ({offers}) => {
                 <li className="places__option" tabIndex="0">Top rated first</li>
               </ul>
             </form>
-            <div className="cities__places-list places__list tabs__content">
-              <OfferList offers={offers}/>
-            </div>
+            <OfferList offers={offers} type={OfferType.MAIN}/>
           </section>
           <div className="cities__right-section">
             <section className="cities__map map"/>
