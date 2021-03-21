@@ -3,11 +3,12 @@ import {Header} from "../header/header";
 import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import {NotFound} from "../404/404";
-import {DECIMAL_RADIX, OfferType} from "../../const";
+import {Amsterdam, DECIMAL_RADIX, OfferType} from "../../const";
 import {addActiveClass, getRatingWidth} from "../../util";
 import {Review} from "../review/review";
 import {FormSendReview} from "../form-send-review/form-send-review";
 import {OfferList} from "../offer-list/offer-list";
+import {Map} from "../map/map";
 
 const Offer = ({offers, reviews}) => {
   const {id} = useParams();
@@ -110,7 +111,9 @@ const Offer = ({offers, reviews}) => {
             </section>
           </div>
         </div>
-        <section className="property__map map"/>
+        <section className="property__map map">
+          <Map city={Amsterdam} offers={offers.slice(0, 3)}/>
+        </section>
       </section>
       <div className="container">
         <section className="near-places places">
