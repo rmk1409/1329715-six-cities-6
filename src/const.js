@@ -7,4 +7,6 @@ const OfferType = {
   FAVORITE: `FAVORITE`
 };
 
-export {DECIMAL_RADIX, ONE_STAR_WIDTH, OfferType};
+const Amsterdam = [52.38333, 4.9];
+
+export {DECIMAL_RADIX, ONE_STAR_WIDTH, OfferType, Amsterdam};
