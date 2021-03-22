@@ -7,8 +7,8 @@ import {Amsterdam, DECIMAL_RADIX, OfferType} from "../../const";
 import {addActiveClass, getRatingWidth} from "../../util";
 import {Review} from "../review/review";
 import {FormSendReview} from "../form-send-review/form-send-review";
-import {OfferList} from "../offer-list/offer-list";
-import {Map} from "../map/map";
+import {ConnectedOfferList} from "../offer-list/offer-list";
+import {ConnectedMap} from "../map/map";
 
 const Offer = ({offers, reviews}) => {
   const {id} = useParams();
@@ -112,13 +112,13 @@ const Offer = ({offers, reviews}) => {
           </div>
         </div>
         <section className="property__map map">
-          <Map city={Amsterdam} offers={offers.slice(0, 3)}/>
+          <ConnectedMap city={Amsterdam} offers={offers.slice(0, 3)}/>
         </section>
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <OfferList offers={offers.slice(0, 3)} type={OfferType.NEAR}/>
+          <ConnectedOfferList offers={offers.slice(0, 3)} type={OfferType.NEAR}/>
         </section>
       </div>
     </main>

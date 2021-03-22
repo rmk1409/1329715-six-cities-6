@@ -1,7 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {OfferCard} from "../offer-card/offer-card";
 import {OfferType} from "../../const";
+import {ActionCreator} from "../../store/action";
+import {connect} from "react-redux";
 
 const getClassForOfferListByType = (type) => {
   let offerListClass = ``;
@@ -19,16 +21,14 @@ const getClassForOfferListByType = (type) => {
   return offerListClass;
 };
 
-const OfferList = ({offers, type}) => {
-  const [, setActiveOffer] = useState();
-
+const OfferList = ({offers, type, setActiveOffer}) => {
   const handleEvent = (evt) => {
     switch (evt.type) {
       case `mouseenter`:
-        setActiveOffer(evt.target.closest(`.place-card`).dataset.id);
+        setActiveOffer(+evt.target.closest(`.place-card`).dataset.id);
         break;
       case `mouseleave`:
-        setActiveOffer(null);
+        setActiveOffer(-1);
         break;
     }
   };
@@ -41,6 +41,16 @@ const OfferList = ({offers, type}) => {
 OfferList.propTypes = {
   offers: PropTypes.array.isRequired,
   type: PropTypes.string.isRequired,
+  setActiveOffer: PropTypes.func.isRequired,
 };
 
-export {OfferList};
+
+const mapDispatchToProps = (dispatch) => ({
+  setActiveOffer(activeOfferId) {
+    dispatch(ActionCreator.setActiveOffer(activeOfferId));
+  },
+});
+
+const ConnectedOfferList = connect(null, mapDispatchToProps)(OfferList);
+
+export {ConnectedOfferList};
