@@ -2,18 +2,35 @@ import React, {useEffect} from 'react';
 import PropTypes from "prop-types";
 import {EmptyMain} from "../empty-main/empty-main";
 import {OfferList} from "../offer-list/offer-list";
-import {Amsterdam, cities, OfferType} from "../../const";
+import {Amsterdam, cities, OfferType, SortOption} from "../../const";
 import {Map} from "../map/map";
 import {connect} from "react-redux";
 import {ConnectedCityList} from "../city-list/city-list";
 import {ActionCreator} from "../../store/action";
 import {Header} from "../header/header";
+import {ConnectedSortOptions} from "../sort-option/sort-option";
 
 const getOffersForCity = (offers, city) => {
   return offers.filter((offer) => city === offer.city.name);
 };
 
-const Main = ({offers, activeCity, onOpenPage}) => {
+const getSortedOffers = (offers, activeSorting) => {
+  let sortedOffers = [...offers];
+  switch (activeSorting) {
+    case SortOption.TOP_RATED_FIRST:
+      sortedOffers.sort((a, b) => b.rating - a.rating);
+      break;
+    case SortOption.LOW_PRICE_FIRST:
+      sortedOffers.sort((a, b) => a.price - b.price);
+      break;
+    case SortOption.HIGH_PRICE_FIRST:
+      sortedOffers.sort((a, b) => b.price - a.price);
+      break;
+  }
+  return sortedOffers;
+};
+
+const Main = ({offers, activeCity, onOpenPage, activeSorting}) => {
   useEffect(() => onOpenPage(), []);
 
   const relevantOffers = getOffersForCity(offers, activeCity);
@@ -21,6 +38,8 @@ const Main = ({offers, activeCity, onOpenPage}) => {
   if (!relevantOffers.length) {
     return <EmptyMain/>;
   }
+
+  const relevantSortOffers = getSortedOffers(relevantOffers, activeSorting);
 
   return <div className="page page--gray page--main">
     <Header/>
@@ -32,22 +51,8 @@ const Main = ({offers, activeCity, onOpenPage}) => {
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{relevantOffers.length} places to stay in Amsterdam</b>
-            <form className="places__sorting" action="#" method="get">
-              <span className="places__sorting-caption">Sort by</span>
-              <span className="places__sorting-type" tabIndex="0">
-                  &nbsp;Popular
-                <svg className="places__sorting-arrow" width="7" height="4">
-                  <use xlinkHref="#icon-arrow-select"/>
-                </svg>
-              </span>
-              <ul className="places__options places__options--custom places__options--opened">
-                <li className="places__option places__option--active" tabIndex="0">Popular</li>
-                <li className="places__option" tabIndex="0">Price: low to high</li>
-                <li className="places__option" tabIndex="0">Price: high to low</li>
-                <li className="places__option" tabIndex="0">Top rated first</li>
-              </ul>
-            </form>
-            <OfferList offers={relevantOffers} type={OfferType.MAIN}/>
+            <ConnectedSortOptions/>
+            <OfferList offers={relevantSortOffers} type={OfferType.MAIN}/>
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
@@ -63,16 +68,18 @@ const Main = ({offers, activeCity, onOpenPage}) => {
 Main.propTypes = {
   offers: PropTypes.array.isRequired,
   activeCity: PropTypes.string.isRequired,
+  activeSorting: PropTypes.string.isRequired,
   onOpenPage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   activeCity: state.activeCity,
+  activeSorting: state.activeSorting,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onOpenPage() {
-    dispatch(ActionCreator.resetActiveCity());
+    dispatch(ActionCreator.resetMainPage());
   },
 });
 

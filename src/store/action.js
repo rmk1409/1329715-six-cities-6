@@ -1,6 +1,7 @@
 const ActionType = {
+  RESET_MAIN_PAGE: `client/reset-main-page`,
   SET_ACTIVE_CITY: `client/set-active-city`,
-  RESET_ACTIVE_CITY: `client/reset-active-city`,
+  SET_ACTIVE_SORTING: `client/set-active-sorting`,
 };
 
 const ActionCreator = {
@@ -10,9 +11,15 @@ const ActionCreator = {
       payload: newActiveCity,
     };
   },
-  resetActiveCity() {
+  setActiveSorting(newActiveSorting) {
     return {
-      type: ActionType.RESET_ACTIVE_CITY
+      type: ActionType.SET_ACTIVE_SORTING,
+      payload: newActiveSorting,
+    };
+  },
+  resetMainPage() {
+    return {
+      type: ActionType.RESET_MAIN_PAGE
     };
   },
 };
