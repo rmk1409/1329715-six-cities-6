@@ -1,7 +1,7 @@
 import React from "react";
-import {Main} from "../main/main";
+import {ConnectedMain} from "../main/main";
 import PropTypes from "prop-types";
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {Login} from "../login/login";
 import {Favorites} from "../favorites/favorites";
 import {Offer} from "../offer/offer";
@@ -11,7 +11,7 @@ const App = ({offers, reviews}) => (
   <BrowserRouter>
     <Switch>
       <Route path="/" exact>
-        <Main offers={offers}/>
+        <ConnectedMain offers={offers}/>
       </Route>
       <Route path="/login" exact>
         <Login/>
