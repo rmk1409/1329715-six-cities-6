@@ -1,7 +1,6 @@
 import React from "react";
 import {ConnectedMain} from "../main/main";
-import PropTypes from "prop-types";
-import {Router, Route, Switch} from "react-router-dom";
+import {Route, Router, Switch} from "react-router-dom";
 import {ConnectedLogin} from "../login/login";
 import {ConnectedFavorites} from "../favorites/favorites";
 import {ConnectedOffer} from "../offer/offer";

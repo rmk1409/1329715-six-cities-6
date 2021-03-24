@@ -69,7 +69,7 @@ const Main = ({offers, activeCity, onOpenPage, activeSorting, isOffersLoaded, on
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <ConnectedMap offers={relevantOffers}/>
+              <ConnectedMap city={activeCity} offers={relevantOffers}/>
             </section>
           </div>
         </div>

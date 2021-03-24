@@ -9,6 +9,7 @@ const ActionType = {
   SET_AUTHORIZATION_INFO: `server/set-authorization-info`,
   LOAD_OFFER: `server/load-offer`,
   LOAD_REVIEWS: `server/load-reviews-for-offer`,
+  LOAD_NEARBY_OFFERS: `server/load-nearby-offers`,
 };
 
 const ActionCreator = {
@@ -69,6 +70,12 @@ const ActionCreator = {
     return {
       type: ActionType.LOAD_REVIEWS,
       payload: reviews,
+    };
+  },
+  loadNearby(nearbyOffers) {
+    return {
+      type: ActionType.LOAD_NEARBY_OFFERS,
+      payload: nearbyOffers,
     };
   },
 };

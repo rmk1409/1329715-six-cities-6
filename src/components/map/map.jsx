@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {City} from "../../const";
 
-const Map = ({offers, activeOfferId, activeCity}) => {
+const Map = ({offers, activeOfferId, city}) => {
 
   useEffect(() => {
     const icon = leaflet.icon({
@@ -19,7 +19,7 @@ const Map = ({offers, activeOfferId, activeCity}) => {
 
     const zoom = 12;
     const map = leaflet.map(`map`, {
-      center: City[activeCity.toUpperCase()].coords,
+      center: City[city.toUpperCase()].coords,
       zoom,
       zoomControl: false,
       marker: true,
@@ -36,7 +36,7 @@ const Map = ({offers, activeOfferId, activeCity}) => {
     });
 
     return () => map.remove();
-  }, [activeOfferId, activeCity]);
+  }, [activeOfferId, city]);
 
   return <div id="map" style={{height: `100%`}}/>;
 };
@@ -44,12 +44,11 @@ const Map = ({offers, activeOfferId, activeCity}) => {
 Map.propTypes = {
   offers: PropTypes.array.isRequired,
   activeOfferId: PropTypes.number.isRequired,
-  activeCity: PropTypes.string.isRequired,
+  city: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   activeOfferId: state.activeOfferId,
-  activeCity: state.activeCity,
 });
 
 const ConnectedMap = connect(mapStateToProps)(Map);

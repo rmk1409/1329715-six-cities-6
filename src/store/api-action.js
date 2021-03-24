@@ -10,6 +10,11 @@ const fetchReviews = (id) => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(ActionCreator.loadReviews(data)))
 );
 
+const fetchNearby = (id) => (dispatch, _getState, api) => (
+  api.get(`/hotels/${id}/nearby`)
+    .then(({data}) => dispatch(ActionCreator.loadNearby(data)))
+);
+
 const fetchOffer = (id) => (dispatch, _getState, api) => (
   api.get(`/hotels/${id}`)
     .then(({data}) => dispatch(ActionCreator.loadAnOffer(data)))
@@ -35,4 +40,4 @@ const login = ({login: email, password}) => (dispatch, _getState, api) => (
     })
 );
 
-export {fetchOffers, checkAuth, login, fetchOffer, fetchReviews};
+export {fetchOffers, checkAuth, login, fetchOffer, fetchReviews, fetchNearby};

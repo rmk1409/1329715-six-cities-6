@@ -10,10 +10,10 @@ import {ConnectedMap} from "../map/map";
 import {connect} from "react-redux";
 import {ConnectedHeader} from "../header/header";
 import LoadingScreen from "../loading-screen/loading-screen";
-import {fetchOffer, fetchReviews} from "../../store/api-action";
+import {fetchNearby, fetchOffer, fetchReviews} from "../../store/api-action";
 import {FormSendReview} from "../form-send-review/form-send-review";
 
-const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized}) => {
+const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized, nearbyOffersForOpenedOffer}) => {
   const {id} = useParams();
   useEffect(() => {
     if (!(currentOffer && currentOffer.id === +id)) {
@@ -118,15 +118,13 @@ const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized}) => {
           </div>
         </div>
         <section className="property__map map">
-          {/*<ConnectedMap offers={offers.slice(0, 3)}/>*/}
-          <ConnectedMap offers={[]}/>
+          <ConnectedMap city={currentOffer.city.name} offers={nearbyOffersForOpenedOffer.slice(0, 3)}/>
         </section>
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          {/*<ConnectedOfferList offers={offers.slice(0, 3)} type={OfferType.NEAR}/>*/}
-          <ConnectedOfferList offers={[]} type={OfferType.NEAR}/>
+          <ConnectedOfferList offers={nearbyOffersForOpenedOffer.slice(0, 3)} type={OfferType.NEAR}/>
         </section>
       </div>
     </main>
@@ -136,6 +134,7 @@ const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized}) => {
 Offer.propTypes = {
   currentOffer: PropTypes.object,
   reviews: PropTypes.array.isRequired,
+  nearbyOffersForOpenedOffer: PropTypes.array.isRequired,
   isUserAuthorized: PropTypes.bool.isRequired,
   onLoadOffer: PropTypes.func.isRequired,
 };
@@ -144,12 +143,14 @@ const mapStateToProps = (state) => ({
   reviews: state.reviewsForOpenedOffer,
   currentOffer: state.currentOpenOfferData,
   isUserAuthorized: state.isUserAuthorized,
+  nearbyOffersForOpenedOffer: state.nearbyOffersForOpenedOffer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadOffer(id) {
     dispatch(fetchOffer(id));
     dispatch(fetchReviews(id));
+    dispatch(fetchNearby(id));
   },
 });
 
