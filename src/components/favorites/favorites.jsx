@@ -1,9 +1,9 @@
 import React from "react";
-import {Header} from "../header/header";
 import PropTypes from "prop-types";
 import {FavoritesLocationListItem} from "../favorites-location-list-item/favorites-location-list-item";
 import {EmptyFavorites} from "../empty-favorites/empty-favorites";
 import {connect} from "react-redux";
+import {ConnectedHeader} from "../header/header";
 
 const Favorites = ({offers}) => {
   const cityToOffersMap = new Map();
@@ -23,7 +23,7 @@ const Favorites = ({offers}) => {
   }
 
   return <div className="page">
-    <Header/>
+    <ConnectedHeader/>
 
     <main className="page__main page__main--favorites">
       <div className="page__favorites-container container">

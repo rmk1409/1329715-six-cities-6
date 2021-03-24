@@ -4,6 +4,9 @@ const ActionType = {
   SET_ACTIVE_SORTING: `client/set-active-sorting`,
   SET_ACTIVE_OFFER_ID: `client/set-active-offer-id`,
   LOAD_OFFERS: `server/load-offers`,
+  SET_AUTHORIZATION: `server/set-authorization`,
+  SET_AUTHORIZATION_INFO: `server/set-authorization-info`,
+  REDIRECT_TO_ROUTE: `client/redirect-to-route`,
 };
 
 const ActionCreator = {
@@ -27,7 +30,7 @@ const ActionCreator = {
   },
   resetMainPage() {
     return {
-      type: ActionType.RESET_MAIN_PAGE
+      type: ActionType.RESET_MAIN_PAGE,
     };
   },
   loadOffers(offers) {
@@ -36,6 +39,24 @@ const ActionCreator = {
       payload: offers,
     };
   },
+  setAuthorization(authorizationStatus) {
+    return {
+      type: ActionType.SET_AUTHORIZATION,
+      payload: authorizationStatus,
+    };
+  },
+  setAuthorizationInfo(authorizationInfo) {
+    return {
+      type: ActionType.SET_AUTHORIZATION_INFO,
+      payload: authorizationInfo,
+    };
+  },
+  redirectToRoute(url) {
+    return {
+      type: ActionType.REDIRECT_TO_ROUTE,
+      payload: url
+    };
+  }
 };
 
 export {ActionType, ActionCreator};

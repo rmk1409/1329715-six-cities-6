@@ -6,11 +6,11 @@ import {City, OfferType, SortOption} from "../../const";
 import {connect} from "react-redux";
 import {ConnectedCityList} from "../city-list/city-list";
 import {ActionCreator} from "../../store/action";
-import {Header} from "../header/header";
 import {ConnectedSortOptions} from "../sort-option/sort-option";
 import {ConnectedMap} from "../map/map";
 import {fetchOffers} from "../../store/api-action";
 import LoadingScreen from "../loading-screen/loading-screen";
+import {ConnectedHeader} from "../header/header";
 
 const getOffersForCity = (offers, city) => {
   return offers.filter((offer) => city === offer.city.name);
@@ -55,7 +55,7 @@ const Main = ({offers, activeCity, onOpenPage, activeSorting, isOffersLoaded, on
   const relevantSortOffers = getSortedOffers(relevantOffers, activeSorting);
 
   return <div className="page page--gray page--main">
-    <Header/>
+    <ConnectedHeader/>
 
     <main className="page__main page__main--index">
       <ConnectedCityList cities={City}/>

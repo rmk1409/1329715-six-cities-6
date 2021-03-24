@@ -30,6 +30,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "dateformat": "^4.5.1",
+    "history": "^4.10.1",
     "leaflet": "^1.7.1",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",

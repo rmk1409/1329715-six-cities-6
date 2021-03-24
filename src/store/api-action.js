@@ -5,4 +5,23 @@ const fetchOffers = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(ActionCreator.loadOffers(data)))
 );
 
-export {fetchOffers};
+const checkAuth = () => (dispatch, _getState, api) => (
+  api.get(`/login`)
+    .then(({data}) => {
+      dispatch(ActionCreator.setAuthorization(true));
+      dispatch(ActionCreator.setAuthorizationInfo(data));
+    })
+    .then(() => ActionCreator.redirectToRoute(`/`))
+    .catch(() => {
+    })
+);
+
+const login = ({login: email, password}) => (dispatch, _getState, api) => (
+  api.post(`/login`, {email, password})
+    .then(({data}) => {
+      dispatch(ActionCreator.setAuthorization(true));
+      dispatch(ActionCreator.setAuthorizationInfo(data));
+    })
+);
+
+export {fetchOffers, checkAuth, login};

@@ -7,13 +7,17 @@ const initialState = {
   activeSorting: SortOption.POPULAR,
   offers: [],
   isOffersLoaded: false,
+  isUserAuthorized: false,
+  authInfo: {
+    email: ``
+  }
 };
 
 const reducer = (state = initialState, action) => {
   let newState = {...state};
   switch (action.type) {
     case ActionType.RESET_MAIN_PAGE:
-      newState = {...initialState};
+      newState = {...state, activeCity: initialState.activeCity, activeSorting: initialState.activeSorting};
       break;
     case ActionType.SET_ACTIVE_CITY:
       newState = {...state, activeCity: action.payload};
@@ -23,6 +27,12 @@ const reducer = (state = initialState, action) => {
       break;
     case ActionType.SET_ACTIVE_OFFER_ID:
       newState = {...state, activeOfferId: action.payload};
+      break;
+    case ActionType.SET_AUTHORIZATION:
+      newState = {...state, isUserAuthorized: action.payload};
+      break;
+    case ActionType.SET_AUTHORIZATION_INFO:
+      newState = {...state, authInfo: action.payload};
       break;
     case ActionType.LOAD_OFFERS:
       newState = {...state, offers: action.payload, isOffersLoaded: true};

@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {addActiveClass, getRatingWidth} from "../../util";
-import {useHistory} from "react-router-dom";
 import {OfferType} from "../../const";
+import browserHistory from "../../browser-history";
 
 const getOfferClassByType = (type) => {
   let offerClass = {
@@ -33,13 +33,12 @@ const getOfferClassByType = (type) => {
 const OfferCard = ({offer, handleEvent, type}) => {
   const bookmarkClass = `place-card__bookmark-button button ${addActiveClass(offer[`is_favorite`], `place-card__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(offer.rating);
-  const history = useHistory();
   const linkToCard = `/offer/${offer.id}`;
   const offerClass = getOfferClassByType(type);
 
   const handleClickTitle = (evt) => {
     evt.preventDefault();
-    history.push(linkToCard);
+    browserHistory.push(linkToCard);
     window.scrollTo(0, 0);
   };
 

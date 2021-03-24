@@ -1,24 +1,24 @@
 import React from "react";
 import {ConnectedMain} from "../main/main";
 import PropTypes from "prop-types";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
-import {Login} from "../login/login";
+import {Router, Route, Switch} from "react-router-dom";
+import {ConnectedLogin} from "../login/login";
 import {ConnectedFavorites} from "../favorites/favorites";
 import {ConnectedOffer} from "../offer/offer";
 import {NotFound} from "../404/404";
+import {ConnectedPrivateRoute} from "../private-route/private-route";
+import browserHistory from "../../browser-history";
 
 const App = ({reviews}) => (
-  <BrowserRouter>
+  <Router history={browserHistory}>
     <Switch>
       <Route path="/" exact>
         <ConnectedMain/>
       </Route>
       <Route path="/login" exact>
-        <Login/>
+        <ConnectedLogin/>
       </Route>
-      <Route path="/favorites" exact>
-        <ConnectedFavorites/>
-      </Route>
+      <ConnectedPrivateRoute exact path="/favorites" render={() => <ConnectedFavorites/>}/>
       <Route path="/offer/:id" exact>
         <ConnectedOffer reviews={reviews}/>
       </Route>
@@ -26,7 +26,7 @@ const App = ({reviews}) => (
         <NotFound/>
       </Route>
     </Switch>
-  </BrowserRouter>
+  </Router>
 );
 
 App.propTypes = {

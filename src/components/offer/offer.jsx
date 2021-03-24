@@ -1,5 +1,4 @@
 import React from "react";
-import {Header} from "../header/header";
 import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import {NotFound} from "../404/404";
@@ -10,6 +9,7 @@ import {FormSendReview} from "../form-send-review/form-send-review";
 import {ConnectedOfferList} from "../offer-list/offer-list";
 import {ConnectedMap} from "../map/map";
 import {connect} from "react-redux";
+import {ConnectedHeader} from "../header/header";
 
 const Offer = ({offers, reviews}) => {
   const {id} = useParams();
@@ -23,7 +23,7 @@ const Offer = ({offers, reviews}) => {
   const reviewsForOffer = reviews.filter((review) => review[`offer_id`] === currentOffer.id);
 
   return <div className="page">
-    <Header/>
+    <ConnectedHeader/>
 
     <main className="page__main page__main--property">
       <section className="property">
