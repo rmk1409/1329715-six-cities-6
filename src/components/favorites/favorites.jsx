@@ -1,11 +1,23 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import {FavoritesLocationListItem} from "../favorites-location-list-item/favorites-location-list-item";
 import {EmptyFavorites} from "../empty-favorites/empty-favorites";
 import {connect} from "react-redux";
 import {ConnectedHeader} from "../header/header";
+import LoadingScreen from "../loading-screen/loading-screen";
+import {fetchFavoriteOffers} from "../../store/api-action";
 
-const Favorites = ({offers}) => {
+const Favorites = ({offers, isFavoriteOffersLoaded, onLoadData}) => {
+  useEffect(()=>{
+    if (!isFavoriteOffersLoaded) {
+      onLoadData();
+    }
+  }, [isFavoriteOffersLoaded]);
+
+  if (!isFavoriteOffersLoaded) {
+    return <LoadingScreen/>;
+  }
+
   const cityToOffersMap = new Map();
   offers.forEach((offer) => {
     const cityName = offer.city.name;
@@ -46,12 +58,21 @@ const Favorites = ({offers}) => {
 
 Favorites.propTypes = {
   offers: PropTypes.array.isRequired,
+  isFavoriteOffersLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
+  offers: state.favoriteOffers,
+  isFavoriteOffersLoaded: state.isFavoriteOffersLoaded,
 });
 
-const ConnectedFavorites = connect(mapStateToProps)(Favorites);
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(fetchFavoriteOffers());
+  }
+});
+
+const ConnectedFavorites = connect(mapStateToProps, mapDispatchToProps)(Favorites);
 
 export {ConnectedFavorites};

@@ -5,6 +5,11 @@ const fetchOffers = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(ActionCreator.loadOffers(data)))
 );
 
+const fetchFavoriteOffers = () => (dispatch, _getState, api) => (
+  api.get(`/favorite`)
+    .then(({data}) => dispatch(ActionCreator.loadFavoriteOffers(data)))
+);
+
 const fetchReviews = (id) => (dispatch, _getState, api) => (
   api.get(`/comments/${id}`)
     .then(({data}) => dispatch(ActionCreator.loadReviews(data)))
@@ -40,4 +45,4 @@ const login = ({login: email, password}) => (dispatch, _getState, api) => (
     })
 );
 
-export {fetchOffers, checkAuth, login, fetchOffer, fetchReviews, fetchNearby};
+export {fetchOffers, checkAuth, login, fetchOffer, fetchReviews, fetchNearby, fetchFavoriteOffers};

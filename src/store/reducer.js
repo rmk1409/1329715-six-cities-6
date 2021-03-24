@@ -6,7 +6,9 @@ const initialState = {
   activeCity: City.PARIS.name,
   activeSorting: SortOption.POPULAR,
   offers: [],
+  favoriteOffers: [],
   isOffersLoaded: false,
+  isFavoriteOffersLoaded: false,
   isUserAuthorized: false,
   authInfo: {
     email: ``,
@@ -39,6 +41,9 @@ const reducer = (state = initialState, action) => {
       break;
     case ActionType.LOAD_OFFERS:
       newState = {...state, offers: action.payload, isOffersLoaded: true};
+      break;
+    case ActionType.LOAD_FAVORITE_OFFERS:
+      newState = {...state, favoriteOffers: action.payload, isFavoriteOffersLoaded: true};
       break;
     case ActionType.LOAD_OFFER:
       newState = {...state, currentOpenOfferData: action.payload};

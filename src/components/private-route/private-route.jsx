@@ -6,13 +6,13 @@ import {connect} from "react-redux";
 const PrivateRoute = ({render, path, exact, isUserAuthorized}) => {
   return (
     <Route path={path} exact={exact} render={(routeProps) => {
-      return (isUserAuthorized === true ? render(routeProps) : <Redirect to={`/login`}/>);
+      return (isUserAuthorized ? render(routeProps) : <Redirect to={`/login`}/>);
     }}/>
   );
 };
 
 PrivateRoute.propTypes = {
-  isUserAuthorized: PropTypes.string.isRequired,
+  isUserAuthorized: PropTypes.bool.isRequired,
   exact: PropTypes.bool.isRequired,
   path: PropTypes.string.isRequired,
   render: PropTypes.func.isRequired,

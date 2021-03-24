@@ -10,6 +10,7 @@ const ActionType = {
   LOAD_OFFER: `server/load-offer`,
   LOAD_REVIEWS: `server/load-reviews-for-offer`,
   LOAD_NEARBY_OFFERS: `server/load-nearby-offers`,
+  LOAD_FAVORITE_OFFERS: `server/load-favorite-offers`,
 };
 
 const ActionCreator = {
@@ -39,6 +40,12 @@ const ActionCreator = {
   loadOffers(offers) {
     return {
       type: ActionType.LOAD_OFFERS,
+      payload: offers,
+    };
+  },
+  loadFavoriteOffers(offers) {
+    return {
+      type: ActionType.LOAD_FAVORITE_OFFERS,
       payload: offers,
     };
   },
