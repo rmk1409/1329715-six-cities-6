@@ -1,9 +1,9 @@
 import {ActionType} from "./action";
-import {cities, SortOption} from "../const";
+import {City, SortOption} from "../const";
 
 const initialState = {
   activeOfferId: -1,
-  activeCity: cities[0],
+  activeCity: City.PARIS.name,
   activeSorting: SortOption.POPULAR,
   offers: [],
   isOffersLoaded: false,

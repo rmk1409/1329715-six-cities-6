@@ -15,12 +15,12 @@ const CityList = ({cities, activeCity, onCityClick}) => {
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {cities.map((city) =>
-            <li key={city} className="locations__item">
+          {Object.values(cities).map((city) =>
+            <li key={city.name} className="locations__item">
               <a
-                className={`locations__item-link tabs__item ${activeCity === city ? `tabs__item--active` : ``}`}
+                className={`locations__item-link tabs__item ${activeCity === city.name ? `tabs__item--active` : ``}`}
                 onClick={handleCityClick}>
-                <span>{city}</span>
+                <span>{city.name}</span>
               </a>
             </li>,
           )}
@@ -31,7 +31,7 @@ const CityList = ({cities, activeCity, onCityClick}) => {
 };
 
 CityList.propTypes = {
-  cities: PropTypes.array.isRequired,
+  cities: PropTypes.object.isRequired,
   activeCity: PropTypes.string.isRequired,
   onCityClick: PropTypes.func.isRequired,
 };

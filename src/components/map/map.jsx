@@ -3,8 +3,9 @@ import "leaflet/dist/leaflet.css";
 import leaflet from "leaflet";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {City} from "../../const";
 
-const Map = ({city, offers, activeOfferId, activeCity}) => {
+const Map = ({offers, activeOfferId, activeCity}) => {
 
   useEffect(() => {
     const icon = leaflet.icon({
@@ -18,12 +19,11 @@ const Map = ({city, offers, activeOfferId, activeCity}) => {
 
     const zoom = 12;
     const map = leaflet.map(`map`, {
-      center: city,
+      center: City[activeCity.toUpperCase()].coords,
       zoom,
       zoomControl: false,
       marker: true,
     });
-    map.setView(city, zoom);
 
     leaflet.tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
       attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`,
@@ -42,7 +42,6 @@ const Map = ({city, offers, activeOfferId, activeCity}) => {
 };
 
 Map.propTypes = {
-  city: PropTypes.array.isRequired,
   offers: PropTypes.array.isRequired,
   activeOfferId: PropTypes.number.isRequired,
   activeCity: PropTypes.string.isRequired,

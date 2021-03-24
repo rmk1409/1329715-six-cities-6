@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import PropTypes from "prop-types";
 import {EmptyMain} from "../empty-main/empty-main";
 import {ConnectedOfferList} from "../offer-list/offer-list";
-import {Amsterdam, cities, OfferType, SortOption} from "../../const";
+import {City, OfferType, SortOption} from "../../const";
 import {connect} from "react-redux";
 import {ConnectedCityList} from "../city-list/city-list";
 import {ActionCreator} from "../../store/action";
@@ -58,7 +58,7 @@ const Main = ({offers, activeCity, onOpenPage, activeSorting, isOffersLoaded, on
     <Header/>
 
     <main className="page__main page__main--index">
-      <ConnectedCityList cities={cities}/>
+      <ConnectedCityList cities={City}/>
       <div className="cities">
         <div className="cities__places-container container">
           <section className="cities__places places">
@@ -69,7 +69,7 @@ const Main = ({offers, activeCity, onOpenPage, activeSorting, isOffersLoaded, on
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <ConnectedMap city={Amsterdam} offers={relevantOffers}/>
+              <ConnectedMap offers={relevantOffers}/>
             </section>
           </div>
         </div>

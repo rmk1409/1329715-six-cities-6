@@ -1,10 +1,10 @@
 import React from "react";
 import {ConnectedCityList} from "../city-list/city-list";
-import {cities} from "../../const";
+import {City} from "../../const";
 
 const EmptyCitiesContainer = () => (
   <main className="page__main page__main--index page__main--index-empty">
-    <ConnectedCityList cities={cities}/>
+    <ConnectedCityList cities={City}/>
     <div className="cities">
       <div className="cities__places-container cities__places-container--empty container">
         <section className="cities__no-places">

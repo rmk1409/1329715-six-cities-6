@@ -3,7 +3,7 @@ import {Header} from "../header/header";
 import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import {NotFound} from "../404/404";
-import {Amsterdam, DECIMAL_RADIX, OfferType} from "../../const";
+import {DECIMAL_RADIX, OfferType} from "../../const";
 import {addActiveClass, getRatingWidth} from "../../util";
 import {Review} from "../review/review";
 import {FormSendReview} from "../form-send-review/form-send-review";
@@ -113,7 +113,7 @@ const Offer = ({offers, reviews}) => {
           </div>
         </div>
         <section className="property__map map">
-          <ConnectedMap city={Amsterdam} offers={offers.slice(0, 3)}/>
+          <ConnectedMap offers={offers.slice(0, 3)}/>
         </section>
       </section>
       <div className="container">
