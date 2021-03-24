@@ -9,8 +9,9 @@ const initialState = {
   isOffersLoaded: false,
   isUserAuthorized: false,
   authInfo: {
-    email: ``
-  }
+    email: ``,
+  },
+  currentOpenOfferData: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -36,6 +37,9 @@ const reducer = (state = initialState, action) => {
       break;
     case ActionType.LOAD_OFFERS:
       newState = {...state, offers: action.payload, isOffersLoaded: true};
+      break;
+    case ActionType.LOAD_OFFER:
+      newState = {...state, currentOpenOfferData: action.payload};
       break;
   }
 

@@ -5,6 +5,12 @@ const fetchOffers = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(ActionCreator.loadOffers(data)))
 );
 
+const fetchOffer = (id) => (dispatch, _getState, api) => (
+  api.get(`/hotels/${id}`)
+    .then(({data}) => dispatch(ActionCreator.loadAnOffer(data)))
+    .catch(() => dispatch(ActionCreator.loadAnOffer({id: -1})))
+);
+
 const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
     .then(({data}) => {
@@ -24,4 +30,4 @@ const login = ({login: email, password}) => (dispatch, _getState, api) => (
     })
 );
 
-export {fetchOffers, checkAuth, login};
+export {fetchOffers, checkAuth, login, fetchOffer};

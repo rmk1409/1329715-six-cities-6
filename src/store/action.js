@@ -3,10 +3,11 @@ const ActionType = {
   SET_ACTIVE_CITY: `client/set-active-city`,
   SET_ACTIVE_SORTING: `client/set-active-sorting`,
   SET_ACTIVE_OFFER_ID: `client/set-active-offer-id`,
+  REDIRECT_TO_ROUTE: `client/redirect-to-route`,
   LOAD_OFFERS: `server/load-offers`,
   SET_AUTHORIZATION: `server/set-authorization`,
   SET_AUTHORIZATION_INFO: `server/set-authorization-info`,
-  REDIRECT_TO_ROUTE: `client/redirect-to-route`,
+  LOAD_OFFER: `server/load-offer`,
 };
 
 const ActionCreator = {
@@ -56,7 +57,13 @@ const ActionCreator = {
       type: ActionType.REDIRECT_TO_ROUTE,
       payload: url
     };
-  }
+  },
+  loadAnOffer(offer) {
+    return {
+      type: ActionType.LOAD_OFFER,
+      payload: offer
+    };
+  },
 };
 
 export {ActionType, ActionCreator};

@@ -1,27 +1,33 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import {NotFound} from "../404/404";
-import {DECIMAL_RADIX, OfferType} from "../../const";
+import {OfferType} from "../../const";
 import {addActiveClass, getRatingWidth} from "../../util";
 import {Review} from "../review/review";
-import {FormSendReview} from "../form-send-review/form-send-review";
 import {ConnectedOfferList} from "../offer-list/offer-list";
 import {ConnectedMap} from "../map/map";
 import {connect} from "react-redux";
 import {ConnectedHeader} from "../header/header";
+import LoadingScreen from "../loading-screen/loading-screen";
+import {fetchOffer} from "../../store/api-action";
+import {FormSendReview} from "../form-send-review/form-send-review";
 
-const Offer = ({offers, reviews}) => {
+const Offer = ({offers, reviews, currentOffer, onLoadOffer, isUserAuthorized}) => {
   const {id} = useParams();
-  const currentOffer = offers.find((current) => current.id === parseInt(id, DECIMAL_RADIX));
+  useEffect(() => {
+    if (!(currentOffer && currentOffer.id === +id)) {
+      onLoadOffer(id);
+    }
+  }, []);
   if (!currentOffer) {
+    return <LoadingScreen/>;
+  } else if (currentOffer.id === -1) {
     return <NotFound/>;
   }
   const bookmarkClass = `property__bookmark-button button ${addActiveClass(currentOffer[`is_favorite`], `property__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(currentOffer.rating);
-
   const reviewsForOffer = reviews.filter((review) => review[`offer_id`] === currentOffer.id);
-
   return <div className="page">
     <ConnectedHeader/>
 
@@ -108,7 +114,7 @@ const Offer = ({offers, reviews}) => {
               <ul className="reviews__list">
                 {reviewsForOffer.map((review) => <Review key={review.id} review={review}/>)}
               </ul>
-              <FormSendReview/>
+              {isUserAuthorized && <FormSendReview/>}
             </section>
           </div>
         </div>
@@ -127,14 +133,25 @@ const Offer = ({offers, reviews}) => {
 };
 
 Offer.propTypes = {
+  currentOffer: PropTypes.object,
   offers: PropTypes.array.isRequired,
   reviews: PropTypes.array.isRequired,
+  isUserAuthorized: PropTypes.bool.isRequired,
+  onLoadOffer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   offers: state.offers,
+  currentOffer: state.currentOpenOfferData,
+  isUserAuthorized: state.isUserAuthorized,
 });
 
-const ConnectedOffer = connect(mapStateToProps)(Offer);
+const mapDispatchToProps = (dispatch) => ({
+  onLoadOffer(id) {
+    dispatch(fetchOffer(id));
+  },
+});
+
+const ConnectedOffer = connect(mapStateToProps, mapDispatchToProps)(Offer);
 
 export {ConnectedOffer};
