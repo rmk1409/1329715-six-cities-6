@@ -9,6 +9,8 @@ import {ActionCreator} from "../../store/action";
 import {Header} from "../header/header";
 import {ConnectedSortOptions} from "../sort-option/sort-option";
 import {ConnectedMap} from "../map/map";
+import {fetchOffers} from "../../store/api-action";
+import LoadingScreen from "../loading-screen/loading-screen";
 
 const getOffersForCity = (offers, city) => {
   return offers.filter((offer) => city === offer.city.name);
@@ -30,8 +32,19 @@ const getSortedOffers = (offers, activeSorting) => {
   return sortedOffers;
 };
 
-const Main = ({offers, activeCity, onOpenPage, activeSorting}) => {
+const Main = ({offers, activeCity, onOpenPage, activeSorting, isOffersLoaded, onLoadOffers}) => {
   useEffect(() => onOpenPage(), []);
+  useEffect(() => {
+    if (!isOffersLoaded) {
+      onLoadOffers();
+    }
+  }, [isOffersLoaded]);
+
+  if (!isOffersLoaded) {
+    return (
+      <LoadingScreen/>
+    );
+  }
 
   const relevantOffers = getOffersForCity(offers, activeCity);
 
@@ -69,17 +82,24 @@ Main.propTypes = {
   offers: PropTypes.array.isRequired,
   activeCity: PropTypes.string.isRequired,
   activeSorting: PropTypes.string.isRequired,
+  isOffersLoaded: PropTypes.bool.isRequired,
   onOpenPage: PropTypes.func.isRequired,
+  onLoadOffers: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   activeCity: state.activeCity,
   activeSorting: state.activeSorting,
+  offers: state.offers,
+  isOffersLoaded: state.isOffersLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onOpenPage() {
     dispatch(ActionCreator.resetMainPage());
+  },
+  onLoadOffers() {
+    dispatch(fetchOffers());
   },
 });
 

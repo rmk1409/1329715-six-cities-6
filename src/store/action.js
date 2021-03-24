@@ -3,6 +3,7 @@ const ActionType = {
   SET_ACTIVE_CITY: `client/set-active-city`,
   SET_ACTIVE_SORTING: `client/set-active-sorting`,
   SET_ACTIVE_OFFER_ID: `client/set-active-offer-id`,
+  LOAD_OFFERS: `server/load-offers`,
 };
 
 const ActionCreator = {
@@ -27,6 +28,12 @@ const ActionCreator = {
   resetMainPage() {
     return {
       type: ActionType.RESET_MAIN_PAGE
+    };
+  },
+  loadOffers(offers) {
+    return {
+      type: ActionType.LOAD_OFFERS,
+      payload: offers,
     };
   },
 };

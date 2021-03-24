@@ -1,4 +1,3 @@
-import {offers as offersMock} from "../mocks/offers";
 import {ActionType} from "./action";
 import {cities, SortOption} from "../const";
 
@@ -6,7 +5,8 @@ const initialState = {
   activeOfferId: -1,
   activeCity: cities[0],
   activeSorting: SortOption.POPULAR,
-  offers: offersMock,
+  offers: [],
+  isOffersLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -23,6 +23,9 @@ const reducer = (state = initialState, action) => {
       break;
     case ActionType.SET_ACTIVE_OFFER_ID:
       newState = {...state, activeOfferId: action.payload};
+      break;
+    case ActionType.LOAD_OFFERS:
+      newState = {...state, offers: action.payload, isOffersLoaded: true};
       break;
   }
 

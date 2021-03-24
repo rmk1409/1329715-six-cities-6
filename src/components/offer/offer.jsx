@@ -9,6 +9,7 @@ import {Review} from "../review/review";
 import {FormSendReview} from "../form-send-review/form-send-review";
 import {ConnectedOfferList} from "../offer-list/offer-list";
 import {ConnectedMap} from "../map/map";
+import {connect} from "react-redux";
 
 const Offer = ({offers, reviews}) => {
   const {id} = useParams();
@@ -130,4 +131,10 @@ Offer.propTypes = {
   reviews: PropTypes.array.isRequired,
 };
 
-export {Offer};
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
+
+const ConnectedOffer = connect(mapStateToProps)(Offer);
+
+export {ConnectedOffer};
