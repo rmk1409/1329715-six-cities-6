@@ -11,9 +11,16 @@ const ActionType = {
   LOAD_REVIEWS: `server/load-reviews-for-offer`,
   LOAD_NEARBY_OFFERS: `server/load-nearby-offers`,
   LOAD_FAVORITE_OFFERS: `server/load-favorite-offers`,
+  SET_SENDING_REVIEW: `client/set-sending-review`,
 };
 
 const ActionCreator = {
+  setSendingReview(isSendingReview) {
+    return {
+      type: ActionType.SET_SENDING_REVIEW,
+      payload: isSendingReview,
+    };
+  },
   setActiveCity(newActiveCity) {
     return {
       type: ActionType.SET_ACTIVE_CITY,

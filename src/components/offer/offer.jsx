@@ -11,7 +11,7 @@ import {connect} from "react-redux";
 import {ConnectedHeader} from "../header/header";
 import LoadingScreen from "../loading-screen/loading-screen";
 import {fetchNearby, fetchOffer, fetchReviews} from "../../store/api-action";
-import {FormSendReview} from "../form-send-review/form-send-review";
+import {ConnectedFormSendReview} from "../form-send-review/form-send-review";
 
 const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized, nearbyOffersForOpenedOffer}) => {
   const {id} = useParams();
@@ -27,6 +27,7 @@ const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized, nearbyOffe
   }
   const bookmarkClass = `property__bookmark-button button ${addActiveClass(currentOffer[`is_favorite`], `property__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(currentOffer.rating);
+  reviews.sort((a, b) => (new Date(b.date)) - (new Date(a.date)));
   return <div className="page">
     <ConnectedHeader/>
 
@@ -111,14 +112,18 @@ const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized, nearbyOffe
               <h2 className="reviews__title">Reviews &middot; <span
                 className="reviews__amount">{reviews.length}</span></h2>
               <ul className="reviews__list">
-                {reviews.map((review) => <Review key={review.id} review={review}/>)}
+                {reviews.slice(0, 10).map((review) =>
+                  <Review key={review.id} review={review}/>)}
               </ul>
-              {isUserAuthorized && <FormSendReview/>}
+              {isUserAuthorized && <ConnectedFormSendReview id={id}/>}
             </section>
           </div>
         </div>
         <section className="property__map map">
-          <ConnectedMap city={currentOffer.city.name} offers={nearbyOffersForOpenedOffer.slice(0, 3)}/>
+          <ConnectedMap
+            city={currentOffer.city.name} offers={nearbyOffersForOpenedOffer.slice(0, 3)}
+            isHighlightActiveOffer={false}
+          />
         </section>
       </section>
       <div className="container">

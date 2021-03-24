@@ -10,6 +10,7 @@ const initialState = {
   isOffersLoaded: false,
   isFavoriteOffersLoaded: false,
   isUserAuthorized: false,
+  isReviewSending: false,
   authInfo: {
     email: ``,
   },
@@ -53,6 +54,9 @@ const reducer = (state = initialState, action) => {
       break;
     case ActionType.LOAD_NEARBY_OFFERS:
       newState = {...state, nearbyOffersForOpenedOffer: action.payload};
+      break;
+    case ActionType.SET_SENDING_REVIEW:
+      newState = {...state, isReviewSending: action.payload};
       break;
   }
 

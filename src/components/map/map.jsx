@@ -5,7 +5,11 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {City} from "../../const";
 
-const Map = ({offers, activeOfferId, city}) => {
+const Map = ({offers, activeOfferId, city, isHighlightActiveOffer}) => {
+  const effectDependencies = [city, offers];
+  if (isHighlightActiveOffer) {
+    effectDependencies.push(activeOfferId);
+  }
 
   useEffect(() => {
     const icon = leaflet.icon({
@@ -30,13 +34,14 @@ const Map = ({offers, activeOfferId, city}) => {
     }).addTo(map);
 
     offers.forEach((offer) => {
-      leaflet.marker([offer.location.latitude, offer.location.longitude], {icon: activeOfferId === offer.id ? activeIcon : icon})
+      const iconOption = (isHighlightActiveOffer && activeOfferId === offer.id) ? activeIcon : icon;
+      leaflet.marker([offer.location.latitude, offer.location.longitude], {icon: iconOption})
         .addTo(map)
         .bindPopup(offer.title);
     });
 
     return () => map.remove();
-  }, [activeOfferId, city]);
+  }, effectDependencies);
 
   return <div id="map" style={{height: `100%`}}/>;
 };
@@ -45,6 +50,7 @@ Map.propTypes = {
   offers: PropTypes.array.isRequired,
   activeOfferId: PropTypes.number.isRequired,
   city: PropTypes.string.isRequired,
+  isHighlightActiveOffer: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({

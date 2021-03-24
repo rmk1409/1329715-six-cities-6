@@ -1,16 +1,28 @@
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
+import {connect} from "react-redux";
+import {postReview} from "../../store/api-action";
+import * as PropTypes from "prop-types";
+import {ActionCreator} from "../../store/action";
 
-const FormSendReview = () => {
-  const [, setFormData] = useState({
+const FormSendReview = ({id, onSubmit, isReviewSending}) => {
+  const refForm = useRef();
+  const [isReviewValid, setReviewValid] = useState(false);
+  const [review, setReview] = useState({
     rating: ``,
-    review: ``
+    review: ``,
   });
 
   const handleFormChange = ({target}) => {
-    setFormData((prevState) => ({...prevState, [target.name]: target.value}));
+    setReview((prevState) => ({...prevState, [target.name]: target.value}));
+    setReviewValid(review.rating && review.review.length > 50 && review.review.length < 300);
   };
 
-  return <form className="reviews__form form" action="#" method="post">
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    onSubmit(id, review, refForm);
+  };
+
+  return <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit} ref={refForm}>
     <label className="reviews__label form__label" htmlFor="review">Your review</label>
     <div className="reviews__rating-form form__rating">
       <input
@@ -67,9 +79,30 @@ const FormSendReview = () => {
         To submit review please make sure to set <span className="reviews__star">rating</span> and describe
         your stay with at least <b className="reviews__text-amount">50 characters</b>.
       </p>
-      <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+      <button className="reviews__submit form__submit button" type="submit" disabled={!isReviewValid || isReviewSending}>
+        {isReviewSending ? `Submitting` : `Submit`}
+      </button>
     </div>
   </form>;
 };
 
-export {FormSendReview};
+FormSendReview.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  isReviewSending: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isReviewSending: state.isReviewSending,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit(id, review, refForm) {
+    dispatch(ActionCreator.setSendingReview(true));
+    const comment = {rating: review.rating, comment: review.review};
+    dispatch(postReview(id, comment, refForm));
+  },
+});
+
+const ConnectedFormSendReview = connect(mapStateToProps, mapDispatchToProps)(FormSendReview);
+export {ConnectedFormSendReview};

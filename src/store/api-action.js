@@ -45,4 +45,19 @@ const login = ({login: email, password}) => (dispatch, _getState, api) => (
     })
 );
 
-export {fetchOffers, checkAuth, login, fetchOffer, fetchReviews, fetchNearby, fetchFavoriteOffers};
+const postReview = (id, comment, refForm) => (dispatch, _getState, api) => (
+  api.post(`/comments/${id}`, comment)
+    .then(({data}) => {
+      dispatch(ActionCreator.loadReviews(data));
+      refForm.current.reset();
+    })
+    .catch((err) => {
+      // eslint-disable-next-line no-alert
+      alert(`Some error happened while sending the review: ${err}`);
+    })
+    .then(() => {
+      dispatch(ActionCreator.setSendingReview(false));
+    })
+);
+
+export {fetchOffers, checkAuth, login, fetchOffer, fetchReviews, fetchNearby, fetchFavoriteOffers, postReview};
