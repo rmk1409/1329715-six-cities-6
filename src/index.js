@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from "./components/app/app";
-import {reviews as reviewsMock} from "./mocks/reviews";
 import {applyMiddleware, createStore} from "redux";
 import {Provider} from "react-redux";
 import {reducer} from "./store/reducer";
@@ -23,7 +22,7 @@ store.dispatch(checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>
-      <App reviews={reviewsMock}/>
+      <App/>
     </Provider>,
     document.querySelector(`#root`),
 );

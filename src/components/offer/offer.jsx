@@ -10,10 +10,10 @@ import {ConnectedMap} from "../map/map";
 import {connect} from "react-redux";
 import {ConnectedHeader} from "../header/header";
 import LoadingScreen from "../loading-screen/loading-screen";
-import {fetchOffer} from "../../store/api-action";
+import {fetchOffer, fetchReviews} from "../../store/api-action";
 import {FormSendReview} from "../form-send-review/form-send-review";
 
-const Offer = ({offers, reviews, currentOffer, onLoadOffer, isUserAuthorized}) => {
+const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized}) => {
   const {id} = useParams();
   useEffect(() => {
     if (!(currentOffer && currentOffer.id === +id)) {
@@ -27,7 +27,6 @@ const Offer = ({offers, reviews, currentOffer, onLoadOffer, isUserAuthorized}) =
   }
   const bookmarkClass = `property__bookmark-button button ${addActiveClass(currentOffer[`is_favorite`], `property__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(currentOffer.rating);
-  const reviewsForOffer = reviews.filter((review) => review[`offer_id`] === currentOffer.id);
   return <div className="page">
     <ConnectedHeader/>
 
@@ -110,22 +109,24 @@ const Offer = ({offers, reviews, currentOffer, onLoadOffer, isUserAuthorized}) =
             </div>
             <section className="property__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span
-                className="reviews__amount">{reviewsForOffer.length}</span></h2>
+                className="reviews__amount">{reviews.length}</span></h2>
               <ul className="reviews__list">
-                {reviewsForOffer.map((review) => <Review key={review.id} review={review}/>)}
+                {reviews.map((review) => <Review key={review.id} review={review}/>)}
               </ul>
               {isUserAuthorized && <FormSendReview/>}
             </section>
           </div>
         </div>
         <section className="property__map map">
-          <ConnectedMap offers={offers.slice(0, 3)}/>
+          {/*<ConnectedMap offers={offers.slice(0, 3)}/>*/}
+          <ConnectedMap offers={[]}/>
         </section>
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <ConnectedOfferList offers={offers.slice(0, 3)} type={OfferType.NEAR}/>
+          {/*<ConnectedOfferList offers={offers.slice(0, 3)} type={OfferType.NEAR}/>*/}
+          <ConnectedOfferList offers={[]} type={OfferType.NEAR}/>
         </section>
       </div>
     </main>
@@ -134,14 +135,13 @@ const Offer = ({offers, reviews, currentOffer, onLoadOffer, isUserAuthorized}) =
 
 Offer.propTypes = {
   currentOffer: PropTypes.object,
-  offers: PropTypes.array.isRequired,
   reviews: PropTypes.array.isRequired,
   isUserAuthorized: PropTypes.bool.isRequired,
   onLoadOffer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
+  reviews: state.reviewsForOpenedOffer,
   currentOffer: state.currentOpenOfferData,
   isUserAuthorized: state.isUserAuthorized,
 });
@@ -149,6 +149,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onLoadOffer(id) {
     dispatch(fetchOffer(id));
+    dispatch(fetchReviews(id));
   },
 });
 

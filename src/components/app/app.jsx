@@ -9,7 +9,7 @@ import {NotFound} from "../404/404";
 import {ConnectedPrivateRoute} from "../private-route/private-route";
 import browserHistory from "../../browser-history";
 
-const App = ({reviews}) => (
+const App = () => (
   <Router history={browserHistory}>
     <Switch>
       <Route path="/" exact>
@@ -20,7 +20,7 @@ const App = ({reviews}) => (
       </Route>
       <ConnectedPrivateRoute exact path="/favorites" render={() => <ConnectedFavorites/>}/>
       <Route path="/offer/:id" exact>
-        <ConnectedOffer reviews={reviews}/>
+        <ConnectedOffer/>
       </Route>
       <Route>
         <NotFound/>
@@ -28,9 +28,5 @@ const App = ({reviews}) => (
     </Switch>
   </Router>
 );
-
-App.propTypes = {
-  reviews: PropTypes.array.isRequired,
-};
 
 export {App};

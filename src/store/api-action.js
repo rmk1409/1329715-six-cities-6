@@ -5,6 +5,11 @@ const fetchOffers = () => (dispatch, _getState, api) => (
     .then(({data}) => dispatch(ActionCreator.loadOffers(data)))
 );
 
+const fetchReviews = (id) => (dispatch, _getState, api) => (
+  api.get(`/comments/${id}`)
+    .then(({data}) => dispatch(ActionCreator.loadReviews(data)))
+);
+
 const fetchOffer = (id) => (dispatch, _getState, api) => (
   api.get(`/hotels/${id}`)
     .then(({data}) => dispatch(ActionCreator.loadAnOffer(data)))
@@ -30,4 +35,4 @@ const login = ({login: email, password}) => (dispatch, _getState, api) => (
     })
 );
 
-export {fetchOffers, checkAuth, login, fetchOffer};
+export {fetchOffers, checkAuth, login, fetchOffer, fetchReviews};

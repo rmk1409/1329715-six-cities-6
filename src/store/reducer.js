@@ -12,6 +12,7 @@ const initialState = {
     email: ``,
   },
   currentOpenOfferData: null,
+  reviewsForOpenedOffer: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -40,6 +41,9 @@ const reducer = (state = initialState, action) => {
       break;
     case ActionType.LOAD_OFFER:
       newState = {...state, currentOpenOfferData: action.payload};
+      break;
+    case ActionType.LOAD_REVIEWS:
+      newState = {...state, reviewsForOpenedOffer: action.payload};
       break;
   }
 

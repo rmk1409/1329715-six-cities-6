@@ -8,6 +8,7 @@ const ActionType = {
   SET_AUTHORIZATION: `server/set-authorization`,
   SET_AUTHORIZATION_INFO: `server/set-authorization-info`,
   LOAD_OFFER: `server/load-offer`,
+  LOAD_REVIEWS: `server/load-reviews-for-offer`,
 };
 
 const ActionCreator = {
@@ -55,13 +56,19 @@ const ActionCreator = {
   redirectToRoute(url) {
     return {
       type: ActionType.REDIRECT_TO_ROUTE,
-      payload: url
+      payload: url,
     };
   },
   loadAnOffer(offer) {
     return {
       type: ActionType.LOAD_OFFER,
-      payload: offer
+      payload: offer,
+    };
+  },
+  loadReviews(reviews) {
+    return {
+      type: ActionType.LOAD_REVIEWS,
+      payload: reviews,
     };
   },
 };
