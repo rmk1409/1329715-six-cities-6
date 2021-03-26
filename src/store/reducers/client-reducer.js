@@ -1,9 +1,9 @@
-import {City, SortOption} from "../../const";
+import {cities, SortOption} from "../../const";
 import {createReducer} from "@reduxjs/toolkit";
 import {resetMainPage, setActiveCity, setActiveOffer, setActiveSorting} from "../action";
 
 const initialState = {
-  activeCity: City.PARIS.name,
+  activeCity: cities[0].name,
   activeSorting: SortOption.POPULAR,
   activeOfferId: -1,
 };

@@ -70,6 +70,7 @@ const serverReducer = createReducer(initialState, (builder) => {
       state.favoriteOffers.splice(state.favoriteOffers.findIndex((offer) => offer.id === action.payload.id), 1);
     }
     state.nearbyOffersForOpenedOffer = updateOffers(state.nearbyOffersForOpenedOffer, action);
+    state.currentOpenOfferData = action.payload;
   });
 });
 

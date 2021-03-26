@@ -3,11 +3,13 @@ import "leaflet/dist/leaflet.css";
 import leaflet from "leaflet";
 import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
-import {City} from "../../const";
+import {cities} from "../../const";
 import {NameSpace} from "../../store/reducers/reducer";
+import {offer as offerPropType} from "../../prop-types";
 
 const Map = ({offers, city, isHighlightActiveOffer}) => {
   const {activeOfferId} = useSelector((state) => state[NameSpace.CLIENT]);
+  const {currentOpenOfferData} = useSelector((state) => state[NameSpace.SERVER]);
   const effectDependencies = [city, offers];
   if (isHighlightActiveOffer) {
     effectDependencies.push(activeOfferId);
@@ -24,8 +26,9 @@ const Map = ({offers, city, isHighlightActiveOffer}) => {
     });
 
     const zoom = 12;
+    const centralCity = cities.find((curCity)=>curCity.name === city);
     const map = leaflet.map(`map`, {
-      center: City[city.toUpperCase()].coords,
+      center: centralCity.coords,
       zoom,
       zoomControl: false,
       marker: true,
@@ -42,6 +45,12 @@ const Map = ({offers, city, isHighlightActiveOffer}) => {
         .bindPopup(offer.title);
     });
 
+    if (!isHighlightActiveOffer) {
+      leaflet.marker([currentOpenOfferData.location.latitude, currentOpenOfferData.location.longitude], {icon: activeIcon})
+        .addTo(map)
+        .bindPopup(currentOpenOfferData.title);
+    }
+
     return () => map.remove();
   }, effectDependencies);
 
@@ -49,7 +58,7 @@ const Map = ({offers, city, isHighlightActiveOffer}) => {
 };
 
 Map.propTypes = {
-  offers: PropTypes.array.isRequired,
+  offers: PropTypes.arrayOf(offerPropType).isRequired,
   city: PropTypes.string.isRequired,
   isHighlightActiveOffer: PropTypes.bool.isRequired,
 };

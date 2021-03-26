@@ -1,17 +1,18 @@
 import React, {useEffect} from "react";
 import {useParams} from "react-router-dom";
 import {NotFound} from "../404/404";
-import {OfferType} from "../../const";
+import {MAX_SHOWN_PHOTOS, MAX_SHOWN_REVIEWS, OfferType} from "../../const";
 import {addActiveClass, getRatingWidth} from "../../util";
 import {Review} from "../review/review";
 import {useDispatch, useSelector} from "react-redux";
 import LoadingScreen from "../loading-screen/loading-screen";
-import {fetchNearby, fetchOffer, fetchReviews} from "../../store/api-action";
+import {fetchNearby, fetchOffer, fetchReviews, postFavoriteHotel} from "../../store/api-action";
 import {NameSpace} from "../../store/reducers/reducer";
 import {FormSendReview} from "../form-send-review/form-send-review";
 import {Header} from "../header/header";
 import {Map} from "../map/map";
 import {OfferList} from "../offer-list/offer-list";
+import browserHistory from "../../browser-history";
 
 const Offer = () => {
   const {id} = useParams();
@@ -37,6 +38,17 @@ const Offer = () => {
   const bookmarkClass = `property__bookmark-button button ${addActiveClass(currentOffer[`is_favorite`], `property__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(currentOffer.rating);
   const sortedReviews = [...reviews].sort((a, b) => (new Date(b.date)) - (new Date(a.date)));
+
+  const handleClickFavorite = (evt) => {
+    evt.preventDefault();
+    if (!isUserAuthorized) {
+      browserHistory.push(`/login`);
+    } else {
+      const newStatus = +!currentOffer[`is_favorite`];
+      dispatch(postFavoriteHotel(id, newStatus));
+    }
+  };
+
   return <div className="page">
     <Header/>
 
@@ -44,7 +56,7 @@ const Offer = () => {
       <section className="property">
         <div className="property__gallery-container container">
           <div className="property__gallery">
-            {currentOffer.images.map((value, index) =>
+            {currentOffer.images.slice(0, MAX_SHOWN_PHOTOS).map((value, index) =>
               <div key={`${value}-${index}`} className="property__image-wrapper">
                 <img className="property__image" src={value} alt={`${currentOffer.type} photo`}/>
               </div>)}
@@ -61,7 +73,7 @@ const Offer = () => {
               <h1 className="property__name">
                 {currentOffer.title}
               </h1>
-              <button className={bookmarkClass} type="button">
+              <button className={bookmarkClass} type="button" onClick={handleClickFavorite}>
                 <svg className="property__bookmark-icon" width="31" height="33">
                   <use xlinkHref="#icon-bookmark"/>
                 </svg>
@@ -121,7 +133,7 @@ const Offer = () => {
               <h2 className="reviews__title">Reviews &middot; <span
                 className="reviews__amount">{reviews.length}</span></h2>
               <ul className="reviews__list">
-                {sortedReviews.slice(0, 10).map((review) =>
+                {sortedReviews.slice(0, MAX_SHOWN_REVIEWS).map((review) =>
                   <Review key={review.id} review={review}/>)}
               </ul>
               {isUserAuthorized && <FormSendReview id={id}/>}

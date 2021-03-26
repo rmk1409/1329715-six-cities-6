@@ -1,7 +1,7 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {getRatingWidth} from "../../util";
 import dateformat from "dateformat";
+import {review as reviewPropType} from "../../prop-types";
 
 const Review = ({review}) => {
   const date = new Date(review.date);
@@ -33,7 +33,7 @@ const Review = ({review}) => {
 };
 
 Review.propTypes = {
-  review: PropTypes.object.isRequired,
+  review: reviewPropType.isRequired,
 };
 
 export {Review};

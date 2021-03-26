@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {EmptyMain} from "../empty-main/empty-main";
-import {City, OfferType, SortOption} from "../../const";
+import {cities, OfferType, SortOption} from "../../const";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchOffers} from "../../store/api-action";
 import LoadingScreen from "../loading-screen/loading-screen";
@@ -71,7 +71,7 @@ const Main = () => {
     <Header/>
 
     <main className="page__main page__main--index">
-      <CityList cities={City}/>
+      <CityList cities={cities}/>
       <div className="cities">
         <div className="cities__places-container container">
           <section className="cities__places places">

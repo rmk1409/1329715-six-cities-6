@@ -34,7 +34,10 @@ const CityList = ({cities}) => {
 };
 
 CityList.propTypes = {
-  cities: PropTypes.object.isRequired,
+  cities: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    coords: PropTypes.arrayOf(PropTypes.number).isRequired,
+  })).isRequired,
 };
 
 export {CityList};
