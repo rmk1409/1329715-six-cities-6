@@ -1,12 +1,13 @@
 import React, {useRef} from "react";
-import {connect} from "react-redux";
-import PropTypes from "prop-types";
-import {ConnectedHeader} from "../header/header";
+import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../store/api-action";
 import {Redirect} from "react-router-dom";
 import {NameSpace} from "../../store/reducers/reducer";
+import {Header} from "../header/header";
 
-const Login = ({isUserAuthorized, onSubmit}) => {
+const Login = () => {
+  const {isUserAuthorized} = useSelector((state) => state[NameSpace.SERVER]);
+  const dispatch = useDispatch();
   if (isUserAuthorized) {
     return <Redirect to="/"/>;
   }
@@ -16,15 +17,14 @@ const Login = ({isUserAuthorized, onSubmit}) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
-    onSubmit({
+    dispatch(login({
       login: loginRef.current.value,
       password: passwordRef.current.value,
-    });
+    }));
   };
 
   return <div className="page page--gray page--login">
-    <ConnectedHeader/>
+    <Header/>
 
     <main className="page__main page__main--login">
       <div className="page__login-container container">
@@ -58,20 +58,4 @@ const Login = ({isUserAuthorized, onSubmit}) => {
   </div>;
 };
 
-Login.propTypes = {
-  isUserAuthorized: PropTypes.bool.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  isUserAuthorized: state[NameSpace.SERVER].isUserAuthorized,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSubmit(authData) {
-    dispatch(login(authData));
-  },
-});
-
-const ConnectedLogin = connect(mapStateToProps, mapDispatchToProps)(Login);
-export {ConnectedLogin};
+export {Login};

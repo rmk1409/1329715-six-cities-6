@@ -1,15 +1,16 @@
 import React, {useState} from "react";
 import {SortOption} from "../../const";
-import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setActiveSorting} from "../../store/action";
 import {NameSpace} from "../../store/reducers/reducer";
 
-const SortOptions = ({activeSorting, onSortingClick}) => {
+const SortOptions = () => {
+  const {activeSorting} = useSelector((state) => state[NameSpace.CLIENT]);
+  const dispatch = useDispatch();
   const [isOpened, setOpened] = useState(false);
 
   const handleSortingClick = (evt) => {
-    onSortingClick(evt.target.dataset.id);
+    dispatch(setActiveSorting(evt.target.dataset.id));
     setOpened(false);
   };
 
@@ -45,21 +46,4 @@ const SortOptions = ({activeSorting, onSortingClick}) => {
   </form>;
 };
 
-SortOptions.propTypes = {
-  activeSorting: PropTypes.string.isRequired,
-  onSortingClick: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  activeSorting: state[NameSpace.CLIENT].activeSorting,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onSortingClick(newActiveSorting) {
-    dispatch(setActiveSorting(newActiveSorting));
-  },
-});
-
-const ConnectedSortOptions = connect(mapStateToProps, mapDispatchToProps)(SortOptions);
-
-export {ConnectedSortOptions};
+export {SortOptions};

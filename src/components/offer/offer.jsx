@@ -1,24 +1,32 @@
 import React, {useEffect} from "react";
 import {useParams} from "react-router-dom";
-import PropTypes from "prop-types";
 import {NotFound} from "../404/404";
 import {OfferType} from "../../const";
 import {addActiveClass, getRatingWidth} from "../../util";
 import {Review} from "../review/review";
-import {ConnectedOfferList} from "../offer-list/offer-list";
-import {ConnectedMap} from "../map/map";
-import {connect} from "react-redux";
-import {ConnectedHeader} from "../header/header";
+import {useDispatch, useSelector} from "react-redux";
 import LoadingScreen from "../loading-screen/loading-screen";
 import {fetchNearby, fetchOffer, fetchReviews} from "../../store/api-action";
-import {ConnectedFormSendReview} from "../form-send-review/form-send-review";
 import {NameSpace} from "../../store/reducers/reducer";
+import {FormSendReview} from "../form-send-review/form-send-review";
+import {Header} from "../header/header";
+import {Map} from "../map/map";
+import {OfferList} from "../offer-list/offer-list";
 
-const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized, nearbyOffersForOpenedOffer}) => {
+const Offer = () => {
   const {id} = useParams();
+  const {
+    reviews,
+    currentOffer,
+    isUserAuthorized,
+    nearbyOffersForOpenedOffer
+  } = useSelector((state) => state[NameSpace.SERVER]);
+  const dispatch = useDispatch();
   useEffect(() => {
     if (!(currentOffer && currentOffer.id === +id)) {
-      onLoadOffer(id);
+      dispatch(fetchOffer(id));
+      dispatch(fetchReviews(id));
+      dispatch(fetchNearby(id));
     }
   }, []);
   if (!currentOffer) {
@@ -30,7 +38,7 @@ const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized, nearbyOffe
   const ratingWidth = getRatingWidth(currentOffer.rating);
   const sortedReviews = [...reviews].sort((a, b) => (new Date(b.date)) - (new Date(a.date)));
   return <div className="page">
-    <ConnectedHeader/>
+    <Header/>
 
     <main className="page__main page__main--property">
       <section className="property">
@@ -116,12 +124,12 @@ const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized, nearbyOffe
                 {sortedReviews.slice(0, 10).map((review) =>
                   <Review key={review.id} review={review}/>)}
               </ul>
-              {isUserAuthorized && <ConnectedFormSendReview id={id}/>}
+              {isUserAuthorized && <FormSendReview id={id}/>}
             </section>
           </div>
         </div>
         <section className="property__map map">
-          <ConnectedMap
+          <Map
             city={currentOffer.city.name} offers={nearbyOffersForOpenedOffer.slice(0, 3)}
             isHighlightActiveOffer={false}
           />
@@ -130,36 +138,11 @@ const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized, nearbyOffe
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <ConnectedOfferList offers={nearbyOffersForOpenedOffer.slice(0, 3)} type={OfferType.NEAR}/>
+          <OfferList offers={nearbyOffersForOpenedOffer.slice(0, 3)} type={OfferType.NEAR}/>
         </section>
       </div>
     </main>
   </div>;
 };
 
-Offer.propTypes = {
-  currentOffer: PropTypes.object,
-  reviews: PropTypes.array.isRequired,
-  nearbyOffersForOpenedOffer: PropTypes.array.isRequired,
-  isUserAuthorized: PropTypes.bool.isRequired,
-  onLoadOffer: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  reviews: state[NameSpace.SERVER].reviewsForOpenedOffer,
-  currentOffer: state[NameSpace.SERVER].currentOpenOfferData,
-  isUserAuthorized: state[NameSpace.SERVER].isUserAuthorized,
-  nearbyOffersForOpenedOffer: state[NameSpace.SERVER].nearbyOffersForOpenedOffer,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadOffer(id) {
-    dispatch(fetchOffer(id));
-    dispatch(fetchReviews(id));
-    dispatch(fetchNearby(id));
-  },
-});
-
-const ConnectedOffer = connect(mapStateToProps, mapDispatchToProps)(Offer);
-
-export {ConnectedOffer};
+export {Offer};

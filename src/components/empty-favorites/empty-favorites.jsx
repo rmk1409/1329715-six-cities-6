@@ -1,9 +1,9 @@
 import React from "react";
-import {ConnectedHeader} from "../header/header";
+import {Header} from "../header/header";
 
 const EmptyFavorites = () => (
   <div className="page page--favorites-empty">
-    <ConnectedHeader/>
+    <Header/>
 
     <main className="page__main page__main--favorites page__main--favorites-empty">
       <div className="page__favorites-container container">

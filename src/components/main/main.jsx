@@ -1,17 +1,16 @@
 import React, {useEffect} from 'react';
-import PropTypes from "prop-types";
 import {EmptyMain} from "../empty-main/empty-main";
-import {ConnectedOfferList} from "../offer-list/offer-list";
 import {City, OfferType, SortOption} from "../../const";
-import {connect} from "react-redux";
-import {ConnectedCityList} from "../city-list/city-list";
-import {ConnectedSortOptions} from "../sort-option/sort-option";
-import {ConnectedMap} from "../map/map";
+import {useDispatch, useSelector} from "react-redux";
 import {fetchOffers} from "../../store/api-action";
 import LoadingScreen from "../loading-screen/loading-screen";
-import {ConnectedHeader} from "../header/header";
 import {resetMainPage} from "../../store/action";
 import {NameSpace} from "../../store/reducers/reducer";
+import {CityList} from "../city-list/city-list";
+import {Header} from "../header/header";
+import {Map} from "../map/map";
+import {OfferList} from "../offer-list/offer-list";
+import {SortOptions} from "../sort-options/sort-options";
 
 const getOffersForCity = (offers, city) => {
   return offers.filter((offer) => city === offer.city.name);
@@ -33,11 +32,14 @@ const getSortedOffers = (offers, activeSorting) => {
   return sortedOffers;
 };
 
-const Main = ({offers, activeCity, onOpenPage, activeSorting, isOffersLoaded, onLoadOffers}) => {
-  useEffect(() => onOpenPage(), []);
+const Main = () => {
+  const {activeCity, activeSorting} = useSelector((state) => state[NameSpace.CLIENT]);
+  const {offers, isOffersLoaded} = useSelector((state) => state[NameSpace.SERVER]);
+  const dispatch = useDispatch();
+  useEffect(() => dispatch(resetMainPage()), []);
   useEffect(() => {
     if (!isOffersLoaded) {
-      onLoadOffers();
+      dispatch(fetchOffers());
     }
   }, [isOffersLoaded]);
 
@@ -56,21 +58,21 @@ const Main = ({offers, activeCity, onOpenPage, activeSorting, isOffersLoaded, on
   const relevantSortOffers = getSortedOffers(relevantOffers, activeSorting);
 
   return <div className="page page--gray page--main">
-    <ConnectedHeader/>
+    <Header/>
 
     <main className="page__main page__main--index">
-      <ConnectedCityList cities={City}/>
+      <CityList cities={City}/>
       <div className="cities">
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{relevantOffers.length} places to stay in Amsterdam</b>
-            <ConnectedSortOptions/>
-            <ConnectedOfferList offers={relevantSortOffers} type={OfferType.MAIN}/>
+            <SortOptions/>
+            <OfferList offers={relevantSortOffers} type={OfferType.MAIN}/>
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <ConnectedMap city={activeCity} offers={relevantOffers} isHighlightActiveOffer={true}/>
+              <Map city={activeCity} offers={relevantOffers} isHighlightActiveOffer={true}/>
             </section>
           </div>
         </div>
@@ -79,31 +81,4 @@ const Main = ({offers, activeCity, onOpenPage, activeSorting, isOffersLoaded, on
   </div>;
 };
 
-Main.propTypes = {
-  offers: PropTypes.array.isRequired,
-  activeCity: PropTypes.string.isRequired,
-  activeSorting: PropTypes.string.isRequired,
-  isOffersLoaded: PropTypes.bool.isRequired,
-  onOpenPage: PropTypes.func.isRequired,
-  onLoadOffers: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  activeCity: state[NameSpace.CLIENT].activeCity,
-  activeSorting: state[NameSpace.CLIENT].activeSorting,
-  offers: state[NameSpace.SERVER].offers,
-  isOffersLoaded: state[NameSpace.SERVER].isOffersLoaded,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onOpenPage() {
-    dispatch(resetMainPage());
-  },
-  onLoadOffers() {
-    dispatch(fetchOffers());
-  },
-});
-
-const ConnectedMain = connect(mapStateToProps, mapDispatchToProps)(Main);
-
-export {ConnectedMain};
+export {Main};

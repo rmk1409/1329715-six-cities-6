@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {OfferType} from "../../const";
-import {ConnectedOfferList} from "../offer-list/offer-list";
+import {OfferList} from "../offer-list/offer-list";
 
 const FavoritesLocationListItem = ({name, offers}) => (
   <li className="favorites__locations-items">
@@ -12,7 +12,7 @@ const FavoritesLocationListItem = ({name, offers}) => (
         </a>
       </div>
     </div>
-    <ConnectedOfferList offers={offers} type={OfferType.FAVORITE}/>
+    <OfferList offers={offers} type={OfferType.FAVORITE}/>
   </li>
 );
 

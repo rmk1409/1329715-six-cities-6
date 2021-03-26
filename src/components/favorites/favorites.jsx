@@ -1,17 +1,18 @@
 import React, {useEffect} from "react";
-import PropTypes from "prop-types";
 import {FavoritesLocationListItem} from "../favorites-location-list-item/favorites-location-list-item";
 import {EmptyFavorites} from "../empty-favorites/empty-favorites";
-import {connect} from "react-redux";
-import {ConnectedHeader} from "../header/header";
+import {useDispatch, useSelector} from "react-redux";
 import LoadingScreen from "../loading-screen/loading-screen";
 import {fetchFavoriteOffers} from "../../store/api-action";
 import {NameSpace} from "../../store/reducers/reducer";
+import {Header} from "../header/header";
 
-const Favorites = ({offers, isFavoriteOffersLoaded, onLoadData}) => {
-  useEffect(()=>{
+const Favorites = () => {
+  const {favoriteOffers: offers, isFavoriteOffersLoaded} = useSelector((state) => state[NameSpace.SERVER]);
+  const dispatch = useDispatch();
+  useEffect(() => {
     if (!isFavoriteOffersLoaded) {
-      onLoadData();
+      dispatch(fetchFavoriteOffers());
     }
   }, [isFavoriteOffersLoaded]);
 
@@ -36,7 +37,7 @@ const Favorites = ({offers, isFavoriteOffersLoaded, onLoadData}) => {
   }
 
   return <div className="page">
-    <ConnectedHeader/>
+    <Header/>
 
     <main className="page__main page__main--favorites">
       <div className="page__favorites-container container">
@@ -57,23 +58,4 @@ const Favorites = ({offers, isFavoriteOffersLoaded, onLoadData}) => {
   </div>;
 };
 
-Favorites.propTypes = {
-  offers: PropTypes.array.isRequired,
-  isFavoriteOffersLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  offers: state[NameSpace.SERVER].favoriteOffers,
-  isFavoriteOffersLoaded: state[NameSpace.SERVER].isFavoriteOffersLoaded,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    dispatch(fetchFavoriteOffers());
-  }
-});
-
-const ConnectedFavorites = connect(mapStateToProps, mapDispatchToProps)(Favorites);
-
-export {ConnectedFavorites};
+export {Favorites};

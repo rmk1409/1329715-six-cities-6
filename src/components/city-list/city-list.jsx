@@ -1,14 +1,16 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setActiveCity} from "../../store/action";
 import {NameSpace} from "../../store/reducers/reducer";
 
-const CityList = ({cities, activeCity, onCityClick}) => {
+const CityList = ({cities}) => {
+  const {activeCity} = useSelector((state) => state[NameSpace.CLIENT]);
+  const dispatch = useDispatch();
   const handleCityClick = (evt) => {
     evt.preventDefault();
     const newActiveCity = evt.target.tagName === `A` ? evt.target.querySelector(`span`).textContent : evt.target.textContent;
-    onCityClick(newActiveCity);
+    dispatch(setActiveCity(newActiveCity));
   };
 
   return <>
@@ -33,20 +35,6 @@ const CityList = ({cities, activeCity, onCityClick}) => {
 
 CityList.propTypes = {
   cities: PropTypes.object.isRequired,
-  activeCity: PropTypes.string.isRequired,
-  onCityClick: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  activeCity: state[NameSpace.CLIENT].activeCity,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onCityClick(newActiveCity) {
-    dispatch(setActiveCity(newActiveCity));
-  },
-});
-
-const ConnectedCityList = connect(mapStateToProps, mapDispatchToProps)(CityList);
-
-export {ConnectedCityList};
+export {CityList};

@@ -2,11 +2,12 @@ import React, {useEffect} from "react";
 import "leaflet/dist/leaflet.css";
 import leaflet from "leaflet";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 import {City} from "../../const";
 import {NameSpace} from "../../store/reducers/reducer";
 
-const Map = ({offers, activeOfferId, city, isHighlightActiveOffer}) => {
+const Map = ({offers, city, isHighlightActiveOffer}) => {
+  const {activeOfferId} = useSelector((state) => state[NameSpace.CLIENT]);
   const effectDependencies = [city, offers];
   if (isHighlightActiveOffer) {
     effectDependencies.push(activeOfferId);
@@ -49,15 +50,8 @@ const Map = ({offers, activeOfferId, city, isHighlightActiveOffer}) => {
 
 Map.propTypes = {
   offers: PropTypes.array.isRequired,
-  activeOfferId: PropTypes.number.isRequired,
   city: PropTypes.string.isRequired,
   isHighlightActiveOffer: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  activeOfferId: state[NameSpace.CLIENT].activeOfferId,
-});
-
-const ConnectedMap = connect(mapStateToProps)(Map);
-
-export {ConnectedMap};
+export {Map};
