@@ -11,51 +11,61 @@ import {Header} from "../header/header";
 import {Map} from "../map/map";
 import {OfferList} from "../offer-list/offer-list";
 import {SortOptions} from "../sort-options/sort-options";
+import {createSelector} from 'reselect';
 
-const getOffersForCity = (offers, city) => {
-  return offers.filter((offer) => city === offer.city.name);
-};
+const getOffers = (state) => state[NameSpace.SERVER].offers;
+const getActiveCity = (state) => state[NameSpace.CLIENT].activeCity;
+const getActiveSorting = (state) => state[NameSpace.CLIENT].activeSorting;
 
-const getSortedOffers = (offers, activeSorting) => {
-  let sortedOffers = [...offers];
-  switch (activeSorting) {
-    case SortOption.TOP_RATED_FIRST:
-      sortedOffers.sort((a, b) => b.rating - a.rating);
-      break;
-    case SortOption.LOW_PRICE_FIRST:
-      sortedOffers.sort((a, b) => a.price - b.price);
-      break;
-    case SortOption.HIGH_PRICE_FIRST:
-      sortedOffers.sort((a, b) => b.price - a.price);
-      break;
-  }
-  return sortedOffers;
-};
+const offerCitySelector = createSelector(
+    getOffers,
+    getActiveCity,
+    (offers, city) => {
+      return offers.filter((offer) => city === offer.city.name);
+    }
+);
+
+const offerSortingSelector = createSelector(
+    offerCitySelector,
+    getActiveSorting,
+    (offers, activeSorting) => {
+      const sortedOffers = [...offers];
+      switch (activeSorting) {
+        case SortOption.TOP_RATED_FIRST:
+          sortedOffers.sort((a, b) => b.rating - a.rating);
+          break;
+        case SortOption.LOW_PRICE_FIRST:
+          sortedOffers.sort((a, b) => a.price - b.price);
+          break;
+        case SortOption.HIGH_PRICE_FIRST:
+          sortedOffers.sort((a, b) => b.price - a.price);
+          break;
+      }
+      return sortedOffers;
+    }
+);
 
 const Main = () => {
-  const {activeCity, activeSorting} = useSelector((state) => state[NameSpace.CLIENT]);
-  const {offers, isOffersLoaded} = useSelector((state) => state[NameSpace.SERVER]);
+  const {activeCity} = useSelector((state) => state[NameSpace.CLIENT]);
+  const {isOffersLoaded} = useSelector((state) => state[NameSpace.SERVER]);
   const dispatch = useDispatch();
-  useEffect(() => dispatch(resetMainPage()), []);
+  const relevantSortOffers = useSelector(offerSortingSelector);
+  useEffect(() => {
+    dispatch(resetMainPage());
+  }, []);
   useEffect(() => {
     if (!isOffersLoaded) {
       dispatch(fetchOffers());
     }
   }, [isOffersLoaded]);
-
   if (!isOffersLoaded) {
     return (
       <LoadingScreen/>
     );
   }
-
-  const relevantOffers = getOffersForCity(offers, activeCity);
-
-  if (!relevantOffers.length) {
+  if (!relevantSortOffers.length) {
     return <EmptyMain/>;
   }
-
-  const relevantSortOffers = getSortedOffers(relevantOffers, activeSorting);
 
   return <div className="page page--gray page--main">
     <Header/>
@@ -66,13 +76,13 @@ const Main = () => {
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
-            <b className="places__found">{relevantOffers.length} places to stay in Amsterdam</b>
+            <b className="places__found">{relevantSortOffers.length} places to stay in Amsterdam</b>
             <SortOptions/>
             <OfferList offers={relevantSortOffers} type={OfferType.MAIN}/>
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map city={activeCity} offers={relevantOffers} isHighlightActiveOffer={true}/>
+              <Map city={activeCity} offers={relevantSortOffers} isHighlightActiveOffer={true}/>
             </section>
           </div>
         </div>
