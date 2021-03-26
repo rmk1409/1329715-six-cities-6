@@ -16,8 +16,8 @@ import {OfferList} from "../offer-list/offer-list";
 const Offer = () => {
   const {id} = useParams();
   const {
-    reviews,
-    currentOffer,
+    reviewsForOpenedOffer: reviews,
+    currentOpenOfferData: currentOffer,
     isUserAuthorized,
     nearbyOffersForOpenedOffer
   } = useSelector((state) => state[NameSpace.SERVER]);
