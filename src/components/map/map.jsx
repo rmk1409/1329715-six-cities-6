@@ -4,6 +4,7 @@ import leaflet from "leaflet";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {City} from "../../const";
+import {NameSpace} from "../../store/reducers/reducer";
 
 const Map = ({offers, activeOfferId, city, isHighlightActiveOffer}) => {
   const effectDependencies = [city, offers];
@@ -54,7 +55,7 @@ Map.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  activeOfferId: state.activeOfferId,
+  activeOfferId: state[NameSpace.CLIENT].activeOfferId,
 });
 
 const ConnectedMap = connect(mapStateToProps)(Map);

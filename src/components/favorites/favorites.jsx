@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {ConnectedHeader} from "../header/header";
 import LoadingScreen from "../loading-screen/loading-screen";
 import {fetchFavoriteOffers} from "../../store/api-action";
+import {NameSpace} from "../../store/reducers/reducer";
 
 const Favorites = ({offers, isFavoriteOffersLoaded, onLoadData}) => {
   useEffect(()=>{
@@ -63,8 +64,8 @@ Favorites.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.favoriteOffers,
-  isFavoriteOffersLoaded: state.isFavoriteOffersLoaded,
+  offers: state[NameSpace.SERVER].favoriteOffers,
+  isFavoriteOffersLoaded: state[NameSpace.SERVER].isFavoriteOffersLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -2,6 +2,7 @@ import {Route, Redirect} from "react-router-dom";
 import React from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {NameSpace} from "../../store/reducers/reducer";
 
 const PrivateRoute = ({render, path, exact, isUserAuthorized}) => {
   return (
@@ -19,7 +20,7 @@ PrivateRoute.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isUserAuthorized: state.isUserAuthorized,
+  isUserAuthorized: state[NameSpace.SERVER].isUserAuthorized,
 });
 
 const ConnectedPrivateRoute = connect(mapStateToProps)(PrivateRoute);

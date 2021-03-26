@@ -1,24 +1,16 @@
+import {createReducer} from "@reduxjs/toolkit";
 import {
   loadAnOffer,
   loadFavoriteOffers,
   loadNearby,
   loadOffers,
   loadReviews,
-  resetMainPage,
-  setActiveCity,
-  setActiveOffer,
-  setActiveSorting,
   setAuthorization,
   setAuthorizationInfo,
   setSendingReview
-} from "./action";
-import {City, SortOption} from "../const";
-import {createReducer} from "@reduxjs/toolkit";
+} from "../action";
 
 const initialState = {
-  activeOfferId: -1,
-  activeCity: City.PARIS.name,
-  activeSorting: SortOption.POPULAR,
   offers: [],
   favoriteOffers: [],
   isOffersLoaded: false,
@@ -33,20 +25,7 @@ const initialState = {
   nearbyOffersForOpenedOffer: [],
 };
 
-const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(resetMainPage, (state) => {
-    state.activeCity = initialState.activeCity;
-    state.activeSorting = initialState.activeSorting;
-  });
-  builder.addCase(setActiveCity, (state, action) => {
-    state.activeCity = action.payload;
-  });
-  builder.addCase(setActiveSorting, (state, action) => {
-    state.activeSorting = action.payload;
-  });
-  builder.addCase(setActiveOffer, (state, action) => {
-    state.activeOfferId = action.payload;
-  });
+const serverReducer = createReducer(initialState, (builder) => {
   builder.addCase(setAuthorization, (state, action) => {
     state.isUserAuthorized = action.payload;
   });
@@ -75,4 +54,4 @@ const reducer = createReducer(initialState, (builder) => {
   });
 });
 
-export {reducer};
+export {serverReducer};

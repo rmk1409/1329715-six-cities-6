@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {postReview} from "../../store/api-action";
 import * as PropTypes from "prop-types";
 import {setSendingReview} from "../../store/action";
+import {NameSpace} from "../../store/reducers/reducer";
 
 const FormSendReview = ({id, onSubmit, isReviewSending}) => {
   const refForm = useRef();
@@ -93,7 +94,7 @@ FormSendReview.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isReviewSending: state.isReviewSending,
+  isReviewSending: state[NameSpace.SERVER].isReviewSending,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {setActiveCity} from "../../store/action";
+import {NameSpace} from "../../store/reducers/reducer";
 
 const CityList = ({cities, activeCity, onCityClick}) => {
   const handleCityClick = (evt) => {
@@ -37,7 +38,7 @@ CityList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  activeCity: state.activeCity,
+  activeCity: state[NameSpace.CLIENT].activeCity,
 });
 
 const mapDispatchToProps = (dispatch) => ({

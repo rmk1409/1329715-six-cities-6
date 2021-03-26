@@ -3,6 +3,7 @@ import {SortOption} from "../../const";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {setActiveSorting} from "../../store/action";
+import {NameSpace} from "../../store/reducers/reducer";
 
 const SortOptions = ({activeSorting, onSortingClick}) => {
   const [isOpened, setOpened] = useState(false);
@@ -50,7 +51,7 @@ SortOptions.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  activeSorting: state.activeSorting,
+  activeSorting: state[NameSpace.CLIENT].activeSorting,
 });
 
 const mapDispatchToProps = (dispatch) => ({

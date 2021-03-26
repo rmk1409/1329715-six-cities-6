@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import {ConnectedHeader} from "../header/header";
 import {login} from "../../store/api-action";
 import {Redirect} from "react-router-dom";
+import {NameSpace} from "../../store/reducers/reducer";
 
 const Login = ({isUserAuthorized, onSubmit}) => {
   if (isUserAuthorized) {
@@ -63,7 +64,7 @@ Login.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isUserAuthorized: state.isUserAuthorized,
+  isUserAuthorized: state[NameSpace.SERVER].isUserAuthorized,
 });
 
 const mapDispatchToProps = (dispatch) => ({

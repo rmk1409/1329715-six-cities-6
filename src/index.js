@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from "./components/app/app";
 import {Provider} from "react-redux";
-import {reducer} from "./store/reducer";
+import {reducer} from "./store/reducers/reducer";
 import {createAPI} from "./services/api";
 import {checkAuth} from "./store/api-action";
 import {setAuthorization} from "./store/action";

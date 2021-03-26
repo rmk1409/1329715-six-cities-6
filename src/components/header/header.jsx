@@ -2,6 +2,7 @@ import React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {NameSpace} from "../../store/reducers/reducer";
 
 const Header = ({isUserAuthorized, authInfo}) => (
   <header className="header">
@@ -37,8 +38,8 @@ Header.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isUserAuthorized: state.isUserAuthorized,
-  authInfo: state.authInfo,
+  isUserAuthorized: state[NameSpace.SERVER].isUserAuthorized,
+  authInfo: state[NameSpace.SERVER].authInfo,
 });
 
 const ConnectedHeader = connect(mapStateToProps)(Header);

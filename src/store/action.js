@@ -6,6 +6,7 @@ const ActionType = {
   SET_ACTIVE_SORTING: `client/set-active-sorting`,
   SET_ACTIVE_OFFER_ID: `client/set-active-offer-id`,
   REDIRECT_TO_ROUTE: `client/redirect-to-route`,
+
   LOAD_OFFERS: `server/load-offers`,
   SET_AUTHORIZATION: `server/set-authorization`,
   SET_AUTHORIZATION_INFO: `server/set-authorization-info`,
@@ -13,7 +14,7 @@ const ActionType = {
   LOAD_REVIEWS: `server/load-reviews-for-offer`,
   LOAD_NEARBY_OFFERS: `server/load-nearby-offers`,
   LOAD_FAVORITE_OFFERS: `server/load-favorite-offers`,
-  SET_SENDING_REVIEW: `client/set-sending-review`,
+  SET_SENDING_REVIEW: `server/set-sending-review`,
 };
 
 const setSendingReview = createAction(ActionType.SET_SENDING_REVIEW, (isSendingReview) => ({payload: isSendingReview}));

@@ -12,6 +12,7 @@ import {ConnectedHeader} from "../header/header";
 import LoadingScreen from "../loading-screen/loading-screen";
 import {fetchNearby, fetchOffer, fetchReviews} from "../../store/api-action";
 import {ConnectedFormSendReview} from "../form-send-review/form-send-review";
+import {NameSpace} from "../../store/reducers/reducer";
 
 const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized, nearbyOffersForOpenedOffer}) => {
   const {id} = useParams();
@@ -27,7 +28,7 @@ const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized, nearbyOffe
   }
   const bookmarkClass = `property__bookmark-button button ${addActiveClass(currentOffer[`is_favorite`], `property__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(currentOffer.rating);
-  reviews.sort((a, b) => (new Date(b.date)) - (new Date(a.date)));
+  const sortedReviews = [...reviews].sort((a, b) => (new Date(b.date)) - (new Date(a.date)));
   return <div className="page">
     <ConnectedHeader/>
 
@@ -112,7 +113,7 @@ const Offer = ({reviews, currentOffer, onLoadOffer, isUserAuthorized, nearbyOffe
               <h2 className="reviews__title">Reviews &middot; <span
                 className="reviews__amount">{reviews.length}</span></h2>
               <ul className="reviews__list">
-                {reviews.slice(0, 10).map((review) =>
+                {sortedReviews.slice(0, 10).map((review) =>
                   <Review key={review.id} review={review}/>)}
               </ul>
               {isUserAuthorized && <ConnectedFormSendReview id={id}/>}
@@ -145,10 +146,10 @@ Offer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  reviews: state.reviewsForOpenedOffer,
-  currentOffer: state.currentOpenOfferData,
-  isUserAuthorized: state.isUserAuthorized,
-  nearbyOffersForOpenedOffer: state.nearbyOffersForOpenedOffer,
+  reviews: state[NameSpace.SERVER].reviewsForOpenedOffer,
+  currentOffer: state[NameSpace.SERVER].currentOpenOfferData,
+  isUserAuthorized: state[NameSpace.SERVER].isUserAuthorized,
+  nearbyOffersForOpenedOffer: state[NameSpace.SERVER].nearbyOffersForOpenedOffer,
 });
 
 const mapDispatchToProps = (dispatch) => ({

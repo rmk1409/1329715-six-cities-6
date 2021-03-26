@@ -11,6 +11,7 @@ import {fetchOffers} from "../../store/api-action";
 import LoadingScreen from "../loading-screen/loading-screen";
 import {ConnectedHeader} from "../header/header";
 import {resetMainPage} from "../../store/action";
+import {NameSpace} from "../../store/reducers/reducer";
 
 const getOffersForCity = (offers, city) => {
   return offers.filter((offer) => city === offer.city.name);
@@ -88,10 +89,10 @@ Main.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  activeCity: state.activeCity,
-  activeSorting: state.activeSorting,
-  offers: state.offers,
-  isOffersLoaded: state.isOffersLoaded,
+  activeCity: state[NameSpace.CLIENT].activeCity,
+  activeSorting: state[NameSpace.CLIENT].activeSorting,
+  offers: state[NameSpace.SERVER].offers,
+  isOffersLoaded: state[NameSpace.SERVER].isOffersLoaded,
 });
 
 const mapDispatchToProps = (dispatch) => ({
