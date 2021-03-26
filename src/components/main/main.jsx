@@ -5,12 +5,12 @@ import {ConnectedOfferList} from "../offer-list/offer-list";
 import {City, OfferType, SortOption} from "../../const";
 import {connect} from "react-redux";
 import {ConnectedCityList} from "../city-list/city-list";
-import {ActionCreator} from "../../store/action";
 import {ConnectedSortOptions} from "../sort-option/sort-option";
 import {ConnectedMap} from "../map/map";
 import {fetchOffers} from "../../store/api-action";
 import LoadingScreen from "../loading-screen/loading-screen";
 import {ConnectedHeader} from "../header/header";
+import {resetMainPage} from "../../store/action";
 
 const getOffersForCity = (offers, city) => {
   return offers.filter((offer) => city === offer.city.name);
@@ -96,7 +96,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onOpenPage() {
-    dispatch(ActionCreator.resetMainPage());
+    dispatch(resetMainPage());
   },
   onLoadOffers() {
     dispatch(fetchOffers());

@@ -1,22 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {App} from "./components/app/app";
-import {applyMiddleware, createStore} from "redux";
 import {Provider} from "react-redux";
 import {reducer} from "./store/reducer";
-import {composeWithDevTools} from "redux-devtools-extension";
 import {createAPI} from "./services/api";
-import thunk from "redux-thunk";
 import {checkAuth} from "./store/api-action";
-import {ActionCreator} from "./store/action";
+import {setAuthorization} from "./store/action";
 import {redirect} from "./store/middlewares/redirect";
+import {configureStore} from "@reduxjs/toolkit";
 
-const axios = createAPI(() => store.dispatch(ActionCreator.setAuthorization(false)));
+const axios = createAPI(() => store.dispatch(setAuthorization(false)));
 
-const store = createStore(reducer, composeWithDevTools(
-    applyMiddleware(thunk.withExtraArgument(axios)),
-    applyMiddleware(redirect))
-);
+const store = configureStore({
+  reducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: axios
+      },
+    }).concat(redirect)
+});
 
 store.dispatch(checkAuth());
 

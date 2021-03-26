@@ -2,8 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import {OfferCard} from "../offer-card/offer-card";
 import {OfferType} from "../../const";
-import {ActionCreator} from "../../store/action";
 import {connect} from "react-redux";
+import {setActiveOffer as setActiveOfferAction} from "../../store/action";
 
 const getClassForOfferListByType = (type) => {
   let offerListClass = ``;
@@ -47,7 +47,7 @@ OfferList.propTypes = {
 
 const mapDispatchToProps = (dispatch) => ({
   setActiveOffer(activeOfferId) {
-    dispatch(ActionCreator.setActiveOffer(activeOfferId));
+    dispatch(setActiveOfferAction(activeOfferId));
   },
 });
 

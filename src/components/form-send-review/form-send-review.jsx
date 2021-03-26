@@ -2,7 +2,7 @@ import React, {useState, useRef} from "react";
 import {connect} from "react-redux";
 import {postReview} from "../../store/api-action";
 import * as PropTypes from "prop-types";
-import {ActionCreator} from "../../store/action";
+import {setSendingReview} from "../../store/action";
 
 const FormSendReview = ({id, onSubmit, isReviewSending}) => {
   const refForm = useRef();
@@ -98,7 +98,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(id, review, refForm) {
-    dispatch(ActionCreator.setSendingReview(true));
+    dispatch(setSendingReview(true));
     const comment = {rating: review.rating, comment: review.review};
     dispatch(postReview(id, comment, refForm));
   },

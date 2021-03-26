@@ -1,38 +1,46 @@
-import {ActionCreator} from "./action";
+import {
+  loadAnOffer,
+  loadFavoriteOffers,
+  loadNearby,
+  loadOffers,
+  loadReviews, redirectToRoute,
+  setAuthorization,
+  setAuthorizationInfo, setSendingReview
+} from "./action";
 
 const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(`/hotels`)
-    .then(({data}) => dispatch(ActionCreator.loadOffers(data)))
+    .then(({data}) => dispatch(loadOffers(data)))
 );
 
 const fetchFavoriteOffers = () => (dispatch, _getState, api) => (
   api.get(`/favorite`)
-    .then(({data}) => dispatch(ActionCreator.loadFavoriteOffers(data)))
+    .then(({data}) => dispatch(loadFavoriteOffers(data)))
 );
 
 const fetchReviews = (id) => (dispatch, _getState, api) => (
   api.get(`/comments/${id}`)
-    .then(({data}) => dispatch(ActionCreator.loadReviews(data)))
+    .then(({data}) => dispatch(loadReviews(data)))
 );
 
 const fetchNearby = (id) => (dispatch, _getState, api) => (
   api.get(`/hotels/${id}/nearby`)
-    .then(({data}) => dispatch(ActionCreator.loadNearby(data)))
+    .then(({data}) => dispatch(loadNearby(data)))
 );
 
 const fetchOffer = (id) => (dispatch, _getState, api) => (
   api.get(`/hotels/${id}`)
-    .then(({data}) => dispatch(ActionCreator.loadAnOffer(data)))
-    .catch(() => dispatch(ActionCreator.loadAnOffer({id: -1})))
+    .then(({data}) => dispatch(loadAnOffer(data)))
+    .catch(() => dispatch(loadAnOffer({id: -1})))
 );
 
 const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)
     .then(({data}) => {
-      dispatch(ActionCreator.setAuthorization(true));
-      dispatch(ActionCreator.setAuthorizationInfo(data));
+      dispatch(setAuthorization(true));
+      dispatch(setAuthorizationInfo(data));
     })
-    .then(() => ActionCreator.redirectToRoute(`/`))
+    .then(() => redirectToRoute(`/`))
     .catch(() => {
     })
 );
@@ -40,15 +48,15 @@ const checkAuth = () => (dispatch, _getState, api) => (
 const login = ({login: email, password}) => (dispatch, _getState, api) => (
   api.post(`/login`, {email, password})
     .then(({data}) => {
-      dispatch(ActionCreator.setAuthorization(true));
-      dispatch(ActionCreator.setAuthorizationInfo(data));
+      dispatch(setAuthorization(true));
+      dispatch(setAuthorizationInfo(data));
     })
 );
 
 const postReview = (id, comment, refForm) => (dispatch, _getState, api) => (
   api.post(`/comments/${id}`, comment)
     .then(({data}) => {
-      dispatch(ActionCreator.loadReviews(data));
+      dispatch(loadReviews(data));
       refForm.current.reset();
     })
     .catch((err) => {
@@ -56,7 +64,7 @@ const postReview = (id, comment, refForm) => (dispatch, _getState, api) => (
       alert(`Some error happened while sending the review: ${err}`);
     })
     .then(() => {
-      dispatch(ActionCreator.setSendingReview(false));
+      dispatch(setSendingReview(false));
     })
 );
 

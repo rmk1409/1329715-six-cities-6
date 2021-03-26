@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import {SortOption} from "../../const";
 import PropTypes from "prop-types";
-import {ActionCreator} from "../../store/action";
 import {connect} from "react-redux";
+import {setActiveSorting} from "../../store/action";
 
 const SortOptions = ({activeSorting, onSortingClick}) => {
   const [isOpened, setOpened] = useState(false);
@@ -55,7 +55,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onSortingClick(newActiveSorting) {
-    dispatch(ActionCreator.setActiveSorting(newActiveSorting));
+    dispatch(setActiveSorting(newActiveSorting));
   },
 });
 

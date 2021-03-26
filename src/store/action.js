@@ -1,3 +1,5 @@
+import {createAction} from "@reduxjs/toolkit";
+
 const ActionType = {
   RESET_MAIN_PAGE: `client/reset-main-page`,
   SET_ACTIVE_CITY: `client/set-active-city`,
@@ -14,84 +16,33 @@ const ActionType = {
   SET_SENDING_REVIEW: `client/set-sending-review`,
 };
 
-const ActionCreator = {
-  setSendingReview(isSendingReview) {
-    return {
-      type: ActionType.SET_SENDING_REVIEW,
-      payload: isSendingReview,
-    };
-  },
-  setActiveCity(newActiveCity) {
-    return {
-      type: ActionType.SET_ACTIVE_CITY,
-      payload: newActiveCity,
-    };
-  },
-  setActiveSorting(newActiveSorting) {
-    return {
-      type: ActionType.SET_ACTIVE_SORTING,
-      payload: newActiveSorting,
-    };
-  },
-  setActiveOffer(newActiveOfferId) {
-    return {
-      type: ActionType.SET_ACTIVE_OFFER_ID,
-      payload: newActiveOfferId,
-    };
-  },
-  resetMainPage() {
-    return {
-      type: ActionType.RESET_MAIN_PAGE,
-    };
-  },
-  loadOffers(offers) {
-    return {
-      type: ActionType.LOAD_OFFERS,
-      payload: offers,
-    };
-  },
-  loadFavoriteOffers(offers) {
-    return {
-      type: ActionType.LOAD_FAVORITE_OFFERS,
-      payload: offers,
-    };
-  },
-  setAuthorization(authorizationStatus) {
-    return {
-      type: ActionType.SET_AUTHORIZATION,
-      payload: authorizationStatus,
-    };
-  },
-  setAuthorizationInfo(authorizationInfo) {
-    return {
-      type: ActionType.SET_AUTHORIZATION_INFO,
-      payload: authorizationInfo,
-    };
-  },
-  redirectToRoute(url) {
-    return {
-      type: ActionType.REDIRECT_TO_ROUTE,
-      payload: url,
-    };
-  },
-  loadAnOffer(offer) {
-    return {
-      type: ActionType.LOAD_OFFER,
-      payload: offer,
-    };
-  },
-  loadReviews(reviews) {
-    return {
-      type: ActionType.LOAD_REVIEWS,
-      payload: reviews,
-    };
-  },
-  loadNearby(nearbyOffers) {
-    return {
-      type: ActionType.LOAD_NEARBY_OFFERS,
-      payload: nearbyOffers,
-    };
-  },
-};
+const setSendingReview = createAction(ActionType.SET_SENDING_REVIEW, (isSendingReview) => ({payload: isSendingReview}));
+const setActiveCity = createAction(ActionType.SET_ACTIVE_CITY, (newActiveCity) => ({payload: newActiveCity}));
+const setActiveSorting = createAction(ActionType.SET_ACTIVE_SORTING, (newActiveSorting) => ({payload: newActiveSorting}));
+const setActiveOffer = createAction(ActionType.SET_ACTIVE_OFFER_ID, (newActiveOfferId) => ({payload: newActiveOfferId}));
+const resetMainPage = createAction(ActionType.RESET_MAIN_PAGE);
+const loadOffers = createAction(ActionType.LOAD_OFFERS, (offers) => ({payload: offers}));
+const loadFavoriteOffers = createAction(ActionType.LOAD_FAVORITE_OFFERS, (offers) => ({payload: offers}));
+const setAuthorization = createAction(ActionType.SET_AUTHORIZATION, (authorizationStatus) => ({payload: authorizationStatus}));
+const setAuthorizationInfo = createAction(ActionType.SET_AUTHORIZATION_INFO, (authorizationInfo) => ({payload: authorizationInfo}));
+const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({payload: url}));
+const loadAnOffer = createAction(ActionType.LOAD_OFFER, (offer) => ({payload: offer}));
+const loadReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => ({payload: reviews}));
+const loadNearby = createAction(ActionType.LOAD_NEARBY_OFFERS, (nearbyOffers) => ({payload: nearbyOffers}));
 
-export {ActionType, ActionCreator};
+export {
+  ActionType,
+  setSendingReview,
+  setActiveCity,
+  setActiveSorting,
+  setActiveOffer,
+  resetMainPage,
+  loadOffers,
+  loadFavoriteOffers,
+  setAuthorization,
+  setAuthorizationInfo,
+  redirectToRoute,
+  loadAnOffer,
+  loadReviews,
+  loadNearby
+};

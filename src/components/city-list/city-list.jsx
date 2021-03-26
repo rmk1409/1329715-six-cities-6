@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {ActionCreator} from "../../store/action";
+import {setActiveCity} from "../../store/action";
 
 const CityList = ({cities, activeCity, onCityClick}) => {
   const handleCityClick = (evt) => {
@@ -42,7 +42,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onCityClick(newActiveCity) {
-    dispatch(ActionCreator.setActiveCity(newActiveCity));
+    dispatch(setActiveCity(newActiveCity));
   },
 });
 
