@@ -7,7 +7,7 @@ import {
   loadReviews,
   setAuthorization,
   setAuthorizationInfo,
-  setSendingReview
+  setSendingReview, updateOffer
 } from "../action";
 
 const initialState = {
@@ -23,6 +23,15 @@ const initialState = {
   currentOpenOfferData: null,
   reviewsForOpenedOffer: [],
   nearbyOffersForOpenedOffer: [],
+};
+
+const updateOffers = (offers, action) => {
+  const indexInOffers = offers.findIndex((offer) => offer.id === action.payload.id);
+  const newOffers = [...offers];
+  if (indexInOffers !== -1) {
+    newOffers[indexInOffers] = action.payload;
+  }
+  return indexInOffers === -1 ? offers : newOffers;
 };
 
 const serverReducer = createReducer(initialState, (builder) => {
@@ -51,6 +60,16 @@ const serverReducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(setSendingReview, (state, action) => {
     state.isReviewSending = action.payload;
+  });
+  builder.addCase(updateOffer, (state, action) => {
+    state.offers = updateOffers(state.offers, action);
+    state.favoriteOffers = updateOffers(state.favoriteOffers, action);
+    if (action.payload[`is_favorite`]) {
+      state.favoriteOffers.push(action.payload);
+    } else {
+      state.favoriteOffers.splice(state.favoriteOffers.findIndex((offer) => offer.id === action.payload.id), 1);
+    }
+    state.nearbyOffersForOpenedOffer = updateOffers(state.nearbyOffersForOpenedOffer, action);
   });
 });
 

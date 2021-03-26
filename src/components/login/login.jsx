@@ -1,16 +1,19 @@
-import React, {useRef} from "react";
+import React, {useEffect, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../store/api-action";
-import {Redirect} from "react-router-dom";
 import {NameSpace} from "../../store/reducers/reducer";
 import {Header} from "../header/header";
+import browserHistory from "../../browser-history";
 
 const Login = () => {
   const {isUserAuthorized} = useSelector((state) => state[NameSpace.SERVER]);
   const dispatch = useDispatch();
-  if (isUserAuthorized) {
-    return <Redirect to="/"/>;
-  }
+
+  useEffect(()=>{
+    if (isUserAuthorized) {
+      browserHistory.push(`/`);
+    }
+  }, [isUserAuthorized]);
 
   const loginRef = useRef();
   const passwordRef = useRef();

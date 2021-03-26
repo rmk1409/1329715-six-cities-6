@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo} from "react";
 import {FavoritesLocationListItem} from "../favorites-location-list-item/favorites-location-list-item";
 import {EmptyFavorites} from "../empty-favorites/empty-favorites";
 import {useDispatch, useSelector} from "react-redux";
@@ -10,6 +10,22 @@ import {Header} from "../header/header";
 const Favorites = () => {
   const {favoriteOffers: offers, isFavoriteOffersLoaded} = useSelector((state) => state[NameSpace.SERVER]);
   const dispatch = useDispatch();
+
+  const cityToOffersMap = useMemo(() => {
+    const cityToOffers = new Map();
+    offers.forEach((offer) => {
+      const cityName = offer.city.name;
+      if (offer[`is_favorite`]) {
+        if (cityToOffers.has(cityName)) {
+          cityToOffers.get(cityName).push(offer);
+        } else {
+          cityToOffers.set(cityName, [offer]);
+        }
+      }
+    });
+    return cityToOffers;
+  }, [offers]);
+
   useEffect(() => {
     if (!isFavoriteOffersLoaded) {
       dispatch(fetchFavoriteOffers());
@@ -19,18 +35,6 @@ const Favorites = () => {
   if (!isFavoriteOffersLoaded) {
     return <LoadingScreen/>;
   }
-
-  const cityToOffersMap = new Map();
-  offers.forEach((offer) => {
-    const cityName = offer.city.name;
-    if (offer[`is_favorite`]) {
-      if (cityToOffersMap.has(cityName)) {
-        cityToOffersMap.get(cityName).push(offer);
-      } else {
-        cityToOffersMap.set(cityName, [offer]);
-      }
-    }
-  });
 
   if (!cityToOffersMap.size) {
     return <EmptyFavorites/>;

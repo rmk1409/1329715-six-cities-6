@@ -15,6 +15,7 @@ const ActionType = {
   LOAD_NEARBY_OFFERS: `server/load-nearby-offers`,
   LOAD_FAVORITE_OFFERS: `server/load-favorite-offers`,
   SET_SENDING_REVIEW: `server/set-sending-review`,
+  UPDATE_OFFER: `server/update-offer`,
 };
 
 const setSendingReview = createAction(ActionType.SET_SENDING_REVIEW, (isSendingReview) => ({payload: isSendingReview}));
@@ -30,6 +31,7 @@ const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE, (url) => ({pa
 const loadAnOffer = createAction(ActionType.LOAD_OFFER, (offer) => ({payload: offer}));
 const loadReviews = createAction(ActionType.LOAD_REVIEWS, (reviews) => ({payload: reviews}));
 const loadNearby = createAction(ActionType.LOAD_NEARBY_OFFERS, (nearbyOffers) => ({payload: nearbyOffers}));
+const updateOffer = createAction(ActionType.UPDATE_OFFER, (updatedOffer) => ({payload: updatedOffer}));
 
 export {
   ActionType,
@@ -45,5 +47,6 @@ export {
   redirectToRoute,
   loadAnOffer,
   loadReviews,
-  loadNearby
+  loadNearby,
+  updateOffer
 };

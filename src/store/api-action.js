@@ -5,7 +5,7 @@ import {
   loadOffers,
   loadReviews, redirectToRoute,
   setAuthorization,
-  setAuthorizationInfo, setSendingReview
+  setAuthorizationInfo, setSendingReview, updateOffer
 } from "./action";
 
 const fetchOffers = () => (dispatch, _getState, api) => (
@@ -68,4 +68,15 @@ const postReview = (id, comment, refForm) => (dispatch, _getState, api) => (
     })
 );
 
-export {fetchOffers, checkAuth, login, fetchOffer, fetchReviews, fetchNearby, fetchFavoriteOffers, postReview};
+const postFavoriteHotel = (id, status) => (dispatch, _getState, api) => (
+  api.post(`/favorite/${id}/${status}`)
+    .then(({data: updatedOffer}) => {
+      dispatch(updateOffer(updatedOffer));
+    })
+    .catch((err) => {
+      // eslint-disable-next-line no-alert
+      alert(`Some error happened while updating status hotel: ${err}`);
+    })
+);
+
+export {fetchOffers, checkAuth, login, fetchOffer, fetchReviews, fetchNearby, fetchFavoriteOffers, postReview, postFavoriteHotel};
