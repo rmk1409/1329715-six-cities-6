@@ -1,8 +1,7 @@
-import React, {useRef, useState, useCallback, useEffect} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {postReview} from "../../store/api-action";
 import * as PropTypes from "prop-types";
-import {setSendingReview} from "../../store/action";
 import {NameSpace} from "../../store/reducers/reducer";
 import {MemoReviewStarList} from "../review-star-list/review-star-list";
 import {MemoReviewTextArea} from "../review-textarea/review-textarea";
@@ -35,7 +34,6 @@ const FormSendReview = ({id}) => {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    dispatch(setSendingReview(true));
     const comment = {rating: review.rating, comment: review.review};
     dispatch(postReview(id, comment, () => {
       if (refForm.current) {

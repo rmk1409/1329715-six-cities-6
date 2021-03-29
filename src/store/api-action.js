@@ -5,7 +5,7 @@ import {
   loadOffers,
   loadReviews, redirectToRoute,
   setAuthorization,
-  setAuthorizationInfo, setSendingReview, updateOffer
+  setAuthorizationInfo, setSendingReview, updateOffer,
 } from "./action";
 
 const fetchOffers = () => (dispatch, _getState, api) => {
@@ -54,18 +54,20 @@ const login = ({login: email, password}) => (dispatch, _getState, api) => {
 };
 
 const postReview = (id, comment, successCb) => (dispatch, _getState, api) => {
-  api.post(`/comments/${id}`, comment)
-    .then(({data}) => {
-      dispatch(loadReviews(data));
-      successCb();
-    })
-    .catch((err) => {
-      // eslint-disable-next-line no-alert
-      alert(`Some error happened while sending the review: ${err}`);
-    })
-    .then(() => {
-      dispatch(setSendingReview(false));
-    });
+  new Promise((resolve) => {
+    dispatch(setSendingReview(true));
+    resolve();
+  }).then(() => {
+    return api.post(`/comments/${id}`, comment);
+  }).then(({data}) => {
+    dispatch(loadReviews(data));
+    successCb();
+  }).catch((err) => {
+    // eslint-disable-next-line no-alert
+    alert(`Some error happened while sending the review: ${err}`);
+  }).finally(() => {
+    dispatch(setSendingReview(false));
+  });
 };
 
 const postFavoriteHotel = (id, status) => (dispatch, _getState, api) => {
@@ -88,5 +90,5 @@ export {
   fetchNearby,
   fetchFavoriteOffers,
   postReview,
-  postFavoriteHotel
+  postFavoriteHotel,
 };

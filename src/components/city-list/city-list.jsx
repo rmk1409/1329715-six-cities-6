@@ -9,7 +9,8 @@ const CityList = ({cities}) => {
   const dispatch = useDispatch();
   const handleCityClick = (evt) => {
     evt.preventDefault();
-    const newActiveCity = evt.target.tagName === `A` ? evt.target.querySelector(`span`).textContent : evt.target.textContent;
+    const target = evt.target;
+    const newActiveCity = target.tagName === `A` ? target.dataset.name : target.closest(`a`).dataset.name;
     dispatch(setActiveCity(newActiveCity));
   };
 
@@ -18,11 +19,11 @@ const CityList = ({cities}) => {
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {Object.values(cities).map((city) =>
+          {cities.map((city) =>
             <li key={city.name} className="locations__item">
               <a
                 className={`locations__item-link tabs__item ${activeCity === city.name ? `tabs__item--active` : ``}`}
-                onClick={handleCityClick}>
+                onClick={handleCityClick} data-name={city.name}>
                 <span>{city.name}</span>
               </a>
             </li>,

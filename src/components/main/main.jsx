@@ -74,7 +74,7 @@ const Main = () => {
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map city={activeCity} offers={relevantSortOffers} isHighlightActiveOffer={true}/>
+              <Map city={activeCity} offers={relevantSortOffers} isHighlightActiveOffer/>
             </section>
           </div>
         </div>
