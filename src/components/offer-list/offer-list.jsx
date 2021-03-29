@@ -35,7 +35,7 @@ const OfferList = ({offers, type}) => {
   };
 
   return <div className={getClassForOfferListByType(type)}>
-    {offers.map((value) => <OfferCard key={value.id} type={type} offer={value} handleEvent={handleEvent}/>)}
+    {offers.map((value) => <OfferCard key={value.id} type={type} offer={value} onHandleEvent={handleEvent}/>)}
   </div>;
 };
 

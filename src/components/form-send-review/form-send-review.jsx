@@ -49,9 +49,9 @@ const FormSendReview = ({id}) => {
   return <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit} ref={refForm}>
     <label className="reviews__label form__label" htmlFor="review">Your review</label>
     <div className="reviews__rating-form form__rating">
-      <MemoReviewStarList handleFormChange={handleRatingChange}/>
+      <MemoReviewStarList onStarsChange={handleRatingChange}/>
     </div>
-    <MemoReviewTextArea handleFormChange={handleCommentChange}/>
+    <MemoReviewTextArea onCommentChange={handleCommentChange}/>
     <div className="reviews__button-wrapper">
       <p className="reviews__help">
         To submit review please make sure to set <span className="reviews__star">rating</span> and describe
