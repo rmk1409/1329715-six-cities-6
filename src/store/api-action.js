@@ -53,7 +53,7 @@ const login = ({login: email, password}) => (dispatch, _getState, api) => {
     });
 };
 
-const postReview = (id, comment, successCb) => (dispatch, _getState, api) => {
+const postReview = (id, comment, successCb, errorCb) => (dispatch, _getState, api) => {
   new Promise((resolve) => {
     dispatch(setSendingReview(true));
     resolve();
@@ -63,8 +63,7 @@ const postReview = (id, comment, successCb) => (dispatch, _getState, api) => {
     dispatch(loadReviews(data));
     successCb();
   }).catch((err) => {
-    // eslint-disable-next-line no-alert
-    alert(`Some error happened while sending the review: ${err}`);
+    errorCb(err);
   }).finally(() => {
     dispatch(setSendingReview(false));
   });

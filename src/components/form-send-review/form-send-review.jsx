@@ -10,6 +10,7 @@ const FormSendReview = ({id}) => {
   const isReviewSending = useSelector((state) => state[NameSpace.SERVER].isReviewSending);
   const dispatch = useDispatch();
   const refForm = useRef();
+  const refErrorMsg = useRef();
   const [isReviewValid, setReviewValid] = useState(false);
   const initialReviewState = {
     rating: ``,
@@ -40,6 +41,13 @@ const FormSendReview = ({id}) => {
         refForm.current.reset();
         setReview(initialReviewState);
       }
+      if (refErrorMsg.current && refErrorMsg.current.textContent) {
+        refErrorMsg.current.textContent = ``;
+      }
+    }, (err) => {
+      if (refErrorMsg.current) {
+        refErrorMsg.current.textContent = `Some error happened while sending the review: ${err}`;
+      }
     }));
 
   };
@@ -49,6 +57,7 @@ const FormSendReview = ({id}) => {
     <div className="reviews__rating-form form__rating">
       <MemoReviewStarList onStarsChange={handleRatingChange}/>
     </div>
+    <p style={{color: `red`}} ref={refErrorMsg}/>
     <MemoReviewTextArea onCommentChange={handleCommentChange}/>
     <div className="reviews__button-wrapper">
       <p className="reviews__help">
