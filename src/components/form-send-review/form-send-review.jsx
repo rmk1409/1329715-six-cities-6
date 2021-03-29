@@ -1,4 +1,4 @@
-import React, {useRef, useState, useCallback} from "react";
+import React, {useRef, useState, useCallback, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {postReview} from "../../store/api-action";
 import * as PropTypes from "prop-types";
@@ -12,32 +12,36 @@ const FormSendReview = ({id}) => {
   const dispatch = useDispatch();
   const refForm = useRef();
   const [isReviewValid, setReviewValid] = useState(false);
-  const [review, setReview] = useState({
+  const initialReviewState = {
     rating: ``,
     review: ``,
-  });
+  };
+  const [review, setReview] = useState(initialReviewState);
+  const checkReviewValidation = () => {
+    return review.rating && review.review.length > 50 && review.review.length < 300;
+  };
 
-  const handleRatingChange = useCallback(
-      ({target}) => {
-        setReview((prevState) => ({...prevState, [target.name]: target.value}));
-        setReviewValid(review.rating && review.review.length > 50 && review.review.length < 300);
-      },
-      [review.rating]
-  );
+  useEffect(() => {
+    setReviewValid(checkReviewValidation());
+  }, [review]);
 
-  const handleCommentChange = useCallback(
-      ({target}) => {
-        setReview((prevState) => ({...prevState, [target.name]: target.value}));
-        setReviewValid(review.rating && review.review.length > 50 && review.review.length < 300);
-      },
-      [review.review]
-  );
+  const handleRatingChange = useCallback(({target}) => {
+    setReview((prevState) => ({...prevState, [target.name]: target.value}));
+  }, [review.rating]);
+
+  const handleCommentChange = useCallback(({target}) => {
+    setReview((prevState) => ({...prevState, [target.name]: target.value}));
+  }, [review.review]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     dispatch(setSendingReview(true));
     const comment = {rating: review.rating, comment: review.review};
-    dispatch(postReview(id, comment, refForm));
+    dispatch(postReview(id, comment, () => {
+      refForm.current.reset();
+      setReview(initialReviewState);
+    }));
+
   };
 
   return <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit} ref={refForm}>

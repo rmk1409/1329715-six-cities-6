@@ -29,7 +29,7 @@ const Offer = () => {
       dispatch(fetchReviews(id));
       dispatch(fetchNearby(id));
     }
-  }, []);
+  }, [id]);
   if (!currentOffer) {
     return <LoadingScreen/>;
   } else if (currentOffer.id === -1) {
