@@ -38,8 +38,10 @@ const FormSendReview = ({id}) => {
     dispatch(setSendingReview(true));
     const comment = {rating: review.rating, comment: review.review};
     dispatch(postReview(id, comment, () => {
-      refForm.current.reset();
-      setReview(initialReviewState);
+      if (refForm.current) {
+        refForm.current.reset();
+        setReview(initialReviewState);
+      }
     }));
 
   };
