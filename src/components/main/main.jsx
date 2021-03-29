@@ -17,37 +17,29 @@ const getOffers = (state) => state[NameSpace.SERVER].offers;
 const getActiveCity = (state) => state[NameSpace.CLIENT].activeCity;
 const getActiveSorting = (state) => state[NameSpace.CLIENT].activeSorting;
 
-const offerCitySelector = createSelector(
-    getOffers,
-    getActiveCity,
-    (offers, city) => {
-      return offers.filter((offer) => city === offer.city.name);
-    }
-);
+const offerCitySelector = createSelector(getOffers, getActiveCity, (offers, city) => {
+  return offers.filter((offer) => city === offer.city.name);
+});
 
-const offerSortingSelector = createSelector(
-    offerCitySelector,
-    getActiveSorting,
-    (offers, activeSorting) => {
-      const sortedOffers = [...offers];
-      switch (activeSorting) {
-        case SortOption.TOP_RATED_FIRST:
-          sortedOffers.sort((a, b) => b.rating - a.rating);
-          break;
-        case SortOption.LOW_PRICE_FIRST:
-          sortedOffers.sort((a, b) => a.price - b.price);
-          break;
-        case SortOption.HIGH_PRICE_FIRST:
-          sortedOffers.sort((a, b) => b.price - a.price);
-          break;
-      }
-      return sortedOffers;
-    }
-);
+const offerSortingSelector = createSelector(offerCitySelector, getActiveSorting, (offers, activeSorting) => {
+  const sortedOffers = [...offers];
+  switch (activeSorting) {
+    case SortOption.TOP_RATED_FIRST:
+      sortedOffers.sort((a, b) => b.rating - a.rating);
+      break;
+    case SortOption.LOW_PRICE_FIRST:
+      sortedOffers.sort((a, b) => a.price - b.price);
+      break;
+    case SortOption.HIGH_PRICE_FIRST:
+      sortedOffers.sort((a, b) => b.price - a.price);
+      break;
+  }
+  return sortedOffers;
+});
 
 const Main = () => {
-  const {activeCity} = useSelector((state) => state[NameSpace.CLIENT]);
-  const {isOffersLoaded} = useSelector((state) => state[NameSpace.SERVER]);
+  const activeCity = useSelector((state) => state[NameSpace.CLIENT].activeCity);
+  const isOffersLoaded = useSelector((state) => state[NameSpace.SERVER].isOffersLoaded);
   const dispatch = useDispatch();
   const relevantSortOffers = useSelector(offerSortingSelector);
   useEffect(() => {

@@ -6,10 +6,10 @@ import {Header} from "../header/header";
 import browserHistory from "../../browser-history";
 
 const Login = () => {
-  const {isUserAuthorized} = useSelector((state) => state[NameSpace.SERVER]);
+  const isUserAuthorized = useSelector((state) => state[NameSpace.SERVER].isUserAuthorized);
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     if (isUserAuthorized) {
       browserHistory.push(`/`);
     }

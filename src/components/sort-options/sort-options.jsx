@@ -5,7 +5,7 @@ import {setActiveSorting} from "../../store/action";
 import {NameSpace} from "../../store/reducers/reducer";
 
 const SortOptions = () => {
-  const {activeSorting} = useSelector((state) => state[NameSpace.CLIENT]);
+  const activeSorting = useSelector((state) => state[NameSpace.CLIENT].activeSorting);
   const dispatch = useDispatch();
   const [isOpened, setOpened] = useState(false);
 

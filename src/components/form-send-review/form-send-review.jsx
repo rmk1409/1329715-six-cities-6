@@ -8,7 +8,7 @@ import {MemoReviewStarList} from "../review-star-list/review-star-list";
 import {MemoReviewTextArea} from "../review-textarea/review-textarea";
 
 const FormSendReview = ({id}) => {
-  const {isReviewSending} = useSelector((state) => state[NameSpace.SERVER]);
+  const isReviewSending = useSelector((state) => state[NameSpace.SERVER].isReviewSending);
   const dispatch = useDispatch();
   const refForm = useRef();
   const [isReviewValid, setReviewValid] = useState(false);

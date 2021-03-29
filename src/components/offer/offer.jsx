@@ -16,12 +16,10 @@ import browserHistory from "../../browser-history";
 
 const Offer = () => {
   const {id} = useParams();
-  const {
-    reviewsForOpenedOffer: reviews,
-    currentOpenOfferData: currentOffer,
-    isUserAuthorized,
-    nearbyOffersForOpenedOffer
-  } = useSelector((state) => state[NameSpace.SERVER]);
+  const reviews = useSelector((state) => state[NameSpace.SERVER].reviewsForOpenedOffer);
+  const currentOffer = useSelector((state) => state[NameSpace.SERVER].currentOpenOfferData);
+  const isUserAuthorized = useSelector((state) => state[NameSpace.SERVER].isUserAuthorized);
+  const nearbyOffersForOpenedOffer = useSelector((state) => state[NameSpace.SERVER].nearbyOffersForOpenedOffer);
   const dispatch = useDispatch();
   useEffect(() => {
     if (!(currentOffer && currentOffer.id === +id)) {

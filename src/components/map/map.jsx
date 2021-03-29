@@ -8,8 +8,8 @@ import {NameSpace} from "../../store/reducers/reducer";
 import {offer as offerPropType} from "../../prop-types";
 
 const Map = ({offers, city, isHighlightActiveOffer}) => {
-  const {activeOfferId} = useSelector((state) => state[NameSpace.CLIENT]);
-  const {currentOpenOfferData} = useSelector((state) => state[NameSpace.SERVER]);
+  const activeOfferId = useSelector((state) => state[NameSpace.CLIENT].activeOfferId);
+  const currentOpenOfferData = useSelector((state) => state[NameSpace.SERVER].currentOpenOfferData);
   const effectDependencies = [city, offers];
   if (isHighlightActiveOffer) {
     effectDependencies.push(activeOfferId);
@@ -26,7 +26,7 @@ const Map = ({offers, city, isHighlightActiveOffer}) => {
     });
 
     const zoom = 12;
-    const centralCity = cities.find((curCity)=>curCity.name === city);
+    const centralCity = cities.find((curCity) => curCity.name === city);
     const map = leaflet.map(`map`, {
       center: centralCity.coords,
       zoom,

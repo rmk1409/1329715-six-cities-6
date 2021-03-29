@@ -8,7 +8,8 @@ import {NameSpace} from "../../store/reducers/reducer";
 import {Header} from "../header/header";
 
 const Favorites = () => {
-  const {favoriteOffers: offers, isFavoriteOffersLoaded} = useSelector((state) => state[NameSpace.SERVER]);
+  const offers = useSelector((state) => state[NameSpace.SERVER].favoriteOffers);
+  const isFavoriteOffersLoaded = useSelector((state) => state[NameSpace.SERVER].isFavoriteOffersLoaded);
   const dispatch = useDispatch();
 
   const cityToOffersMap = useMemo(() => {

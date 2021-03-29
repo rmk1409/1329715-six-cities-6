@@ -5,7 +5,7 @@ import {setActiveCity} from "../../store/action";
 import {NameSpace} from "../../store/reducers/reducer";
 
 const CityList = ({cities}) => {
-  const {activeCity} = useSelector((state) => state[NameSpace.CLIENT]);
+  const activeCity = useSelector((state) => state[NameSpace.CLIENT].activeCity);
   const dispatch = useDispatch();
   const handleCityClick = (evt) => {
     evt.preventDefault();

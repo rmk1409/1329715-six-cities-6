@@ -11,7 +11,7 @@ const getOfferClassByType = (type) => {
   let offerClass = {
     article: ``,
     wrapper: ``,
-    info: ``
+    info: ``,
   };
 
   switch (type) {
@@ -34,7 +34,7 @@ const getOfferClassByType = (type) => {
 };
 
 const OfferCard = ({offer, handleEvent, type}) => {
-  const {isUserAuthorized} = useSelector((state)=>state[NameSpace.SERVER]);
+  const isUserAuthorized = useSelector((state) => state[NameSpace.SERVER].isUserAuthorized);
   const dispatch = useDispatch();
   const bookmarkClass = `place-card__bookmark-button button ${addActiveClass(offer[`is_favorite`], `place-card__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(offer.rating);

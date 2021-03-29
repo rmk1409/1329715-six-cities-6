@@ -4,7 +4,8 @@ import {useSelector} from "react-redux";
 import {NameSpace} from "../../store/reducers/reducer";
 
 const Header = () => {
-  const {isUserAuthorized, authInfo} = useSelector((state) => state[NameSpace.SERVER]);
+  const isUserAuthorized = useSelector((state) => state[NameSpace.SERVER].isUserAuthorized);
+  const authInfo = useSelector((state) => state[NameSpace.SERVER].authInfo);
   return <header className="header">
     <div className="container">
       <div className="header__wrapper">
