@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, memo} from "react";
 import "leaflet/dist/leaflet.css";
 import leaflet from "leaflet";
 import PropTypes from "prop-types";
@@ -63,4 +63,6 @@ Map.propTypes = {
   isHighlightActiveOffer: PropTypes.bool.isRequired,
 };
 
-export {Map};
+const MemoMap = memo(Map);
+
+export {MemoMap};

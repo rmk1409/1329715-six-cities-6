@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, memo} from "react";
 import {SortOption} from "../../const";
 import {useDispatch, useSelector} from "react-redux";
 import {setActiveSorting} from "../../store/action";
@@ -46,4 +46,6 @@ const SortOptions = () => {
   </form>;
 };
 
-export {SortOptions};
+const MemoSortOptions = memo(SortOptions);
+
+export {MemoSortOptions};

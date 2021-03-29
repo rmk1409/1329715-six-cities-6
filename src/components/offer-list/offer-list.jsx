@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {OfferCard} from "../offer-card/offer-card";
 import {OfferType} from "../../const";
 import {useDispatch} from "react-redux";
 import {setActiveOffer as setActiveOfferAction} from "../../store/action";
+import {MemoOfferCard} from "../offer-card/offer-card";
 
 const getClassForOfferListByType = (type) => {
   let offerListClass = ``;
@@ -35,7 +35,7 @@ const OfferList = ({offers, type}) => {
   };
 
   return <div className={getClassForOfferListByType(type)}>
-    {offers.map((value) => <OfferCard key={value.id} type={type} offer={value} onHandleEvent={handleEvent}/>)}
+    {offers.map((value) => <MemoOfferCard key={value.id} type={type} offer={value} onHandleEvent={handleEvent}/>)}
   </div>;
 };
 

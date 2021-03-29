@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import PropTypes from "prop-types";
 import {useDispatch, useSelector} from "react-redux";
 import {setActiveCity} from "../../store/action";
@@ -41,4 +41,6 @@ CityList.propTypes = {
   })).isRequired,
 };
 
-export {CityList};
+const MemoCityList = memo(CityList);
+
+export {MemoCityList};

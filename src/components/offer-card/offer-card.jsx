@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import PropTypes from "prop-types";
 import {addActiveClass, getRatingWidth} from "../../util";
 import {OfferType} from "../../const";
@@ -106,4 +106,6 @@ OfferCard.propTypes = {
   type: PropTypes.string.isRequired,
 };
 
-export {OfferCard};
+const MemoOfferCard = memo(OfferCard);
+
+export {MemoOfferCard};

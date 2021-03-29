@@ -74,9 +74,7 @@ const postFavoriteHotel = (id, status) => (dispatch, _getState, api) => {
     .then(({data: updatedOffer}) => {
       dispatch(updateOffer(updatedOffer));
     })
-    .catch((err) => {
-      // eslint-disable-next-line no-alert
-      alert(`Some error happened while updating status hotel: ${err}`);
+    .catch(() => {
     });
 };
 

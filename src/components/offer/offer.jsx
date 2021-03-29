@@ -9,10 +9,10 @@ import LoadingScreen from "../loading-screen/loading-screen";
 import {fetchNearby, fetchOffer, fetchReviews, postFavoriteHotel} from "../../store/api-action";
 import {NameSpace} from "../../store/reducers/reducer";
 import {FormSendReview} from "../form-send-review/form-send-review";
-import {Header} from "../header/header";
-import {Map} from "../map/map";
 import {OfferList} from "../offer-list/offer-list";
 import browserHistory from "../../browser-history";
+import {MemoMap} from "../map/map";
+import {MemoHeader} from "../header/header";
 
 const Offer = () => {
   const {id} = useParams();
@@ -48,7 +48,7 @@ const Offer = () => {
   };
 
   return <div className="page">
-    <Header/>
+    <MemoHeader/>
 
     <main className="page__main page__main--property">
       <section className="property">
@@ -139,7 +139,7 @@ const Offer = () => {
           </div>
         </div>
         <section className="property__map map">
-          <Map
+          <MemoMap
             city={currentOffer.city.name} offers={nearbyOffersForOpenedOffer.slice(0, 3)}
             isHighlightActiveOffer={false}
           />

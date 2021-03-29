@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {NameSpace} from "../../store/reducers/reducer";
@@ -35,4 +35,6 @@ const Header = () => {
   </header>;
 };
 
-export {Header};
+const MemoHeader = memo(Header);
+
+export {MemoHeader};

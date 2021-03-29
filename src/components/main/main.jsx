@@ -6,11 +6,11 @@ import {fetchOffers} from "../../store/api-action";
 import LoadingScreen from "../loading-screen/loading-screen";
 import {resetMainPage} from "../../store/action";
 import {NameSpace} from "../../store/reducers/reducer";
-import {CityList} from "../city-list/city-list";
-import {Header} from "../header/header";
-import {Map} from "../map/map";
+import {MemoCityList} from "../city-list/city-list";
+import {MemoHeader} from "../header/header";
+import {MemoMap} from "../map/map";
 import {OfferList} from "../offer-list/offer-list";
-import {SortOptions} from "../sort-options/sort-options";
+import {MemoSortOptions} from "../sort-options/sort-options";
 import {createSelector} from 'reselect';
 
 const getOffers = (state) => state[NameSpace.SERVER].offers;
@@ -60,21 +60,21 @@ const Main = () => {
   }
 
   return <div className="page page--gray page--main">
-    <Header/>
+    <MemoHeader/>
 
     <main className="page__main page__main--index">
-      <CityList cities={cities}/>
+      <MemoCityList cities={cities}/>
       <div className="cities">
         <div className="cities__places-container container">
           <section className="cities__places places">
             <h2 className="visually-hidden">Places</h2>
             <b className="places__found">{relevantSortOffers.length} places to stay in {activeCity}</b>
-            <SortOptions/>
+            <MemoSortOptions/>
             <OfferList offers={relevantSortOffers} type={OfferType.MAIN}/>
           </section>
           <div className="cities__right-section">
             <section className="cities__map map">
-              <Map city={activeCity} offers={relevantSortOffers} isHighlightActiveOffer/>
+              <MemoMap city={activeCity} offers={relevantSortOffers} isHighlightActiveOffer/>
             </section>
           </div>
         </div>

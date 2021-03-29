@@ -2,8 +2,8 @@ import React, {useEffect, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../store/api-action";
 import {NameSpace} from "../../store/reducers/reducer";
-import {Header} from "../header/header";
 import browserHistory from "../../browser-history";
+import {MemoHeader} from "../header/header";
 
 const Login = () => {
   const isUserAuthorized = useSelector((state) => state[NameSpace.SERVER].isUserAuthorized);
@@ -27,7 +27,7 @@ const Login = () => {
   };
 
   return <div className="page page--gray page--login">
-    <Header/>
+    <MemoHeader/>
 
     <main className="page__main page__main--login">
       <div className="page__login-container container">

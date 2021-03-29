@@ -68,7 +68,9 @@ const serverReducer = createReducer(initialState, (builder) => {
       state.favoriteOffers.splice(state.favoriteOffers.findIndex((offer) => offer.id === action.payload.id), 1);
     }
     updateOffers(state.nearbyOffersForOpenedOffer, action);
-    state.currentOpenOfferData = action.payload;
+    if (state.currentOpenOfferData.id === action.payload.id) {
+      state.currentOpenOfferData = action.payload;
+    }
   });
 });
 
