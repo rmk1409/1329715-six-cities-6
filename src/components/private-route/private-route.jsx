@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import {NameSpace} from "../../store/reducers/reducer";
 
 const PrivateRoute = ({render, path, exact}) => {
-  const {isUserAuthorized} = useSelector((state)=>state[NameSpace.SERVER]);
+  const isUserAuthorized = useSelector((state) => state[NameSpace.SERVER].isUserAuthorized);
   return (
     <Route path={path} exact={exact} render={(routeProps) => {
       return (isUserAuthorized ? render(routeProps) : <Redirect to={`/login`}/>);

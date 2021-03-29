@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import PropTypes from "prop-types";
 import {addActiveClass, getRatingWidth} from "../../util";
 import {OfferType} from "../../const";
@@ -11,7 +11,7 @@ const getOfferClassByType = (type) => {
   let offerClass = {
     article: ``,
     wrapper: ``,
-    info: ``
+    info: ``,
   };
 
   switch (type) {
@@ -33,8 +33,8 @@ const getOfferClassByType = (type) => {
   return offerClass;
 };
 
-const OfferCard = ({offer, handleEvent, type}) => {
-  const {isUserAuthorized} = useSelector((state)=>state[NameSpace.SERVER]);
+const OfferCard = ({offer, onHandleEvent, type}) => {
+  const isUserAuthorized = useSelector((state) => state[NameSpace.SERVER].isUserAuthorized);
   const dispatch = useDispatch();
   const bookmarkClass = `place-card__bookmark-button button ${addActiveClass(offer[`is_favorite`], `place-card__bookmark-button--active`)}`;
   const ratingWidth = getRatingWidth(offer.rating);
@@ -58,8 +58,8 @@ const OfferCard = ({offer, handleEvent, type}) => {
   };
 
   return <article
-    className={`${offerClass.article} place-card`} onMouseEnter={handleEvent} data-id={offer.id}
-    onMouseLeave={handleEvent}>
+    className={`${offerClass.article} place-card`} onMouseEnter={onHandleEvent} data-id={offer.id}
+    onMouseLeave={onHandleEvent}>
     {type === OfferType.MAIN && offer[`is_premium`] ?
       <div className="place-card__mark">
         <span>Premium</span>
@@ -102,8 +102,10 @@ const OfferCard = ({offer, handleEvent, type}) => {
 
 OfferCard.propTypes = {
   offer: PropTypes.object.isRequired,
-  handleEvent: PropTypes.func.isRequired,
+  onHandleEvent: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
 };
 
-export {OfferCard};
+const MemoOfferCard = memo(OfferCard);
+
+export {MemoOfferCard};

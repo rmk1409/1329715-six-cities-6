@@ -5,10 +5,11 @@ import {useDispatch, useSelector} from "react-redux";
 import LoadingScreen from "../loading-screen/loading-screen";
 import {fetchFavoriteOffers} from "../../store/api-action";
 import {NameSpace} from "../../store/reducers/reducer";
-import {Header} from "../header/header";
+import {MemoHeader} from "../header/header";
 
 const Favorites = () => {
-  const {favoriteOffers: offers, isFavoriteOffersLoaded} = useSelector((state) => state[NameSpace.SERVER]);
+  const offers = useSelector((state) => state[NameSpace.SERVER].favoriteOffers);
+  const isFavoriteOffersLoaded = useSelector((state) => state[NameSpace.SERVER].isFavoriteOffersLoaded);
   const dispatch = useDispatch();
 
   const cityToOffersMap = useMemo(() => {
@@ -41,7 +42,7 @@ const Favorites = () => {
   }
 
   return <div className="page">
-    <Header/>
+    <MemoHeader/>
 
     <main className="page__main page__main--favorites">
       <div className="page__favorites-container container">

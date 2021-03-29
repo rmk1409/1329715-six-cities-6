@@ -9,19 +9,17 @@ import LoadingScreen from "../loading-screen/loading-screen";
 import {fetchNearby, fetchOffer, fetchReviews, postFavoriteHotel} from "../../store/api-action";
 import {NameSpace} from "../../store/reducers/reducer";
 import {FormSendReview} from "../form-send-review/form-send-review";
-import {Header} from "../header/header";
-import {Map} from "../map/map";
 import {OfferList} from "../offer-list/offer-list";
 import browserHistory from "../../browser-history";
+import {MemoMap} from "../map/map";
+import {MemoHeader} from "../header/header";
 
 const Offer = () => {
   const {id} = useParams();
-  const {
-    reviewsForOpenedOffer: reviews,
-    currentOpenOfferData: currentOffer,
-    isUserAuthorized,
-    nearbyOffersForOpenedOffer
-  } = useSelector((state) => state[NameSpace.SERVER]);
+  const reviews = useSelector((state) => state[NameSpace.SERVER].reviewsForOpenedOffer);
+  const currentOffer = useSelector((state) => state[NameSpace.SERVER].currentOpenOfferData);
+  const isUserAuthorized = useSelector((state) => state[NameSpace.SERVER].isUserAuthorized);
+  const nearbyOffersForOpenedOffer = useSelector((state) => state[NameSpace.SERVER].nearbyOffersForOpenedOffer);
   const dispatch = useDispatch();
   useEffect(() => {
     if (!(currentOffer && currentOffer.id === +id)) {
@@ -29,7 +27,7 @@ const Offer = () => {
       dispatch(fetchReviews(id));
       dispatch(fetchNearby(id));
     }
-  }, []);
+  }, [id]);
   if (!currentOffer) {
     return <LoadingScreen/>;
   } else if (currentOffer.id === -1) {
@@ -50,7 +48,7 @@ const Offer = () => {
   };
 
   return <div className="page">
-    <Header/>
+    <MemoHeader/>
 
     <main className="page__main page__main--property">
       <section className="property">
@@ -141,7 +139,7 @@ const Offer = () => {
           </div>
         </div>
         <section className="property__map map">
-          <Map
+          <MemoMap
             city={currentOffer.city.name} offers={nearbyOffersForOpenedOffer.slice(0, 3)}
             isHighlightActiveOffer={false}
           />

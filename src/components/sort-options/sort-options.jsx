@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, {useState, memo} from "react";
 import {SortOption} from "../../const";
 import {useDispatch, useSelector} from "react-redux";
 import {setActiveSorting} from "../../store/action";
 import {NameSpace} from "../../store/reducers/reducer";
 
 const SortOptions = () => {
-  const {activeSorting} = useSelector((state) => state[NameSpace.CLIENT]);
+  const activeSorting = useSelector((state) => state[NameSpace.CLIENT].activeSorting);
   const dispatch = useDispatch();
   const [isOpened, setOpened] = useState(false);
 
@@ -46,4 +46,6 @@ const SortOptions = () => {
   </form>;
 };
 
-export {SortOptions};
+const MemoSortOptions = memo(SortOptions);
+
+export {MemoSortOptions};

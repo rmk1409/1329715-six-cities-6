@@ -26,12 +26,10 @@ const initialState = {
 };
 
 const updateOffers = (offers, action) => {
-  const indexInOffers = offers.findIndex((offer) => offer.id === action.payload.id);
-  const newOffers = [...offers];
-  if (indexInOffers !== -1) {
-    newOffers[indexInOffers] = action.payload;
+  const index = offers.findIndex((offer) => offer.id === action.payload.id);
+  if (index !== -1) {
+    offers[index] = action.payload;
   }
-  return indexInOffers === -1 ? offers : newOffers;
 };
 
 const serverReducer = createReducer(initialState, (builder) => {
@@ -62,15 +60,17 @@ const serverReducer = createReducer(initialState, (builder) => {
     state.isReviewSending = action.payload;
   });
   builder.addCase(updateOffer, (state, action) => {
-    state.offers = updateOffers(state.offers, action);
-    state.favoriteOffers = updateOffers(state.favoriteOffers, action);
+    updateOffers(state.offers, action);
+    updateOffers(state.favoriteOffers, action);
     if (action.payload[`is_favorite`]) {
       state.favoriteOffers.push(action.payload);
     } else {
       state.favoriteOffers.splice(state.favoriteOffers.findIndex((offer) => offer.id === action.payload.id), 1);
     }
-    state.nearbyOffersForOpenedOffer = updateOffers(state.nearbyOffersForOpenedOffer, action);
-    state.currentOpenOfferData = action.payload;
+    updateOffers(state.nearbyOffersForOpenedOffer, action);
+    if (state.currentOpenOfferData.id === action.payload.id) {
+      state.currentOpenOfferData = action.payload;
+    }
   });
 });
 

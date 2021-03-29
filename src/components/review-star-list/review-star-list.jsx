@@ -4,14 +4,14 @@ import * as PropTypes from "prop-types";
 
 const ratings = [`perfect`, `good`, `not bad`, `badly`, `terribly`];
 
-const ReviewStarList = ({handleFormChange}) => (
+const ReviewStarList = ({onStarsChange}) => (
   ratings.map((rating, index) =>
-    <ReviewStar key={rating} rating={rating} index={ratings.length - index} handleFormChange={handleFormChange}/>
+    <ReviewStar key={rating} rating={rating} index={ratings.length - index} onStarsChange={onStarsChange}/>
   )
 );
 
 ReviewStarList.propTypes = {
-  handleFormChange: PropTypes.func.isRequired,
+  onStarsChange: PropTypes.func.isRequired,
 };
 
 const MemoReviewStarList = memo(ReviewStarList);
