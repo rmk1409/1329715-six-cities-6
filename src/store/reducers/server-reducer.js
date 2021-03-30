@@ -61,17 +61,19 @@ const serverReducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(updateOffer, (state, action) => {
     updateOffers(state.offers, action);
-    updateOffers(state.favoriteOffers, action);
+
     if (action.payload[`is_favorite`]) {
       state.favoriteOffers.push(action.payload);
     } else {
       state.favoriteOffers.splice(state.favoriteOffers.findIndex((offer) => offer.id === action.payload.id), 1);
     }
+
     updateOffers(state.nearbyOffersForOpenedOffer, action);
-    if (state.currentOpenOfferData.id === action.payload.id) {
+
+    if (state.currentOpenOfferData && state.currentOpenOfferData.id === action.payload.id) {
       state.currentOpenOfferData = action.payload;
     }
   });
 });
 
-export {serverReducer};
+export {serverReducer, initialState};

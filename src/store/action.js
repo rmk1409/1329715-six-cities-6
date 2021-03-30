@@ -18,19 +18,20 @@ const ActionType = {
   UPDATE_OFFER: `server/update-offer`,
 };
 
-const setSendingReview = createAction(ActionType.SET_SENDING_REVIEW);
+const resetMainPage = createAction(ActionType.RESET_MAIN_PAGE);
 const setActiveCity = createAction(ActionType.SET_ACTIVE_CITY);
 const setActiveSorting = createAction(ActionType.SET_ACTIVE_SORTING);
 const setActiveOffer = createAction(ActionType.SET_ACTIVE_OFFER_ID);
-const resetMainPage = createAction(ActionType.RESET_MAIN_PAGE);
+const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE);
+
 const loadOffers = createAction(ActionType.LOAD_OFFERS);
-const loadFavoriteOffers = createAction(ActionType.LOAD_FAVORITE_OFFERS);
 const setAuthorization = createAction(ActionType.SET_AUTHORIZATION);
 const setAuthorizationInfo = createAction(ActionType.SET_AUTHORIZATION_INFO);
-const redirectToRoute = createAction(ActionType.REDIRECT_TO_ROUTE);
 const loadAnOffer = createAction(ActionType.LOAD_OFFER);
 const loadReviews = createAction(ActionType.LOAD_REVIEWS);
 const loadNearby = createAction(ActionType.LOAD_NEARBY_OFFERS);
+const loadFavoriteOffers = createAction(ActionType.LOAD_FAVORITE_OFFERS);
+const setSendingReview = createAction(ActionType.SET_SENDING_REVIEW);
 const updateOffer = createAction(ActionType.UPDATE_OFFER);
 
 export {

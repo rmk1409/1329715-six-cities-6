@@ -24,4 +24,4 @@ const clientReducer = createReducer(initialState, (builder) => {
   });
 });
 
-export {clientReducer};
+export {clientReducer, initialState};
