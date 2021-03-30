@@ -9,8 +9,7 @@ const CityList = ({cities}) => {
   const dispatch = useDispatch();
   const handleCityClick = (evt) => {
     evt.preventDefault();
-    const target = evt.target;
-    const newActiveCity = target.tagName === `A` ? target.dataset.name : target.closest(`a`).dataset.name;
+    const newActiveCity = evt.currentTarget.dataset.name;
     dispatch(setActiveCity(newActiveCity));
   };
 
