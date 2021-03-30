@@ -8,6 +8,8 @@ import {checkAuth} from "./store/api-action";
 import {setAuthorization} from "./store/action";
 import {redirect} from "./store/middlewares/redirect";
 import {configureStore} from "@reduxjs/toolkit";
+import {Router} from "react-router-dom";
+import browserHistory from "./browser-history";
 
 const axios = createAPI(() => store.dispatch(setAuthorization(false)));
 
@@ -25,7 +27,9 @@ store.dispatch(checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>
-      <App/>
+      <Router history={browserHistory}>
+        <App/>
+      </Router>
     </Provider>,
     document.querySelector(`#root`),
 );

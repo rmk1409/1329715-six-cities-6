@@ -35,16 +35,16 @@ const Login = () => {
           <h1 className="login__title">Sign in</h1>
           <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
             <div className="login__input-wrapper form__input-wrapper">
-              <label className="visually-hidden">E-mail</label>
+              <label className="visually-hidden" htmlFor="email-input">E-mail</label>
               <input
                 ref={loginRef} className="login__input form__input" type="email" name="email" placeholder="Email"
-                required=""/>
+                required="" id="email-input"/>
             </div>
             <div className="login__input-wrapper form__input-wrapper">
-              <label className="visually-hidden">Password</label>
+              <label className="visually-hidden" htmlFor="password-input">Password</label>
               <input
                 ref={passwordRef} className="login__input form__input" type="password" name="password"
-                placeholder="Password" required=""/>
+                placeholder="Password" required="" id="password-input"/>
             </div>
             <button className="login__submit form__submit button" type="submit">Sign in</button>
           </form>
