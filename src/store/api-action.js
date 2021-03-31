@@ -9,33 +9,33 @@ import {
 } from "./action";
 
 const fetchOffers = () => (dispatch, _getState, api) => {
-  api.get(`/hotels`)
+  return api.get(`/hotels`)
     .then(({data}) => dispatch(loadOffers(data)));
 };
 
 const fetchFavoriteOffers = () => (dispatch, _getState, api) => {
-  api.get(`/favorite`)
+  return api.get(`/favorite`)
     .then(({data}) => dispatch(loadFavoriteOffers(data)));
 };
 
 const fetchReviews = (id) => (dispatch, _getState, api) => {
-  api.get(`/comments/${id}`)
+  return api.get(`/comments/${id}`)
     .then(({data}) => dispatch(loadReviews(data)));
 };
 
 const fetchNearby = (id) => (dispatch, _getState, api) => {
-  api.get(`/hotels/${id}/nearby`)
+  return api.get(`/hotels/${id}/nearby`)
     .then(({data}) => dispatch(loadNearby(data)));
 };
 
 const fetchOffer = (id) => (dispatch, _getState, api) => {
-  api.get(`/hotels/${id}`)
+  return api.get(`/hotels/${id}`)
     .then(({data}) => dispatch(loadAnOffer(data)))
     .catch(() => dispatch(loadAnOffer({id: -1})));
 };
 
 const checkAuth = () => (dispatch, _getState, api) => {
-  api.get(`/login`)
+  return api.get(`/login`)
     .then(({data}) => {
       dispatch(setAuthorization(true));
       dispatch(setAuthorizationInfo(data));
@@ -46,7 +46,7 @@ const checkAuth = () => (dispatch, _getState, api) => {
 };
 
 const login = ({login: email, password}) => (dispatch, _getState, api) => {
-  api.post(`/login`, {email, password})
+  return api.post(`/login`, {email, password})
     .then(({data}) => {
       dispatch(setAuthorization(true));
       dispatch(setAuthorizationInfo(data));
@@ -54,7 +54,7 @@ const login = ({login: email, password}) => (dispatch, _getState, api) => {
 };
 
 const postReview = (id, comment, successCb, errorCb) => (dispatch, _getState, api) => {
-  new Promise((resolve) => {
+  return new Promise((resolve) => {
     dispatch(setSendingReview(true));
     resolve();
   }).then(() => {
@@ -70,7 +70,7 @@ const postReview = (id, comment, successCb, errorCb) => (dispatch, _getState, ap
 };
 
 const postFavoriteHotel = (id, status) => (dispatch, _getState, api) => {
-  api.post(`/favorite/${id}/${status}`)
+  return api.post(`/favorite/${id}/${status}`)
     .then(({data: updatedOffer}) => {
       dispatch(updateOffer(updatedOffer));
     })
