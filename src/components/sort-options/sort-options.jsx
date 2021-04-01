@@ -22,26 +22,13 @@ const SortOptions = () => {
     <ul
       className={`places__options places__options--custom ${isOpened ? `places__options--opened` : ``}`}
       onClick={handleSortingClick}>
-      <li
-        className={`places__option ${activeSorting === SortOption.POPULAR ? `places__option--active` : ``}`}
-        tabIndex="0" data-id={SortOption.POPULAR}>
-        Popular
-      </li>
-      <li
-        className={`places__option ${activeSorting === SortOption.LOW_PRICE_FIRST ? `places__option--active` : ``}`}
-        tabIndex="0" data-id={SortOption.LOW_PRICE_FIRST}>
-        Price: low to high
-      </li>
-      <li
-        className={`places__option ${activeSorting === SortOption.HIGH_PRICE_FIRST ? `places__option--active` : ``}`}
-        tabIndex="0" data-id={SortOption.HIGH_PRICE_FIRST}>
-        Price: high to low
-      </li>
-      <li
-        className={`places__option ${activeSorting === SortOption.TOP_RATED_FIRST ? `places__option--active` : ``}`}
-        tabIndex="0" data-id={SortOption.TOP_RATED_FIRST}>
-        Top rated first
-      </li>
+      {Object.values(SortOption).map((option) => (
+        <li
+          className={`places__option ${activeSorting === {option} ? `places__option--active` : ``}`}
+          tabIndex="0" data-id={option} key={option}>
+          {option}
+        </li>
+      ))}
     </ul>
   </form>;
 };

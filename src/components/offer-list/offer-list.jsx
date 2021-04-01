@@ -4,6 +4,7 @@ import {OfferType} from "../../const";
 import {useDispatch} from "react-redux";
 import {setActiveOffer as setActiveOfferAction} from "../../store/action";
 import {MemoOfferCard} from "../offer-card/offer-card";
+import {offer} from "../../prop-types";
 
 const getClassForOfferListByType = (type) => {
   let offerListClass = ``;
@@ -40,7 +41,7 @@ const OfferList = ({offers, type}) => {
 };
 
 OfferList.propTypes = {
-  offers: PropTypes.array.isRequired,
+  offers: PropTypes.arrayOf(offer).isRequired,
   type: PropTypes.string.isRequired,
 };
 

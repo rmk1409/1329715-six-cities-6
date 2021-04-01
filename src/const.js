@@ -35,12 +35,35 @@ const cities = [
 
 const SortOption = {
   POPULAR: `Popular`,
-  LOW_PRICE_FIRST: `Low-price-first`,
-  HIGH_PRICE_FIRST: `High-price-first`,
-  TOP_RATED_FIRST: `Top-rated-first`,
+  LOW_PRICE_FIRST: `Price: low to high`,
+  HIGH_PRICE_FIRST: `Price: high to low`,
+  TOP_RATED_FIRST: `Top rated first`,
+};
+
+const Routing = {
+  ROOT: `/`,
+  LOGIN: `/login`,
+  FAVORITE: `/favorite`,
+  FAVORITES: `/favorites`,
+  OFFER: `/offer`,
+  HOTELS: `/hotels`,
+  COMMENTS: `/comments`,
 };
 
 const MAX_SHOWN_PHOTOS = 6;
 const MAX_SHOWN_REVIEWS = 10;
 
-export {ONE_STAR_WIDTH, OfferType, SortOption, cities, MAX_SHOWN_PHOTOS, MAX_SHOWN_REVIEWS};
+const MIN_REVIEW_LENGTH = 50;
+const MAX_REVIEW_LENGTH = 300;
+
+export {
+  ONE_STAR_WIDTH,
+  OfferType,
+  SortOption,
+  cities,
+  MAX_SHOWN_PHOTOS,
+  MAX_SHOWN_REVIEWS,
+  Routing,
+  MIN_REVIEW_LENGTH,
+  MAX_REVIEW_LENGTH
+};

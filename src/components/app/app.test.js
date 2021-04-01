@@ -9,6 +9,7 @@ import configureStore from 'redux-mock-store';
 import {NameSpace} from "../../store/reducers/reducer";
 import {initialState as initialStateServer} from "../../store/reducers/server-reducer";
 import {initialState as initialStateClient} from "../../store/reducers/client-reducer";
+import {Routing} from "../../const";
 
 const stubOffers = [
   {
@@ -194,12 +195,18 @@ const stubOffers = [
 ];
 
 const mockStore = configureStore({});
+
 describe(`Test routing`, () => {
+  let history;
+
+  beforeAll(() => {
+    history = createMemoryHistory();
+  });
+
   jest.spyOn(redux, `useSelector`);
   jest.spyOn(redux, `useDispatch`);
 
   it(`Render 'Main Page' when user navigate to '/' url`, () => {
-    const history = createMemoryHistory();
     const store = mockStore({
       [NameSpace.SERVER]: {...initialStateServer, offers: stubOffers, isOffersLoaded: true},
       [NameSpace.CLIENT]: {...initialStateClient},
@@ -218,8 +225,7 @@ describe(`Test routing`, () => {
   });
 
   it(`Render 'Sign in' when user navigate to '/login' url`, () => {
-    const history = createMemoryHistory();
-    history.push(`/login`);
+    history.push(Routing.LOGIN);
 
     const store = mockStore({
       [NameSpace.SERVER]: {...initialStateServer},
@@ -236,8 +242,7 @@ describe(`Test routing`, () => {
   });
 
   it(`Render 'Favorites' when user navigate to '/favorites' url`, () => {
-    const history = createMemoryHistory();
-    history.push(`/favorites`);
+    history.push(Routing.FAVORITES);
 
     const store = mockStore({
       [NameSpace.SERVER]: {
@@ -259,8 +264,7 @@ describe(`Test routing`, () => {
   });
 
   it(`Render 'Offer' when user navigate to '/offer/id' url`, () => {
-    const history = createMemoryHistory();
-    history.push(`/offer/1`);
+    history.push(`${Routing.OFFER}/1`);
 
     const store = mockStore({
       [NameSpace.SERVER]: {...initialStateServer, currentOpenOfferData: stubOffers[0]},
@@ -279,7 +283,6 @@ describe(`Test routing`, () => {
   });
 
   it(`Render '404' when user navigate to 'wrong address' url`, () => {
-    const history = createMemoryHistory();
     history.push(`/some-wrong-address`);
 
     render(

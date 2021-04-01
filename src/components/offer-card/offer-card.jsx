@@ -1,7 +1,7 @@
 import React, {memo} from "react";
 import PropTypes from "prop-types";
 import {addActiveClass, getRatingWidth} from "../../util";
-import {OfferType} from "../../const";
+import {OfferType, Routing} from "../../const";
 import browserHistory from "../../browser-history";
 import {useDispatch, useSelector} from "react-redux";
 import {NameSpace} from "../../store/reducers/reducer";
@@ -50,7 +50,7 @@ const OfferCard = ({offer, onHandleEvent, type}) => {
   const handleClickFavorite = (evt) => {
     evt.preventDefault();
     if (!isUserAuthorized) {
-      browserHistory.push(`/login`);
+      browserHistory.push(Routing.LOGIN);
     } else {
       const newStatus = +!offer[`is_favorite`];
       dispatch(postFavoriteHotel(offer.id, newStatus));

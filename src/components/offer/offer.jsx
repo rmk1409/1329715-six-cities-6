@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useParams} from "react-router-dom";
 import {NotFound} from "../404/404";
-import {MAX_SHOWN_PHOTOS, MAX_SHOWN_REVIEWS, OfferType} from "../../const";
+import {MAX_SHOWN_PHOTOS, MAX_SHOWN_REVIEWS, OfferType, Routing} from "../../const";
 import {addActiveClass, getRatingWidth} from "../../util";
 import {Review} from "../review/review";
 import {useDispatch, useSelector} from "react-redux";
@@ -40,7 +40,7 @@ const Offer = () => {
   const handleClickFavorite = (evt) => {
     evt.preventDefault();
     if (!isUserAuthorized) {
-      browserHistory.push(`/login`);
+      browserHistory.push(Routing.LOGIN);
     } else {
       const newStatus = +!currentOffer[`is_favorite`];
       dispatch(postFavoriteHotel(id, newStatus));

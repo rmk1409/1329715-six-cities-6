@@ -6,17 +6,18 @@ import {Favorites} from "../favorites/favorites";
 import {Login} from "../login/login";
 import {Main} from "../main/main";
 import {Offer} from "../offer/offer";
+import {Routing} from "../../const";
 
 const App = () => (
   <Switch>
-    <Route path="/" exact>
+    <Route path={Routing.ROOT} exact>
       <Main/>
     </Route>
-    <Route path="/login" exact>
+    <Route path={Routing.LOGIN} exact>
       <Login/>
     </Route>
-    <PrivateRoute exact path="/favorites" render={() => <Favorites/>}/>
-    <Route path="/offer/:id" exact>
+    <PrivateRoute exact path={Routing.FAVORITES} render={() => <Favorites/>}/>
+    <Route path={`${Routing.OFFER}/:id`} exact>
       <Offer/>
     </Route>
     <Route>

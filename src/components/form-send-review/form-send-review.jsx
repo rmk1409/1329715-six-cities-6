@@ -5,6 +5,7 @@ import * as PropTypes from "prop-types";
 import {NameSpace} from "../../store/reducers/reducer";
 import {MemoReviewStarList} from "../review-star-list/review-star-list";
 import {MemoReviewTextArea} from "../review-textarea/review-textarea";
+import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH} from "../../const";
 
 const FormSendReview = ({id}) => {
   const isReviewSending = useSelector((state) => state[NameSpace.SERVER].isReviewSending);
@@ -18,7 +19,7 @@ const FormSendReview = ({id}) => {
   };
   const [review, setReview] = useState(initialReviewState);
   const checkReviewValidation = () => {
-    return review.rating && review.review.length > 50 && review.review.length < 300;
+    return review.rating && review.review.length > MIN_REVIEW_LENGTH && review.review.length < MAX_REVIEW_LENGTH;
   };
 
   useEffect(() => {
