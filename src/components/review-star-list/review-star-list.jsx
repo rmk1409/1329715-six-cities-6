@@ -1,8 +1,7 @@
 import React, {memo} from "react";
 import {ReviewStar} from "../review-star/review-star";
 import * as PropTypes from "prop-types";
-
-const ratings = [`perfect`, `good`, `not bad`, `badly`, `terribly`];
+import {ratings} from "../../const";
 
 const ReviewStarList = ({onStarsChange}) => (
   ratings.map((rating, index) =>
@@ -16,4 +15,4 @@ ReviewStarList.propTypes = {
 
 const MemoReviewStarList = memo(ReviewStarList);
 
-export {MemoReviewStarList};
+export {MemoReviewStarList, ReviewStarList};

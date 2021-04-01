@@ -33,6 +33,8 @@ const cities = [
   },
 ];
 
+const ratings = [`perfect`, `good`, `not bad`, `badly`, `terribly`];
+
 const SortOption = {
   POPULAR: `Popular`,
   LOW_PRICE_FIRST: `Price: low to high`,
@@ -61,6 +63,7 @@ export {
   OfferType,
   SortOption,
   cities,
+  ratings,
   MAX_SHOWN_PHOTOS,
   MAX_SHOWN_REVIEWS,
   Routing,
