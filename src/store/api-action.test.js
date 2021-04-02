@@ -11,18 +11,25 @@ import {
 import {createAPI} from "../services/api";
 import MockAdapter from "axios-mock-adapter";
 import {ActionType} from "./action";
+import {Routing} from "../const";
 
 const api = createAPI(() => {
 });
 
+let apiMock;
+let dispatch;
+
 describe(`Api actions work correctly`, () => {
+  beforeEach(() => {
+    apiMock = new MockAdapter(api);
+    dispatch = jest.fn();
+  });
+
   it(`fetchOffers works correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
     const action = fetchOffers();
 
     apiMock
-      .onGet(`/hotels`)
+      .onGet(Routing.HOTELS)
       .reply(200, [{fake: true}]);
 
     return action(dispatch, () => {
@@ -37,12 +44,10 @@ describe(`Api actions work correctly`, () => {
   });
 
   it(`fetchFavoriteOffers works correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
     const action = fetchFavoriteOffers();
 
     apiMock
-      .onGet(`/favorite`)
+      .onGet(Routing.FAVORITE)
       .reply(200, [{fake: true}]);
 
     return action(dispatch, () => {
@@ -57,13 +62,11 @@ describe(`Api actions work correctly`, () => {
   });
 
   it(`fetchReviews works correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
     const testId = 1;
     const action = fetchReviews(testId);
 
     apiMock
-      .onGet(`/comments/${testId}`)
+      .onGet(`${Routing.COMMENTS}/${testId}`)
       .reply(200, [{fake: true}]);
 
     return action(dispatch, () => {
@@ -78,13 +81,11 @@ describe(`Api actions work correctly`, () => {
   });
 
   it(`fetchNearby works correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
     const testId = 1;
     const action = fetchNearby(testId);
 
     apiMock
-      .onGet(`/hotels/${testId}/nearby`)
+      .onGet(`${Routing.HOTELS}/${testId}/nearby`)
       .reply(200, [{fake: true}]);
 
     return action(dispatch, () => {
@@ -99,13 +100,11 @@ describe(`Api actions work correctly`, () => {
   });
 
   it(`fetchOffer works correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
     const testId = 1;
     const action = fetchOffer(testId);
 
     apiMock
-      .onGet(`/hotels/${testId}`)
+      .onGet(`${Routing.HOTELS}/${testId}`)
       .reply(200, {fake: true});
 
     return action(dispatch, () => {
@@ -120,12 +119,10 @@ describe(`Api actions work correctly`, () => {
   });
 
   it(`checkAuth works correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
     const action = checkAuth();
 
     apiMock
-      .onGet(`/login`)
+      .onGet(Routing.LOGIN)
       .reply(200, {fake: true});
 
     return action(dispatch, () => {
@@ -144,8 +141,6 @@ describe(`Api actions work correctly`, () => {
   });
 
   it(`login works correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
     const loginInfo = {
       email: `email@gmail.com`,
       password: `password`,
@@ -154,7 +149,7 @@ describe(`Api actions work correctly`, () => {
     const action = login(loginInfo);
 
     apiMock
-      .onPost(`/login`)
+      .onPost(Routing.LOGIN)
       .reply(200, {fake: true});
 
     return action(dispatch, () => {
@@ -173,14 +168,14 @@ describe(`Api actions work correctly`, () => {
   });
 
   it(`postReview works correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
     const testId = 1;
     const testComment = `some test comment`;
-    const action = postReview(testId, testComment, ()=>{}, ()=>{});
+    const action = postReview(testId, testComment, () => {
+    }, () => {
+    });
 
     apiMock
-      .onPost(`/comments/${testId}`)
+      .onPost(`${Routing.COMMENTS}/${testId}`)
       .reply(200, {fake: true});
 
     return action(dispatch, () => {
@@ -203,14 +198,12 @@ describe(`Api actions work correctly`, () => {
   });
 
   it(`postFavoriteHotel works correctly`, () => {
-    const apiMock = new MockAdapter(api);
-    const dispatch = jest.fn();
     const testId = 1;
     const testStatus = 1;
     const action = postFavoriteHotel(testId, testStatus);
 
     apiMock
-      .onPost(`/favorite/${testId}/${testStatus}`)
+      .onPost(`${Routing.FAVORITE}/${testId}/${testStatus}`)
       .reply(200, {fake: true});
 
     return action(dispatch, () => {
