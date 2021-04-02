@@ -1,7 +1,5 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import {createMemoryHistory} from 'history';
 import {Review} from "./review";
 
 const stubReview = {
@@ -19,12 +17,7 @@ const stubReview = {
 };
 
 it(`Review should render correctly`, () => {
-  const history = createMemoryHistory();
-  render(
-      <Router history={history}>
-        <Review review={stubReview}/>
-      </Router>
-  );
+  render(<Review review={stubReview}/>);
 
   expect(screen.getByText(stubReview.user.name)).toBeInTheDocument();
   expect(screen.getByText(/Rating/i)).toBeInTheDocument();
