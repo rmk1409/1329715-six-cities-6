@@ -199,7 +199,7 @@ const mockStore = configureStore({});
 describe(`Test routing`, () => {
   let history;
 
-  beforeAll(() => {
+  beforeEach(() => {
     history = createMemoryHistory();
   });
 
