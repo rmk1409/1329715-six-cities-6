@@ -219,7 +219,7 @@ describe(`Test routing`, () => {
         </Provider>
     );
     expect(screen.getByText(/places to stay /i)).toBeInTheDocument();
-    expect(screen.getByText(/Paris/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Paris/i)).toHaveLength(2);
     expect(screen.getByText(/Cologne/i)).toBeInTheDocument();
     expect(screen.getByText(/Brussels/i)).toBeInTheDocument();
   });

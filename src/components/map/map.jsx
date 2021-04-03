@@ -54,7 +54,7 @@ const Map = ({offers, city, isHighlightActiveOffer}) => {
     return () => map.remove();
   }, effectDependencies);
 
-  return <div id="map" style={{height: `100%`}}/>;
+  return <div id="map" style={{height: `100%`}} data-testid="map"/>;
 };
 
 Map.propTypes = {
@@ -65,4 +65,4 @@ Map.propTypes = {
 
 const MemoMap = memo(Map);
 
-export {MemoMap};
+export {MemoMap, Map};

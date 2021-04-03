@@ -3,7 +3,7 @@ import {EmptyCitiesContainer} from "../empty-cities-container/empty-cities-conta
 import {MemoHeader} from "../header/header";
 
 const EmptyMain = () => (
-  <div className="page page--gray page--main">
+  <div className="page page--gray page--main" data-testid="page-main">
     <MemoHeader/>
     <EmptyCitiesContainer/>
   </div>

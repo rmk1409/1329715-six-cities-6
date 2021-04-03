@@ -42,4 +42,4 @@ CityList.propTypes = {
 
 const MemoCityList = memo(CityList);
 
-export {MemoCityList};
+export {MemoCityList, CityList};

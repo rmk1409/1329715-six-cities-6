@@ -59,13 +59,13 @@ const OfferCard = ({offer, onHandleEvent, type}) => {
 
   return <article
     className={`${offerClass.article} place-card`} onMouseEnter={onHandleEvent} data-id={offer.id}
-    onMouseLeave={onHandleEvent}>
+    onMouseLeave={onHandleEvent} data-testid="offer-card-article">
     {type === OfferType.MAIN && offer[`is_premium`] ?
       <div className="place-card__mark">
         <span>Premium</span>
       </div>
       : ``}
-    <div className={`${offerClass.wrapper} place-card__image-wrapper`}>
+    <div className={`${offerClass.wrapper} place-card__image-wrapper`} data-testid="offer-card-wrapper">
       <a>
         <img
           className="place-card__image" src={offer[`preview_image`]}
@@ -108,4 +108,4 @@ OfferCard.propTypes = {
 
 const MemoOfferCard = memo(OfferCard);
 
-export {MemoOfferCard};
+export {MemoOfferCard, OfferCard};

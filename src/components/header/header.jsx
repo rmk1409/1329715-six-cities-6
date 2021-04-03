@@ -7,7 +7,7 @@ import {Routing} from "../../const";
 const Header = () => {
   const isUserAuthorized = useSelector((state) => state[NameSpace.SERVER].isUserAuthorized);
   const authInfo = useSelector((state) => state[NameSpace.SERVER].authInfo);
-  return <header className="header">
+  return <header className="header" data-testid="header">
     <div className="container">
       <div className="header__wrapper">
         <div className="header__left">
@@ -38,4 +38,4 @@ const Header = () => {
 
 const MemoHeader = memo(Header);
 
-export {MemoHeader};
+export {MemoHeader, Header};

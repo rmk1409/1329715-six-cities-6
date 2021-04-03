@@ -35,4 +35,4 @@ const SortOptions = () => {
 
 const MemoSortOptions = memo(SortOptions);
 
-export {MemoSortOptions};
+export {MemoSortOptions, SortOptions};
