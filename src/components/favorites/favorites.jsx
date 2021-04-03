@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import LoadingScreen from "../loading-screen/loading-screen";
 import {fetchFavoriteOffers} from "../../store/api-action";
 import {NameSpace} from "../../store/reducers/reducer";
-import {MemoHeader} from "../header/header";
+import MemoHeader from "../header/header";
 
 const Favorites = () => {
   const offers = useSelector((state) => state[NameSpace.SERVER].favoriteOffers);

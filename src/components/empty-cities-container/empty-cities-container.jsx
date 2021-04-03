@@ -1,6 +1,6 @@
 import React from "react";
 import {cities} from "../../const";
-import {MemoCityList} from "../city-list/city-list";
+import MemoCityList from "../city-list/city-list";
 import {useSelector} from "react-redux";
 import {NameSpace} from "../../store/reducers/reducer";
 
@@ -25,3 +25,4 @@ const EmptyCitiesContainer = () => {
 };
 
 export {EmptyCitiesContainer};
+export default EmptyCitiesContainer;

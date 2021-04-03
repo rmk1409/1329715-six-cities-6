@@ -16,3 +16,4 @@ ReviewStarList.propTypes = {
 const MemoReviewStarList = memo(ReviewStarList);
 
 export {MemoReviewStarList, ReviewStarList};
+export default MemoReviewStarList;

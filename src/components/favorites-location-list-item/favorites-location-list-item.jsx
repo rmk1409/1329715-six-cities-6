@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {OfferType} from "../../const";
-import {OfferList} from "../offer-list/offer-list";
+import OfferList from "../offer-list/offer-list";
 import {offer} from "../../prop-types";
 
 const FavoritesLocationListItem = ({name, offers}) => {

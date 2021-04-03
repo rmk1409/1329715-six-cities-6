@@ -10,6 +10,18 @@ import {Main} from "./main";
 import {createMemoryHistory} from "history";
 import {cities} from "../../const";
 
+jest.mock(`../map/map`, () => {
+  const mockMap = () => <>Map</>;
+  mockMap.displayName = `MockMap`;
+
+  return {
+    __esModule: true,
+    default: () => {
+      return mockMap();
+    },
+  };
+});
+
 it(`Main should render correctly`, () => {
   const mockStore = configureStore({});
   const history = createMemoryHistory();
@@ -21,10 +33,6 @@ it(`Main should render correctly`, () => {
       offers: [{
         id: 1,
         city: {name: cities[0].name},
-        location: {
-          latitude: 0,
-          longitude: 0,
-        }
       }],
     },
   });

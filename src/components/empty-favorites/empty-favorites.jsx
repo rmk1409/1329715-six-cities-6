@@ -1,5 +1,5 @@
 import React from "react";
-import {MemoHeader} from "../header/header";
+import MemoHeader from "../header/header";
 
 const EmptyFavorites = () => (
   <div className="page page--favorites-empty">

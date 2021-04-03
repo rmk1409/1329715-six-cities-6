@@ -109,3 +109,4 @@ OfferCard.propTypes = {
 const MemoOfferCard = memo(OfferCard);
 
 export {MemoOfferCard, OfferCard};
+export default MemoOfferCard;

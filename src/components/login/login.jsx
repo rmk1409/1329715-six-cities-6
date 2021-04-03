@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../store/api-action";
 import {NameSpace} from "../../store/reducers/reducer";
 import browserHistory from "../../browser-history";
-import {MemoHeader} from "../header/header";
+import MemoHeader from "../header/header";
 import {Routing} from "../../const";
 
 const Login = () => {

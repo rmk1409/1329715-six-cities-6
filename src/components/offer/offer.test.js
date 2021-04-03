@@ -10,6 +10,30 @@ import {Offer} from "./offer";
 import {initialState as clientInitialState} from "../../store/reducers/client-reducer";
 import {cities, Routing} from "../../const";
 
+jest.mock(`../header/header`, () => {
+  const mockHeader = () => <>Header</>;
+  mockHeader.displayName = `MockHeader`;
+
+  return {
+    __esModule: true,
+    default: () => {
+      return mockHeader();
+    },
+  };
+});
+
+jest.mock(`../map/map`, () => {
+  const mockMap = () => <>Map</>;
+  mockMap.displayName = `MockMap`;
+
+  return {
+    __esModule: true,
+    default: () => {
+      return mockMap();
+    },
+  };
+});
+
 jest.mock(`react-router-dom`, () => ({
   ...jest.requireActual(`react-router-dom`),
   useParams: () => ({id: `1`}),
@@ -30,10 +54,6 @@ it(`offer page should render correctly`, () => {
     },
     city: {
       name: cities[0].name
-    },
-    location: {
-      latitude: 0,
-      longitude: 0,
     },
   };
 

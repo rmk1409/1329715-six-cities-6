@@ -4,27 +4,27 @@ import {OfferList} from "./offer-list";
 import {OfferType} from "../../const";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
-import {NameSpace} from "../../store/reducers/reducer";
-import {initialState} from "../../store/reducers/server-reducer";
 
-const mockStore = configureStore({});
-const store = mockStore({
-  [NameSpace.SERVER]: initialState,
+jest.mock(`../offer-card/offer-card`, () => {
+  const mockOfferCard = () => <>Offer card</>;
+  mockOfferCard.displayName = `MockOfferCard`;
+
+  return {
+    __esModule: true,
+    default: () => {
+      return mockOfferCard();
+    },
+  };
 });
 
-const testOffers = [{
-  id: 1,
-  city: {
-    name: `Some-name`
-  },
-  [`is_favorite`]: true,
-}];
+const mockStore = configureStore({});
+const store = mockStore({});
 
 describe(`offer list should render correctly`, () => {
   it(`offer list with type 'MAIN' should render correctly`, () => {
     render(
         <Provider store={store}>
-          <OfferList offers={testOffers} type={OfferType.MAIN}/>
+          <OfferList offers={[]} type={OfferType.MAIN}/>
         </Provider>
     );
     expect(screen.getByTestId(/offer-list/i)).toHaveClass(`cities__places-list places__list tabs__content`);
@@ -33,7 +33,7 @@ describe(`offer list should render correctly`, () => {
   it(`offer list with type 'NEAR' should render correctly`, () => {
     render(
         <Provider store={store}>
-          <OfferList offers={testOffers} type={OfferType.NEAR}/>
+          <OfferList offers={[]} type={OfferType.NEAR}/>
         </Provider>
     );
     expect(screen.getByTestId(/offer-list/i)).toHaveClass(`near-places__list places__list`);
@@ -42,7 +42,7 @@ describe(`offer list should render correctly`, () => {
   it(`offer list with type 'FAVORITE' should render correctly`, () => {
     render(
         <Provider store={store}>
-          <OfferList offers={testOffers} type={OfferType.FAVORITE}/>
+          <OfferList offers={[]} type={OfferType.FAVORITE}/>
         </Provider>
     );
     expect(screen.getByTestId(/offer-list/i)).toHaveClass(`favorites__places`);

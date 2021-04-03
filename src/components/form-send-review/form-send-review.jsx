@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {postReview} from "../../store/api-action";
 import * as PropTypes from "prop-types";
 import {NameSpace} from "../../store/reducers/reducer";
-import {MemoReviewStarList} from "../review-star-list/review-star-list";
-import {MemoReviewTextArea} from "../review-textarea/review-textarea";
+import MemoReviewStarList from "../review-star-list/review-star-list";
+import MemoReviewTextArea from "../review-textarea/review-textarea";
 import {MAX_REVIEW_LENGTH, MIN_REVIEW_LENGTH} from "../../const";
 
 const FormSendReview = ({id}) => {

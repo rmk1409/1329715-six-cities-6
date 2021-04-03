@@ -6,9 +6,20 @@ import {initialState as initialStateClient} from "../../store/reducers/client-re
 import configureStore from "redux-mock-store";
 import {EmptyCitiesContainer} from "./empty-cities-container";
 
+jest.mock(`../city-list/city-list`, () => {
+  const mockCityList = () => <>City list</>;
+  mockCityList.displayName = `MockCityList`;
+
+  return {
+    __esModule: true,
+    default: () => {
+      return mockCityList();
+    },
+  };
+});
+
 it(`Empty-cities-container should render correctly`, () => {
   const mockStore = configureStore({});
-
   const store = mockStore({
     [NameSpace.CLIENT]: {...initialStateClient},
   });

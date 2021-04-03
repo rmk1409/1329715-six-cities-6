@@ -8,6 +8,18 @@ import {createMemoryHistory} from "history";
 import {Router} from "react-router-dom";
 import {Login} from "./login";
 
+jest.mock(`../header/header`, () => {
+  const mockHeader = () => <>Header</>;
+  mockHeader.displayName = `MockHeader`;
+
+  return {
+    __esModule: true,
+    default: () => {
+      return mockHeader();
+    },
+  };
+});
+
 it(`header should render correctly`, () => {
   const mockStore = configureStore({});
   const history = createMemoryHistory();
@@ -23,5 +35,5 @@ it(`header should render correctly`, () => {
         </Router>
       </Provider>
   );
-  expect(screen.getAllByText(/Sign in/i)).toHaveLength(3);
+  expect(screen.getAllByText(/Sign in/i)).toHaveLength(2);
 });

@@ -199,12 +199,13 @@ const mockStore = configureStore({});
 describe(`Test routing`, () => {
   let history;
 
+  jest.spyOn(redux, `useSelector`);
+  jest.spyOn(redux, `useDispatch`);
+
   beforeEach(() => {
     history = createMemoryHistory();
   });
 
-  jest.spyOn(redux, `useSelector`);
-  jest.spyOn(redux, `useDispatch`);
 
   it(`Render 'Main Page' when user navigate to '/' url`, () => {
     const store = mockStore({

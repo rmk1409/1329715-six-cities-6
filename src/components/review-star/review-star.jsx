@@ -5,9 +5,9 @@ const ReviewStar = ({rating, index, onStarsChange}) => (
   <>
     <input
       className="form__rating-input visually-hidden" name="rating" value={index} id={`${index}-stars`}
-      type="radio" onChange={onStarsChange}
+      type="radio" onChange={onStarsChange} data-testid="review-star-input"
     />
-    <label htmlFor={`${index}-stars`} className="reviews__rating-label form__rating-label" title={rating} data-testid="review-star">
+    <label htmlFor={`${index}-stars`} className="reviews__rating-label form__rating-label" title={rating} data-testid="review-star-label">
       <svg className="form__star-image" width="37" height="33">
         <use xlinkHref="#icon-star"/>
       </svg>

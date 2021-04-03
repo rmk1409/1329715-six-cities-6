@@ -39,3 +39,4 @@ const Header = () => {
 const MemoHeader = memo(Header);
 
 export {MemoHeader, Header};
+export default MemoHeader;

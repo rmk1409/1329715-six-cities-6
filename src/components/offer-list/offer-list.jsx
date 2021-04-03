@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {OfferType} from "../../const";
 import {useDispatch} from "react-redux";
 import {setActiveOffer as setActiveOfferAction} from "../../store/action";
-import {MemoOfferCard} from "../offer-card/offer-card";
+import MemoOfferCard from "../offer-card/offer-card";
 import {offer} from "../../prop-types";
 
 const getClassForOfferListByType = (type) => {
@@ -46,3 +46,4 @@ OfferList.propTypes = {
 };
 
 export {OfferList};
+export default OfferList;

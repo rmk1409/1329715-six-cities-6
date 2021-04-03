@@ -13,7 +13,11 @@ it(`header should render correctly`, () => {
   const history = createMemoryHistory();
 
   const store = mockStore({
-    [NameSpace.SERVER]: {...initialState, isUserAuthorized: true, authInfo: {email: `some-email`}},
+    [NameSpace.SERVER]: {
+      ...initialState,
+      isUserAuthorized: true,
+      authInfo: {email: `some-email`}
+    },
   });
 
   render(

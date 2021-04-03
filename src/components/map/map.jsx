@@ -66,3 +66,4 @@ Map.propTypes = {
 const MemoMap = memo(Map);
 
 export {MemoMap, Map};
+export default MemoMap;

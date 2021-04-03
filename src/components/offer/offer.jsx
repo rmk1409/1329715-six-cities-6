@@ -11,8 +11,8 @@ import {NameSpace} from "../../store/reducers/reducer";
 import {FormSendReview} from "../form-send-review/form-send-review";
 import {OfferList} from "../offer-list/offer-list";
 import browserHistory from "../../browser-history";
-import {MemoMap} from "../map/map";
-import {MemoHeader} from "../header/header";
+import MemoMap from "../map/map";
+import MemoHeader from "../header/header";
 
 const Offer = () => {
   const {id} = useParams();

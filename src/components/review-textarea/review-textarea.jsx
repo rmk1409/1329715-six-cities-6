@@ -15,3 +15,4 @@ ReviewTextArea.propTypes = {
 const MemoReviewTextArea = memo(ReviewTextArea);
 
 export {MemoReviewTextArea, ReviewTextArea};
+export default MemoReviewTextArea;
